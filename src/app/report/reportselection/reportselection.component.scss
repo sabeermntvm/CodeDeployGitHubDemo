@@ -1,0 +1,37 @@
+.btn-add{
+    background: #0084f9;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 5px !important;
+    padding: 3px 5px;
+    float: right;
+}
+.headText{
+    font-size: 16px;
+    float: left;
+    font-weight: bold;
+    color: midnightblue;
+    margin-top: 5px;
+}
+
+
+.template-portrait{
+    margin:0 auto;
+    max-width:286px;
+    height: auto;
+    img{width: 100%;max-height:400px;}
+}
+
+.template-landscape{
+    margin:0 auto;
+    max-width:400px;
+    height: auto;
+    img{width: 100%;max-height:286px;}
+}
+
+@media (max-width: 834px){
+.selectRepRow{
+    margin-top: 10px;
+    margin: 0 auto;
+}
+}

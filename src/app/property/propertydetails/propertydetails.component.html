@@ -1,0 +1,1769 @@
+<div class="col-md-12 clearfix">
+  *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+  <button class="btn btn-primary btn-sm float-right" [appFeedback]="'Property'">Feedback</button>
+</div>
+<!--<div *ngIf="!!propertyDetails && !!propertyDetails.PropertyUse && ['Industrial', 'Special Use', 'Multi-Family Housing', 'Retail'].indexOf(propertyDetails.PropertyUse) == -1">-->
+<div *ngIf="!!propertyDetails && !!propertyDetails.PropertyUse &&   propertyDetails.PropertyUse == 'Office'">
+  <div class="row">
+    <div class="col-md-12 ">
+      <div class="row ">
+        <div class="col-md-12 ">
+          <label class="listHeadLabel">Information</label>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Property Type</label>
+            <label class="col-6"><b>{{propertyDetails.PropertyUse}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Lot Size Hectares</label>
+            <label class="col-6">
+              <font *ngIf="lotSizeValue"> <b>{{lotSizeValue | number: '.0-3' }}</b>
+              </font>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Zoning</label>
+            <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Building Size</label>
+            <label class="col-6"><b>{{propertyDetails.BuildingSizeSM
+              | number: '.0-0'}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Lot Size SqM</label>
+            <label class="col-6">
+              <font *ngIf="propertyDetails.LotSizeSM"> <b>{{propertyDetails.LotSizeSM | number: '.0-3' }} </b></font>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Year Renovated</label>
+            <label class="col-6"><b>{{propertyDetails.YearRenovated}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Specific Use</label>
+            <label class="col-6"><b>{{propertyDetails.SpecificUseName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Year Built</label>
+            <label class="col-6"><b>{{propertyDetails.YearBuilt}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Tenancy</label>
+            <label class="col-6"><b>{{propertyDetails.TenancyName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Owner Occupied</label>
+            <label *ngIf="propertyDetails.IsOwnerOccupied==1" class="col-6"><b>Yes</b></label>
+            <label *ngIf="propertyDetails.IsOwnerOccupied!=1" class="col-6"><b>No</b></label>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Floors</label>
+            <label class="col-6"><b>{{propertyDetails.Floors}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Parking Spaces</label>
+            <label class="col-6"><b>{{propertyDetails.ParkingSpaces}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Property Grade</label>
+            <label class="col-6"><b>{{propertyDetails.ClassTypeName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Construction Status</label>
+            <label class="col-6"><b>{{propertyDetails.ConstructionStatusName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Sprinklers</label>
+            <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes /
+                {{propertyDetails.SprinklerTypeName}}</b></label>
+            <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Parking Ratio</label>
+            <label class="col-6"><b>{{propertyDetails.ParkingRatio | number: '.0-2'}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">HVAC Type</label>
+            <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+          </div>
+        </div>
+        <div *ngIf="CountryId != 14" class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Condo</label>
+            <label class="col-6"><b>{{propertyDetails.CondoTypeName}}</b></label>
+          </div>
+        </div>
+        <div *ngIf="CountryId == 14" class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Strata</label>
+            <label class="col-6"
+              *ngIf="propertyDetails.CondoTypeName && propertyDetails.CondoTypeName!='Not a Condo'"><b>Yes</b></label>
+            <label class="col-6"
+              *ngIf="!propertyDetails.CondoTypeName || propertyDetails.CondoTypeName=='Not a Condo'"><b>No</b></label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="listHeadLabel">Specification</label>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Construction Type</label>
+            <label class="col-6"><b>{{propertyDetails.ConstructionTypeName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6"># of Office Floors</label>
+            <label class="col-6"><b>{{propertyDetails.NoOfOfficeFloors}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+              <label class="col-6">Office NLA</label>
+              <label *ngIf="unitId == metricUnit" class="col-6"><b>{{propertyDetails.OfficeSM | number: '.0-0'}}<span
+                *ngIf="propertyDetails.OfficeSM">&nbsp;SqM</span></b></label>
+          <label *ngIf="unitId != metricUnit" class="col-6"><b>{{propertyDetails.OfficeSF | number: '.0-0'}}<span
+                *ngIf="propertyDetails.OfficeSF">&nbsp;SF</span> </b></label>
+            </div>
+          </div>
+          <div class="col-md-4" >
+            <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+              <label class="col-6">Retail NLA</label>
+              <label class="col-6"><b>
+                  <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailSM | number: '.0-0'}}
+                    <span *ngIf="propertyDetails.RetailSM">&nbsp;SqM </span></span>
+                  <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailSF | number: '.0-0'}}
+                    <span *ngIf="propertyDetails.RetailSF">&nbsp;SF </span></span> </b></label>
+            </div>
+          </div>
+        <!-- <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Common Area Factor</label>
+            <label class="col-6"><b>{{propertyDetails.CoreFactor }} <span *ngIf="propertyDetails.CoreFactor"> %
+                </span></b> </label>
+          </div>
+        </div> -->
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6"># of Elevators</label>
+            <label class="col-6"><b>{{propertyDetails.PassengerElevators}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">DDA Accessible</label>
+            <label *ngIf="propertyDetails.IsADAAccessible" class="col-6"><b>Yes</b></label>
+            <label *ngIf="!propertyDetails.IsADAAccessible" class="col-6"><b>No</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Min Floor Size</label>
+            <label class="col-6"> <b>
+                <span *ngIf="unitId == metricUnit">{{propertyDetails.SmallestFloorSM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.SmallestFloorSM">&nbsp;SqM</span></span>
+                <span *ngIf="unitId != metricUnit">{{propertyDetails.SmallestFloor | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.SmallestFloor">&nbsp;SF</span></span>
+              </b>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">{{RetailFrontageLabel}}</label>
+            <label class="col-6"> <b>
+                <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailFrontageM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailFrontageM">&nbsp; m </span></span>
+
+                <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailFrontage | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailFrontage">&nbsp; ft </span>
+                </span></b> </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">{{RetailSpaceLabel}}</label>
+            <label class="col-6"><b>
+                <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailSM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailSM">&nbsp;SqM </span></span>
+                <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailSF | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailSF">&nbsp;SF </span></span> </b></label>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Max Floor Size</label>
+            <label class="col-6"> <b>
+                <span *ngIf="unitId == metricUnit">{{propertyDetails.LargestFloorSM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.LargestFloorSM">&nbsp;SqM </span>
+                </span>
+                <span *ngIf="unitId != metricUnit">{{propertyDetails.LargestFloor | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.LargestFloor">&nbsp;SF </span>
+                </span> </b></label>
+          </div>
+        </div>
+
+
+        <ng-container *ngIf="propertyDetails.Amenities">
+        <div class="col-md-12">
+          <label class="listHeadLabel">Amenities</label>
+        </div>
+        <div class="col-md-12">
+          <p class="commentsParaProp">
+            {{propertyDetails.Amenities}}
+          </p>
+        </div>
+      </ng-container>
+        <div class="col-md-12">
+          <label class="listHeadLabel">Site Information</label>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Metro</label>
+            <label class="col-6"><b>{{propertyDetails.MetroName || propertyDetails.CityName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Market</label>
+            <label class="col-6"><b>{{propertyDetails.MarketName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Submarket</label>
+            <label class="col-6"><b>{{propertyDetails.SubMarket}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Business Park/Center</label>
+            <label *ngIf="propertyDetails.ComplexName"class="col-6"><b>{{propertyDetails.ComplexName}}</b></label>
+            <label *ngIf="!propertyDetails.ComplexName"class="col-6"><b>Not Part of a Park/Center</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Parcel</label>
+            <label class="col-6"><b>{{propertyDetails.ParcelInformation}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Latitude</label>
+            <label class="col-6"><b>{{propertyDetails.Latitude}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Longitude</label>
+            <label class="col-6"><b>{{propertyDetails.Longitude}}</b></label>
+          </div>
+        </div>
+        <ng-container *ngIf="propertyDetails.BuildingComments"> 
+        <div class="col-md-12">
+          <label class="listHeadLabel">Building Comments</label>
+        </div>
+        <div class="col-md-12">
+          <p class="commentsParaProp">
+            {{propertyDetails.BuildingComments}}
+          </p>
+        </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Industrial Property Starts -->
+<div *ngIf="propertyDetails.PropertyUse == 'Industrial'" class="row">
+  <div class="col-md-12">
+    <div class="row m-0 viewCol">
+      <div class="col-md-12">
+        <label class="listHeadLabel">Information</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Type</label>
+          <label class="col-6"><b>{{propertyDetails.PropertyUse}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size Hectares</label>
+          <label class="col-6">
+            <font *ngIf="lotSizeValue"> <b>{{lotSizeValue | number: '.0-3' }}</b>
+            </font>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Zoning</label>
+          <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Building Size</label>
+          <label class="col-6"><b>{{propertyDetails.BuildingSizeSM
+            | number: '.0-0'}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size SqM</label>
+          <label class="col-6">
+            <font *ngIf="propertyDetails.LotSizeSM"> <b>{{propertyDetails.LotSizeSM | number: '.0-3' }} </b></font>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Year Renovated</label>
+          <label class="col-6"><b>{{propertyDetails.YearRenovated}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Specific Use</label>
+          <label class="col-6"><b>{{propertyDetails.SpecificUseName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Year Built</label>
+            <label class="col-6"><b>{{propertyDetails.YearBuilt}}</b></label>
+          </div>
+        </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Tenancy</label>
+          <label class="col-6"><b>{{propertyDetails.TenancyName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Owner Occupied</label>
+          <label *ngIf="propertyDetails.IsOwnerOccupied==1" class="col-6"><b>Yes</b></label>
+          <label *ngIf="propertyDetails.IsOwnerOccupied!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Floors</label>
+          <label class="col-6"><b>{{propertyDetails.Floors}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Spaces</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingSpaces}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Grade</label>
+          <label class="col-6"><b>{{propertyDetails.ClassTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Status</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionStatusName}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId == 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Strata</label>
+          <label class="col-6"
+            *ngIf="propertyDetails.CondoTypeName && propertyDetails.CondoTypeName!='Not a Condo'"><b>Yes</b></label>
+          <label class="col-6"
+            *ngIf="!propertyDetails.CondoTypeName || propertyDetails.CondoTypeName=='Not a Condo'"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Ratio</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingRatio | number: '.0-2'}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId != 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Condo</label>
+          <label class="col-6"><b>{{propertyDetails.CondoTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes /
+              {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Government Interest</label>
+          <label class="col-6"><b>{{propertyDetails.GovernmentInterestName}}</b></label>
+        </div>
+      </div>-->
+      <div class="col-md-12">
+        <label class="listHeadLabel">Specification</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Type</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionTypeName}}</b></label>
+        </div>
+      </div>
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinkler Type</label>
+          <label class="col-6"><b>{{propertyDetails.SprinklerTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes / {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>-->
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">{{OfficeSpaceLabel}}</label>
+          <label *ngIf="unitId == metricUnit" class="col-6"><b>{{propertyDetails.OfficeSM | number: '.0-0'}}<span
+                *ngIf="propertyDetails.OfficeSM">&nbsp;SqM</span></b></label>
+          <label *ngIf="unitId != metricUnit" class="col-6"><b>{{propertyDetails.OfficeSF | number: '.0-0'}}<span
+                *ngIf="propertyDetails.OfficeSF">&nbsp;SF</span> </b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6"># Offices</label>
+          <label class="col-6"><b>{{propertyDetails.NoOfOffices}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Office NLA</label>
+            <label *ngIf="unitId == metricUnit" class="col-6"><b>{{propertyDetails.OfficeSM | number: '.0-0'}}<span
+              *ngIf="propertyDetails.OfficeSM">&nbsp;SqM</span></b></label>
+        <label *ngIf="unitId != metricUnit" class="col-6"><b>{{propertyDetails.OfficeSF | number: '.0-0'}}<span
+              *ngIf="propertyDetails.OfficeSF">&nbsp;SF</span> </b></label>
+          </div>
+        </div>
+        <div class="col-md-4" >
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Retail NLA</label>
+            <label class="col-6"><b>
+                <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailSM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailSM">&nbsp;SqM </span></span>
+                <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailSF | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailSF">&nbsp;SF </span></span> </b></label>
+          </div>
+        </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Yard-Fenced</label>
+          <label *ngIf="propertyDetails.HasYardFenced " class="col-6">Yes</label>
+          <label *ngIf="!propertyDetails.HasYardFenced " class="col-6">No</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Yard-Unfenced</label>
+          <label *ngIf="propertyDetails.HasYardUnfenced " class="col-6">Yes</label>
+          <label *ngIf="!propertyDetails.HasYardUnfenced " class="col-6">No</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Yard-Paved</label>
+          <label *ngIf="propertyDetails.HasPavedYard " class="col-6">Yes</label>
+          <label *ngIf="!propertyDetails.HasPavedYard " class="col-6">No</label>
+        </div>
+      </div>
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">DDA Accessible</label>
+          <label *ngIf="propertyDetails.IsADAAccessible" class="col-6">Yes</label>
+          <label *ngIf="!propertyDetails.IsADAAccessible" class="col-6">No</label>
+        </div>
+      </div>-->
+      <div class="col-md-12">
+        <label class="listHeadLabel">Loading/Power</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Dock High</label>
+          <label class="col-6"><b>{{propertyDetails.DockHigh}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Grade Level</label>
+          <label class="col-6"><b>{{propertyDetails.GradeLevelIn}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Truckwells</label>
+          <label class="col-6"><b>{{propertyDetails.Truckwell}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Dock Levelers/Capacity</label>
+          <label class="col-6"><b>{{propertyDetails.DockLevelersCapacity}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Clear Height</label>
+          <label class="col-6">
+            <span *ngIf="unitId == metricUnit">{{propertyDetails.ClearHeightMinM}}
+              <span *ngIf="propertyDetails.ClearHeightMinM && propertyDetails.ClearHeightMaxM"> -</span>
+              {{propertyDetails.ClearHeightMaxM}}
+            </span>
+            <span *ngIf="unitId != metricUnit">{{propertyDetails.ClearHeightMin}} - {{propertyDetails.ClearHeightMax}}
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Column Spacing</label>
+          <label class="col-6">
+            <span *ngIf="unitId == metricUnit">{{propertyDetails.ColumnSpacingLenM}}
+              <span *ngIf="propertyDetails.ColumnSpacingLenM && propertyDetails.ColumnSpacingWidthM"> *</span></span>
+            <span
+              *ngIf="unitId != metricUnit">{{propertyDetails.ColumnSpacingLen}}*{{propertyDetails.ColumnSpacingWidth}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Crane Served</label>
+          <label class="col-6"><b>{{propertyDetails.RailServed}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Rail Served/Provider</label>
+          <label class="col-6"><b>{{propertyDetails.RailProvider}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Phase/Volts/Amps</label>
+          <label class="col-6"><span>{{propertyDetails.Phase}}
+              <span *ngIf="propertyDetails.Phase && propertyDetails.Volts"> /</span> {{propertyDetails.Volts}}
+              <span *ngIf="propertyDetails.Volts && propertyDetails.Amps"> /</span> {{propertyDetails.Amps}}
+
+            </span></label>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <label class="listHeadLabel">Site Information</label>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Metro</label>
+          <label class="col-6"><b>{{propertyDetails.MetroName || propertyDetails.CityName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Market</label>
+          <label class="col-6"><b>{{propertyDetails.MarketName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Submarket</label>
+          <label class="col-6"><b>{{propertyDetails.SubMarket}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Business Park/Center</label>
+          <label *ngIf="propertyDetails.ComplexName"class="col-6"><b>{{propertyDetails.ComplexName}}</b></label>
+          <label *ngIf="!propertyDetails.ComplexName"class="col-6"><b>Not Part of a Park/Center</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parcel</label>
+          <label class="col-6"><b>{{propertyDetails.ParcelInformation}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Latitude</label>
+          <label class="col-6"><b>{{propertyDetails.Latitude}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Longitude</label>
+          <label class="col-6"><b>{{propertyDetails.Longitude}}</b></label>
+        </div>
+      </div>
+      <ng-container *ngIf="propertyDetails.BuildingComments"> 
+      <div class="col-md-12">
+        <label class="listHeadLabel">Building Comments</label>
+      </div>
+      <div class="col-md-12">
+        <p class="commentsParaProp">
+          {{propertyDetails.BuildingComments}}
+        </p>
+      </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<!-- Industrial Property Ends -->
+
+<!-- Special Use Property Starts -->
+<!--<div class="row" *ngIf="propertyDetails.PropertyUse == 'Special Use'">
+  <div class="col-md-12">
+    <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+      <div class="col-md-12">
+        <label class="listHeadLabel">Information</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Floors</label>
+          <label class="col-6"><b>{{propertyDetails.Floors}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Status</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionStatusName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Grade</label>
+          <label class="col-6"><b>{{propertyDetails.ClassTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size Hectares</label>
+          <label *ngIf="lotSizeValue" class="col-6"><b>{{lotSizeValue | number: '.0-3' }} &nbsp; ha</b>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Tenancy</label>
+          <label class="col-6"><b>{{propertyDetails.TenancyName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Spaces</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingSpaces}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Ratio</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingRatio | number: '.0-2'}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId != 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Condo</label>
+          <label class="col-6"><b>{{propertyDetails.CondoTypeName}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId == 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Strata</label>
+          <label class="col-6"> 
+            <span *ngIf="propertyDetails.CondoTypeName && propertyDetails.CondoTypeName!='Not a Condo'"> Yes </span>
+            <span *ngIf="!propertyDetails.CondoTypeName || propertyDetails.CondoTypeName=='Not a Condo'"> No </span>
+        </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Owner Occupied</label>
+          <label *ngIf="propertyDetails.IsOwnerOccupied==1" class="col-6">Yes</label>
+          <label *ngIf="propertyDetails.IsOwnerOccupied!=1" class="col-6">No</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Zoning</label>
+          <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Government Interest</label>
+          <label class="col-6"><b>{{propertyDetails.GovernmentInterestName}}</b></label>
+        </div>
+      </div>-->
+<!-- <div class="col-md-12">
+        <label class="listHeadLabel">Specification</label>
+      </div> -->
+<!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Type</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Grade Level Doors </label>
+          <label class="col-6"><b>{{propertyDetails.GradeLevelDriveIn}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Dock Doors </label>
+          <label class="col-6"><b>{{propertyDetails.DockLevelers}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Truckwells</label>
+          <label class="col-6"><b>{{propertyDetails.Truckwell}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Min Floor Size</label>
+          <label class="col-6"><b>
+            <span *ngIf="unitId == metricUnit">{{propertyDetails.SmallestFloorSM | number: '.0-0'}}
+              <span *ngIf="propertyDetails.SmallestFloorSM">&nbsp;SqM</span>
+              </span>
+              <span *ngIf="unitId != metricUnit">{{propertyDetails.SmallestFloor | number: '.0-0'}}
+              <span *ngIf="propertyDetails.SmallestFloor">&nbsp;SF</span>
+              </span>
+              </b>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Max Floor Size</label>
+          <label class="col-6">
+              <span *ngIf="unitId == metricUnit">{{propertyDetails.LargestFloorSM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.LargestFloorSM">&nbsp;SqM</span>                                            
+                 </span>
+                 <span *ngIf="unitId != metricUnit">{{propertyDetails.LargestFloor | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.LargestFloor">&nbsp;SF</span>                                            
+                 </span>  
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">DDA Accessible</label>
+          <label *ngIf="propertyDetails.IsADAAccessible" class="col-6"><b>Yes</b></label>
+          <label *ngIf="!propertyDetails.IsADAAccessible" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinkler Type</label>
+          <label class="col-6"><b>{{propertyDetails.SprinklerTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes / {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Amenities</label>
+      </div>
+      <div class="col-md-12">
+        <p>
+          {{propertyDetails.Amenities}}
+        </p>
+      </div>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Site Information</label>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Metro</label>
+          <label class="col-6"><b>{{propertyDetails.MetroName || propertyDetails.CityName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Market</label>
+          <label class="col-6"><b>{{propertyDetails.MarketName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Submarket</label>
+          <label class="col-6"><b>{{propertyDetails.SubMarket}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Park/Complex Name</label>
+          <label class="col-6"><b>{{propertyDetails.ComplexName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parcel</label>
+          <label class="col-6"><b>{{propertyDetails.ParcelInformation}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Latitude</label>
+          <label class="col-6"><b>{{propertyDetails.Latitude}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Longitude</label>
+          <label class="col-6"><b>{{propertyDetails.Longitude}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Building Comments</label>
+      </div>
+      <div class="col-md-12">
+        <p>
+          {{propertyDetails.BuildingComments}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!-- Special Use Property Ends -->
+
+<!-- Multi-Family Property Starts -->
+
+<div *ngIf="propertyDetails.PropertyUse == 'Multi-Family Housing'" class="row">
+  <div class="col-md-12">
+    <div class="row m-0 viewCol">
+      <div class="col-md-12">
+        <label class="listHeadLabel">Information</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Type</label>
+          <label class="col-6"><b>{{propertyDetails.PropertyUse}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size Hectares</label>
+          <label class="col-6">
+            <font *ngIf="lotSizeValue"> <b>{{lotSizeValue | number: '.0-3' }} &nbsp; ha</b>
+            </font>
+          </label>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Year Renovated</label>
+          <label class="col-6"><b>{{propertyDetails.YearRenovated}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Building Size</label>
+          <label class="col-6"><b>{{propertyDetails.BuildingSizeSM
+            | number: '.0-0'}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size SqM</label>
+          <label class="col-6">
+            <font *ngIf="propertyDetails.LotSizeSM"> <b>{{propertyDetails.LotSizeSM | number: '.0-3' }} </b></font>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Year Built</label>
+            <label class="col-6"><b>{{propertyDetails.YearBuilt}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Specific Use</label>
+            <label class="col-6"><b>{{propertyDetails.SpecificUseName}}</b></label>
+          </div>
+        </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Tenancy</label>
+          <label class="col-6"><b>{{propertyDetails.TenancyName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Zoning</label>
+          <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6"># Units</label>
+          <label class="col-6"><b>{{propertyDetails.NoOfUnits}}</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Spaces</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingSpaces}}</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Status</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionStatusName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Ratio</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingRatio | number: '.0-2'}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId == 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Strata</label>
+          <label class="col-6"
+            *ngIf="propertyDetails.CondoTypeName && propertyDetails.CondoTypeName!='Not a Condo'"><b>Yes</b></label>
+          <label class="col-6"
+            *ngIf="!propertyDetails.CondoTypeName || propertyDetails.CondoTypeName=='Not a Condo'"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Grade</label>
+          <label class="col-6"><b>{{propertyDetails.ClassTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+      <div *ngIf="CountryId != 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Condo</label>
+          <label class="col-6"><b>{{propertyDetails.CondoTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes /
+              {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Specification</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Type</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionTypeName}}</b></label>
+        </div>
+      </div>
+
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6"># Passenger Elevators</label>
+          <label class="col-6"><b>{{propertyDetails.PassengerElevators}}</b></label>
+        </div>
+      </div>-->
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Free Parking</label>
+          <label *ngIf="propertyDetails.HasFreeParking" class="col-6"><b>Yes</b></label>
+          <label *ngIf="!propertyDetails.HasFreeParking" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Paid Parking</label>
+          <label *ngIf="propertyDetails.HasPaidParking" class="col-6"><b>Yes</b></label>
+          <label *ngIf="!propertyDetails.HasPaidParking" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">{{RetailFrontageLabel}}</label>
+          <label class="col-6"><b>
+              <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailFrontageM | number: '.0-0'}}
+                <span *ngIf="propertyDetails.RetailFrontageM"> m </span>
+              </span>
+
+              <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailFrontage | number: '.0-0'}}
+                <span *ngIf="propertyDetails.RetailFrontage"> ft </span>
+              </span></b>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">{{RetailSpaceLabel}}</label>
+          <label class="col-6"><b>
+              <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailSM | number: '.0-0'}}
+                <span *ngIf="propertyDetails.RetailSM">&nbsp;SqM </span></span>
+              <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailSF | number: '.0-0'}}
+                <span *ngIf="propertyDetails.RetailSF">&nbsp;SF </span></span> </b></label>
+        </div>
+      </div>
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Min Floor Size</label>
+          <label class="col-6"> <b>  
+                          <span *ngIf="unitId == metricUnit">{{propertyDetails.SmallestFloorSM | number: '.0-0'}}
+                            <span *ngIf="propertyDetails.SmallestFloorSM">&nbsp;SqM</span></span>
+                            <span *ngIf="unitId != metricUnit">{{propertyDetails.SmallestFloor | number: '.0-0'}}
+                            <span *ngIf="propertyDetails.SmallestFloor">&nbsp;SF</span></span> </b>
+                      </label>
+        </div>
+      </div>-->
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Max Floor Size</label>
+          <label class="col-6"> <b>
+                            <span *ngIf="unitId == metricUnit">{{propertyDetails.LargestFloorSM | number: '.0-0'}}
+                              <span *ngIf="propertyDetails.LargestFloorSM">&nbsp;SqM</span>
+                              </span>
+                              <span *ngIf="unitId != metricUnit">{{propertyDetails.LargestFloor | number: '.0-0'}}
+                              <span *ngIf="propertyDetails.LargestFloor">&nbsp;SF</span>
+                              </span></b> </label>
+        </div>
+      </div>-->
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">DDA Accessible</label>
+          <label *ngIf="propertyDetails.IsADAAccessible" class="col-6"><b>Yes</b></label>
+          <label *ngIf="!propertyDetails.IsADAAccessible" class="col-6"><b>No</b></label>
+        </div>
+      </div>-->
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinkler Type</label>
+          <label class="col-6"><b>{{propertyDetails.SprinklerTypeName}}</b></label>
+        </div>
+      </div>-->
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes / {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>-->
+      <ng-container *ngIf="propertyDetails.Amenities">
+      <div class="col-md-12">
+        <label class="listHeadLabel">Amenities</label>
+      </div>
+      <div class="col-md-12">
+        <p class="commentsParaProp">
+          {{propertyDetails.Amenities}}
+        </p>
+      </div>
+      </ng-container>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Site Information</label>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Metro</label>
+          <label class="col-6"><b>{{propertyDetails.MetroName || propertyDetails.CityName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Market</label>
+          <label class="col-6"><b>{{propertyDetails.MarketName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Submarket</label>
+          <label class="col-6"><b>{{propertyDetails.SubMarket}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Business Park/Center</label>
+          <label *ngIf="propertyDetails.ComplexName"class="col-6"><b>{{propertyDetails.ComplexName}}</b></label>
+          <label *ngIf="!propertyDetails.ComplexName"class="col-6"><b>Not Part of a Park/Center</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parcel</label>
+          <label class="col-6"><b>{{propertyDetails.ParcelInformation}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Latitude</label>
+          <label class="col-6"><b>{{propertyDetails.Latitude}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Longitude</label>
+          <label class="col-6"><b>{{propertyDetails.Longitude}}</b></label>
+        </div>
+      </div>
+      <ng-container *ngIf="propertyDetails.BuildingComments"> 
+      <div class="col-md-12" >
+        <label class="listHeadLabel">Building Comments</label>
+      </div>
+      <div class="col-md-12">
+        <p class="commentsParaProp">
+          {{propertyDetails.BuildingComments}}
+        </p>
+      </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Multi-Family Property Ends -->
+
+<!-- Retail Property Starts -->
+<div *ngIf="propertyDetails.PropertyUse == 'Retail' || propertyDetails.PropertyUse == 'Special Use'" class="row">
+  <div class="col-md-12">
+    <div class="row m-0 viewCol">
+      <div class="col-md-12">
+        <label class="listHeadLabel">Information</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Type</label>
+          <label class="col-6"><b>{{propertyDetails.PropertyUse}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size Hectares</label>
+          <label class="col-6">
+            <font *ngIf="lotSizeValue"> <b>{{lotSizeValue | number: '.0-3' }}</b>
+            </font>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Zoning</label>
+          <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Building Size</label>
+          <label class="col-6"><b>{{propertyDetails.BuildingSizeSM
+            | number: '.0-0'}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Lot Size SqM</label>
+          <label class="col-6">
+            <font *ngIf="propertyDetails.LotSizeSM"> <b>{{propertyDetails.LotSizeSM | number: '.0-3' }} </b>
+            </font>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Year Renovated</label>
+          <label class="col-6"><b>{{propertyDetails.YearRenovated}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Specific Use</label>
+          <label class="col-6"><b>{{propertyDetails.SpecificUseName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Year Built</label>
+            <label class="col-6"><b>{{propertyDetails.YearBuilt}}</b></label>
+          </div>
+        </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Tenancy</label>
+          <label class="col-6"><b>{{propertyDetails.TenancyName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Owner Occupied</label>
+          <label *ngIf="propertyDetails.IsOwnerOccupied==1" class="col-6"><b>Yes</b></label>
+          <label *ngIf="propertyDetails.IsOwnerOccupied!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Floors</label>
+          <label class="col-6"><b>{{propertyDetails.Floors}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Spaces</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingSpaces}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Property Grade</label>
+          <label class="col-6"><b>{{propertyDetails.ClassTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Status</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionStatusName}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId == 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Strata</label>
+          <label class="col-6"
+            *ngIf="propertyDetails.CondoTypeName && propertyDetails.CondoTypeName!='Not a Condo'"><b>Yes</b></label>
+          <label class="col-6"
+            *ngIf="!propertyDetails.CondoTypeName || propertyDetails.CondoTypeName=='Not a Condo'"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parking Ratio</label>
+          <label class="col-6"><b>{{propertyDetails.ParkingRatio | number: '.0-2'}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+      <div *ngIf="CountryId != 14" class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Condo</label>
+          <label class="col-6"><b>{{propertyDetails.CondoTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes /
+              {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Specification</label>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Construction Type</label>
+          <label class="col-6"><b>{{propertyDetails.ConstructionTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Dock High</label>
+          <label class="col-6"><b>{{propertyDetails.DockHigh}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Office NLA</label>
+            <label *ngIf="unitId == metricUnit" class="col-6"><b>{{propertyDetails.OfficeSM | number: '.0-0'}}<span
+              *ngIf="propertyDetails.OfficeSM">&nbsp;SqM</span></b></label>
+        <label *ngIf="unitId != metricUnit" class="col-6"><b>{{propertyDetails.OfficeSF | number: '.0-0'}}<span
+              *ngIf="propertyDetails.OfficeSF">&nbsp;SF</span> </b></label>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="propertyDetails.PropertyUse != 'Retail'">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Retail NLA</label>
+            <label class="col-6"><b>
+                <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailSM | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailSM">&nbsp;SqM </span></span>
+                <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailSF | number: '.0-0'}}
+                  <span *ngIf="propertyDetails.RetailSF">&nbsp;SF </span></span> </b></label>
+          </div>
+        </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Bay Depth/Width</label>
+          <label *ngIf="unitId == metricUnit && propertyDetails.BayDepthM"
+            class="col-6"><b>{{propertyDetails.BayDepthM}} / {{propertyDetails.BayWidthM}}</b></label>
+          <label *ngIf="unitId != metricUnit && propertyDetails.BayDepth" class="col-6"><b>{{propertyDetails.BayDepth}}
+              / {{propertyDetails.BayWidth}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6"># of Anchors </label>
+          <label class="col-6"><b>{{propertyDetails.NoOfAnchor}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Grade Level Doors </label>
+          <label class="col-6"><b>{{propertyDetails.GradeLevelDriveIn}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Column Spacing</label>
+          <label class="col-6">
+            <span *ngIf="unitId == metricUnit">{{propertyDetails.ColumnSpacingLenM}}
+              <span *ngIf="propertyDetails.ColumnSpacingLenM && propertyDetails.ColumnSpacingWidthM"> *</span></span>
+            <span
+              *ngIf="unitId != metricUnit">{{propertyDetails.ColumnSpacingLen}}*{{propertyDetails.ColumnSpacingWidth}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">{{AnchorSpaceLabel}}</label>
+          <label class="col-6"><b>
+              <span *ngIf="unitId == metricUnit">{{propertyDetails.TotalAnchorSM | number: '.0-0'}}
+                <span *ngIf="propertyDetails.TotalAnchorSM">&nbsp;SqM</span>
+              </span>
+              <span *ngIf="unitId != metricUnit">{{propertyDetails.TotalAnchorSF | number: '.0-0'}}
+                <span *ngIf="propertyDetails.TotalAnchorSF">&nbsp;SF</span>
+              </span></b>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Truckwells</label>
+          <label class="col-6"><b>{{propertyDetails.Truckwell}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Vented</label>
+          <label class="col-6" *ngIf="propertyDetails.IsVented == 1"><b>Yes</b></label>
+          <label class="col-6" *ngIf="propertyDetails.IsVented == 0"><b>No</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">{{RetailFrontageLabel}}</label>
+          <label class="col-6"><b>
+              <span *ngIf="unitId == metricUnit">{{propertyDetails.RetailFrontageM | number: '.0-0'}}
+                <span *ngIf="propertyDetails.RetailFrontageM"> m </span>
+              </span>
+
+              <span *ngIf="unitId != metricUnit">{{propertyDetails.RetailFrontage | number: '.0-0'}}
+                <span *ngIf="propertyDetails.RetailFrontage"> ft </span>
+              </span></b>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Dock Levelers/Capacity</label>
+          <label class="col-6"><b>{{propertyDetails.DockLevelersCapacity}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Traffic Count</label>
+          <label class="col-6"><b>{{propertyDetails.PrimaryTrafficCount}}</b></label>
+        </div>
+      </div>
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Min/Max Floor Size</label>
+          <label class="col-6"><b>
+                  <span *ngIf="unitId == metricUnit">
+                      {{propertyDetails.SmallestFloorSM | number: '.0-0'}}
+                          <span *ngIf="propertyDetails.SmallestFloorSM"> SqM </span>
+                  <span *ngIf="propertyDetails.LargestFloorSM"> /
+                          {{propertyDetails.LargestFloorSM | number: '.0-0'}} SqM </span>
+                  
+                  </span>
+                  <span *ngIf="unitId != metricUnit">
+                      {{propertyDetails.SmallestFloor | number: '.0-0'}}
+                          <span *ngIf="propertyDetails.SmallestFloor">&nbsp;SF </span>
+                  <span *ngIf="propertyDetails.LargestFloor"> /
+                          {{propertyDetails.LargestFloor | number: '.0-0'}} SF </span>
+                  
+                  </span></b>
+              </label>
+        </div>
+      </div>-->
+      <!--<div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Min/Max Clear Height</label>
+          <label class="col-6"><b>
+                    <span *ngIf="unitId == metricUnit">
+                        {{propertyDetails.ClearHeightMinM | number: '.0-0'}}
+                            <span *ngIf="propertyDetails.ClearHeightMinM"> m </span>
+                    <span *ngIf="propertyDetails.ClearHeightMaxM"> /
+                            {{propertyDetails.ClearHeightMaxM | number: '.0-0'}} m </span>
+                    
+                    </span>
+                    <span *ngIf="unitId != metricUnit">
+                        {{propertyDetails.ClearHeightMin | number: '.0-0'}}
+                            <span *ngIf="propertyDetails.SmallestFloor"> F </span>
+                    <span *ngIf="propertyDetails.LargestFloor"> /
+                            {{propertyDetails.ClearHeightMax | number: '.0-0'}} F </span>
+                    
+                    </span></b>
+                </label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Dock Doors </label>
+          <label class="col-6"><b>{{propertyDetails.DockLevelers}}</b></label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">HVAC Type</label>
+          <label class="col-6"><b>{{propertyDetails.HVACTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinkler Type</label>
+          <label class="col-6"><b>{{propertyDetails.SprinklerTypeName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Sprinklers</label>
+          <label *ngIf="propertyDetails.HasSprinkler==1" class="col-6"><b>Yes / {{propertyDetails.SprinklerTypeName}}</b></label>
+          <label *ngIf="propertyDetails.HasSprinkler!=1" class="col-6"><b>No</b></label>
+        </div>
+      </div>-->
+      <ng-container *ngIf="propertyDetails.Amenities"> 
+      <div class="col-md-12" >
+        <label class="listHeadLabel">Amenities</label>
+      </div>
+      <div class="col-md-12">
+        <p class="commentsParaProp">
+          {{propertyDetails.Amenities}}
+        </p>
+      </div>
+      </ng-container>
+      <div class="col-md-12">
+        <label class="listHeadLabel">Site Information</label>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Metro</label>
+          <label class="col-6"><b>{{propertyDetails.MetroName || propertyDetails.CityName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Market</label>
+          <label class="col-6"><b>{{propertyDetails.MarketName}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Submarket</label>
+          <label class="col-6"><b>{{propertyDetails.SubMarket}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Business Park/Center</label>
+          <label *ngIf="propertyDetails.ComplexName"class="col-6"><b>{{propertyDetails.ComplexName}}</b></label>
+          <label *ngIf="!propertyDetails.ComplexName"class="col-6"><b>Not Part of a Park/Center</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Parcel</label>
+          <label class="col-6"><b>{{propertyDetails.ParcelInformation}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Latitude</label>
+          <label class="col-6"><b>{{propertyDetails.Latitude}}</b></label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+          <label class="col-6">Longitude</label>
+          <label class="col-6"><b>{{propertyDetails.Longitude}}</b></label>
+        </div>
+      </div>
+      <ng-container *ngIf="propertyDetails.BuildingComments"> 
+      <div class="col-md-12">
+        <label class="listHeadLabel">Building Comments</label>
+      </div>
+      <div class="col-md-12">
+        <p class="commentsParaProp">
+          {{propertyDetails.BuildingComments}}
+        </p>
+      </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div *ngIf="!!propertyDetails && !!propertyDetails.PropertyUse &&   propertyDetails.PropertyUse == 'Land'">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <label class="listHeadLabel">Information</label>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Property Type</label>
+            <label class="col-6"><b>{{propertyDetails.PropertyUse}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Rail Served/Provider</label>
+            <label class="col-6"><b>{{propertyDetails.RailServed ? 'Yes':'No'}} <span
+                  *ngIf="propertyDetails.RailProvider"> / {{propertyDetails.RailProvider}}</span></b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Lot Size Hectares</label>
+            <label class="col-6">
+              <font *ngIf="lotSizeValue"> <b>{{lotSizeValue | number: '.0-3' }} &nbsp; ha</b>
+              </font>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Specific Use</label>
+            <label class="col-6"><b>{{propertyDetails.SpecificUseName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Zoning</label>
+            <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+          </div>
+        </div>
+        <div *ngIf="CountryId != 14" class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Condo</label>
+            <label class="col-6"><b>{{propertyDetails.CondoTypeName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">{{LotSizeLabel}}</label>
+            <label class="col-6" *ngIf="unitId == metricUnit && propertyDetails.LotSizeSM">
+              <font> <b>{{propertyDetails.LotSizeSM | number: '.0-0' }} &nbsp; SqM</b></font>
+            </label>
+            <label class="col-6" *ngIf="unitId != metricUnit && propertyDetails.LotSizeSF">
+              <font> <b>{{propertyDetails.LotSizeSF | number: '.0-0' }} &nbsp; SF</b></font>
+            </label>
+          </div>
+        </div>
+        <div *ngIf="CountryId == 14" class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Strata</label>
+            <label class="col-6"
+              *ngIf="propertyDetails.CondoTypeName && propertyDetails.CondoTypeName!='Not a Condo'"><b>Yes</b></label>
+            <label class="col-6"
+              *ngIf="!propertyDetails.CondoTypeName || propertyDetails.CondoTypeName=='Not a Condo'"><b>No</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Surrounding Land Use</label>
+            <label class="col-6"><b>{{propertyDetails.SurroundingLandUseText}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Flood Plain</label>
+            <label class="col-6"><b>{{propertyDetails.ZoningCode}}</b></label>
+          </div>
+        </div>
+
+        <!--
+        <div class="col-md-12">
+          <label class="listHeadLabel">Specification</label>
+        </div>-->
+        <div class="col-md-12">
+          <label class="listHeadLabel">Utility Comments</label>
+        </div>
+        <div class="col-md-12">
+          <p class="commentsParaProp">
+            {{propertyDetails.UtilityComments}}
+          </p>
+        </div>
+
+        <div class="col-md-12">
+          <label class="listHeadLabel">Site Information</label>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Metro</label>
+            <label class="col-6"><b>{{propertyDetails.MetroName || propertyDetails.CityName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Market</label>
+            <label class="col-6"><b>{{propertyDetails.MarketName}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Submarket</label>
+            <label class="col-6"><b>{{propertyDetails.SubMarket}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Business Park/Center</label>
+            <label *ngIf="propertyDetails.ComplexName"class="col-6"><b>{{propertyDetails.ComplexName}}</b></label>
+            <label *ngIf="!propertyDetails.ComplexName"class="col-6"><b>Not Part of a Park/Center</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Parcel</label>
+            <label class="col-6"><b>{{propertyDetails.ParcelInformation}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Latitude</label>
+            <label class="col-6"><b>{{propertyDetails.Latitude}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Longitude</label>
+            <label class="col-6"><b>{{propertyDetails.Longitude}}</b></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row m-0 viewCol" [appEditSuggestion]="'Property'">
+            <label class="col-6">Longitude</label>
+            <label class="col-6"><b>{{propertyDetails.Q}}</b></label>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

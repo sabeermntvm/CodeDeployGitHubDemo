@@ -1,0 +1,208 @@
+<div class="col-md-12">
+  <button class="btn btn-success mb-3" (click)="showListingDetails(PropertyDetail.PropertyId)">View Property</button>
+</div>
+<div class="col-md-12">
+  <h4 style="color:#fff;">{{PropertyDetail.PropertyName}}</h4>
+  <hr>
+  <div class="col-12 mb-2 p-0">
+    <div class="mainPhotoBox" [ngStyle]="{'background-image': 'url(' + mediaUrl +PropertyDetail.MainPhotoUrl+ ')'}"></div>
+    <!-- <img class="img-fluid" src="{{mediaUrl + PropertyDetail.MainPhotoUrl}}"> -->
+  </div>
+  <h5>Overview</h5>
+  <div class="row">
+    <span class="col-4"><b>Property ID</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.PropertyId}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Type</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.PropertyType}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Size</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="unitId == metricUnit && PropertyDetail.BuildingSizeSM">{{PropertyDetail.BuildingSizeSM |
+      number: '.0-0'}} SqM</span>
+    <span class="col-6" *ngIf="unitId != metricUnit && PropertyDetail.BuildingSize">{{PropertyDetail.BuildingSize |
+      number: '.0-0'}} SqM</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Year Built</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.YearBuilt}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Floors</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.Floors}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Market</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.MarketName}}</span>
+  </div>
+  <!-- <div class="row">
+    <span class="col-4"><b>Total Available</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="unitId == metricUnit && PropertyDetail.TotalAvailableSM">{{PropertyDetail.TotalAvailableSM
+      | number: '.0-0'}} SqM</span>
+    <span class="col-6" *ngIf="unitId != metricUnit && PropertyDetail.TotalAvailable">{{PropertyDetail.TotalAvailable |
+      number: '.0-0'}} SF</span>
+  </div> -->
+  <!--<div class="row">
+    <span class="col-4"><b>Rate</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="listing.AskingLeaseRatePerYrText">{{listing.AskingLeaseRatePerYrText}}</span>
+    <span class="col-6" *ngIf="listing.AskingSalePrice">{{listing.AskingSalePrice}}</span>
+  </div>-->
+
+  <h5>Property Location</h5>
+
+  <div class="row">
+    <span class="col-4"><b>Address</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.Address}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>City</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.City}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>State</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.State}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>LGA</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.County}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Country</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.Country}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Postal Code</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{PropertyDetail.ZipCode}}</span>
+  </div>
+
+  <h5>Notes</h5>
+  <div class="row">
+    <div class="col-12">
+      <p style="color:#fff;"> {{PropertyDetail.BuildingComments}}</p>
+    </div>
+  </div>
+
+  <h5>
+    <div class="row">
+      <div class="col-4 mt-2">Listing Info</div>
+      <button id="btnGroupVerticalDrop1" type="button" (click)="showReport()" class="btn btn-primary-ash dropdown-toggle" title="Print Report"
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-print font20"></i>
+    </button>
+      <div class="col-8">
+          <angular2-multiselect [data]="listingFilterList" [(ngModel)]="listingFilterselected" [settings]="listingFiltersettings" (onSelect)="onListingFilterChange()"
+          (onDeSelect)="onListingFilterChange()" (onSelectAll)="onListingFilterChange()" (onDeSelectAll)="onListingFilterChange()">
+      </angular2-multiselect>
+      </div>
+    </div> 
+  </h5>
+  <div *ngIf="currentListings.length>0">
+    <div class="row" *ngFor="let listingDetail of currentListings; let i = index;">
+      <div class="col-12">
+        <div class="listingBox mb-2">
+          <h5>
+              <div class="checkbox checkbox-css tableChechbox float-right">
+                  <input type="checkbox" id="propCheckbox_{{i}}" [(ngModel)]='listingDetail.isSelected' (change)="Selection($event.target.checked);"
+                    value="" />
+                  <label for="propCheckbox_{{i}}"></label>
+                </div>
+            <!--<font *ngIf="listingDetail.RecordTypeName"> For {{listingDetail.RecordTypeName}} </font>-->
+            <font *ngIf="listingDetail.RecordTypeID==1">
+              <font *ngIf="listingDetail.ListingTypeName"> For {{listingDetail.ListingTypeName}}
+                <font *ngIf="listingDetail.ListingTypeName != 'Sublease' "> Lease</font>
+              </font>
+            </font>
+            <font *ngIf="listingDetail.RecordTypeID!=1">
+              <font *ngIf="listingDetail.RecordTypeName"> For {{listingDetail.RecordTypeName}}</font>
+            </font>
+            <font *ngIf="unitId == metricUnit && listingDetail.MinDivSM ==listingDetail.TotalAvailableSM && listingDetail.TotalAvailableSM ">- {{listingDetail.TotalAvailableSM | number: '.0-0'}} SqM</font>
+            <font *ngIf="unitId == metricUnit && listingDetail.MinDivSM != listingDetail.TotalAvailableSM && listingDetail.TotalAvailableSM ">- {{listingDetail.MinDivSM | number: '.0-0'}}-{{listingDetail.TotalAvailableSM | number: '.0-0'}} SqM</font>
+            <font *ngIf="unitId != metricUnit && listingDetail.MinDiv==listingDetail.TotalAvailable && listingDetail.TotalAvailable">- {{listingDetail.TotalAvailable | number: '.0-0'}} SF</font>
+            <font *ngIf="unitId != metricUnit && listingDetail.MinDiv!=listingDetail.TotalAvailable && listingDetail.TotalAvailable">- {{listingDetail.MinDiv | number: '.0-0'}}-{{listingDetail.TotalAvailable | number: '.0-0'}} SF</font>
+          </h5>
+          <div class="row">
+            <!--<label class="col-md-6 smallBorder" *ngIf="listingDetail.RecordTypeID==1">
+            {{listingDetail.GeneralUse}} / {{listingDetail.ListingTypeName}} <font *ngIf="listingDetail.ListingTypeName != 'Sublease' "> Lease</font>
+            
+            </label>
+          <label class="col-md-6 smallBorder" *ngIf="listingDetail.RecordTypeID!=1">{{listingDetail.GeneralUse}}</label>-->
+            <label class="col-md-6 smallBorder" *ngIf="listingDetail.GeneralUse"> {{listingDetail.GeneralUse}}   </label>
+            <label class="col-md-6" *ngIf="listingDetail.RecordTypeID==1">{{listingDetail.ListingStatusName}} / {{listingDetail.NoOfSpaces}} Spaces</label>
+            <label class="col-md-6" *ngIf="listingDetail.RecordTypeID==2">{{listingDetail.ListingStatusName}}</label>
+
+            <label class="col-md-6 smallBorder" *ngIf="listingDetail.RecordTypeID==1 && listingDetail.AskingLeaseRatePerYrText">{{listingDetail.AskingLeaseRatePerYrText}}/SqM </label>
+            <label class="col-md-6 smallBorder" *ngIf="unitId == metricUnit && listingDetail.RecordTypeID==2 && listingDetail.AskingSalePrice">$ {{listingDetail.AskingSalePrice}} /SqM</label>
+            <label class="col-md-6 smallBorder" *ngIf="unitId != metricUnit && listingDetail.RecordTypeID==2 && listingDetail.AskingSalePrice">{{listingDetail.AskingSalePrice}}/SF </label>
+            <label class="col-md-6" *ngIf="unitId == metricUnit">
+         <font *ngIf="listingDetail.MinDivSM == listingDetail.TotalAvailableSM && listingDetail.TotalAvailableSM">   {{listingDetail.TotalAvailableSM | number: '.0-0'}}SqM Available </font> 
+          <font *ngIf="listingDetail.MinDivSM != listingDetail.TotalAvailableSM && listingDetail.TotalAvailableSM"> {{listingDetail.MinDivSM | number: '.0-0'}}-{{listingDetail.TotalAvailableSM | number: '.0-0'}} SqM Available </font> 
+         <font *ngIf="listingDetail.TotalVacantSM && listingDetail.TotalVacantSM">   /  {{listingDetail.TotalVacantSM | number: '.0-0'}}SqM Vacant </font>
+         </label>
+            <label class="col-md-6" *ngIf="unitId != metricUnit">
+         <font *ngIf="listingDetail.MinDiv==listingDetail.TotalAvailable && listingDetail.TotalAvailable">   {{listingDetail.TotalAvailable | number: '.0-0'}}SF Available </font> 
+           <font *ngIf="listingDetail.MinDiv!=listingDetail.TotalAvailable && listingDetail.TotalAvailable"> {{listingDetail.MinDiv | number: '.0-0'}}-{{listingDetail.TotalAvailable | number: '.0-0'}}SF Available </font> 
+         <font *ngIf="listingDetail.TotalVacant && listingDetail.TotalVacant">   /  {{listingDetail.TotalVacant | number: '.0-0'}}SF Vacant </font>
+         </label>
+          </div>
+          <div class="row">
+            <label class="col-md-6 smallBorder"><b>{{listingDetail.ListingCompanyName}}</b></label>
+            <label class="col-md-6"><b>{{listingDetail.ListingBroker1}}</b></label>
+          </div>
+          <div class="list-bottom-icon-wrapper row">
+            <div class="col-md-12">
+            <font *ngIf="listingDetail.CompanyMainPhotoUrl">  <img src="{{mediaUrl+listingDetail.CompanyMainPhotoUrl}}" class="float-left" style="height:20px;" /> </font>
+              <ul>
+                <li class="prop-name" [routerLink]="['/property/propertySummary',PropertyDetail.PropertyId,listingDetail.ListingID]">
+                <!--<i class="fas fa-eye"></i>-->
+                <a>View</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="row" >
+    <div class="col-12">
+        <div class="listingBox mb-2">
+            <h5>For {{listingDetail.RecordTypeName}} - 200-624 SqM</h5>
+            <div class="row">
+              <label class="col-md-6 smallBorder">Retail / Direct Listing</label> 
+              <label class="col-md-6">Active / 2 Spaces</label> 
+              <label class="col-md-6 smallBorder">$ 17.29-17.29 / SqM </label>
+              <label class="col-md-6">200-624 Available / 224 Vacant</label>
+            </div>
+            <div class="row">
+                <label class="col-md-6 smallBorder"><b>Empirical CRE - Sydney</b></label>
+                <label class="col-md-6"><b>Anoop Thomas</b></label>
+            </div>
+            <div class="list-bottom-icon-wrapper row">
+              <div class="col-md-12">
+                  <img src="assets/img/EmpiricalCRE_Logo_Primary.png" class="float-left" style="height:20px;"/>
+                  <ul>
+                      <li [routerLink]="['/property/propertySummary',PropertyDetail.PropertyId]"><i class="fas fa-eye"></i></li>
+                  </ul>
+              </div>
+            </div>
+          </div>      
+    </div>
+  </div>-->
+
+  <button class="btn btn-success mb-3 float-left" (click)="showListingDetails(PropertyDetail.PropertyId)">View Property</button>
+</div>

@@ -1,0 +1,111 @@
+.contact-title .edit-icon-wrap{
+    position:absolute;
+    right:5px;
+    top:5px;
+}
+.contact-title{
+    position: relative;
+}
+
+.contact-wrap {
+    width: 100%;
+    margin: 0 auto;
+}
+.truncate {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
+    float: left;
+    /* border: 1px solid; */
+    overflow: hidden;
+    height: auto;
+  }
+
+/* .crd-width{
+    width: 250px;
+    margin: 5px;
+} */
+
+.crd-width {
+    width: 259px;
+    margin: 5px;
+}
+
+/* .icon-side label{
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+} */
+
+
+@media (min-width:1500px){
+    .crd-width {
+        width: 297px;
+        margin: 5px;
+    }
+}
+
+@media (min-width:1700px){
+    .crd-width {
+        width: 273px;
+        margin: 5px;
+    }
+    .profile-top{
+        height: 160px;
+    }
+}
+
+@media (min-width:1800px){
+    .crd-width {
+        width: 295px;
+        margin: 5px;
+    }
+}
+
+@media (min-width:1900px){
+    .crd-width {
+        width: 250px;
+        margin: 5px;
+    }
+    .profile-top{
+        height: 290px;
+    }
+}
+
+@media (min-width:2000px){
+    .crd-width {
+        width: 340px;
+        margin: 5px;
+    }
+    .profile-top{
+        height: 185px;
+    }   
+}
+
+@media (min-width:2700px){
+    .crd-width {
+        width: 475px;
+        margin: 5px;
+    }
+    .profile-top{
+        height: 260px;
+    }
+}
+
+@media (min-width:2800px){
+    .crd-width {
+        width: 720px;
+        margin: 17px;
+    }
+    .profile-top{
+        height: 350px;
+    }
+}
+.parent{position: relative;}
+    .child { display:none; position: absolute; top:0px;right: 2px;}
+    .parent:hover .child { display:block; }
+
+.hyperlink{
+    color:#fff;
+}

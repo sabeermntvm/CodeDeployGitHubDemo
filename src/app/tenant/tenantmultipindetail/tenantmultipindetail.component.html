@@ -1,0 +1,154 @@
+<!-- <div class="col-md-12">
+    <div class="row m-0">
+      <button class="btn btn-success mb-3" (click)="showPropertyTenant(tenant,tenant.PropertyID,tenant.ConfirmedTenantID)">View</button>
+    </div>
+  </div> -->
+<div class="col-md-12">
+  <h4 class="headCol">{{PropertyName}}</h4>
+  <button class="btn btn-success mb-3" (click)="showMultiplePropertyTenant(tenant,tenant.PropertyID,tenant.ConfirmedTenantID)">View</button>
+  <hr>
+  <div class="row">
+    <div class="col-5 mb-2 tranallign center">
+      <img class="img-fluid" src="{{mediaUrl + tenant.TenantPhotoUrl}}" style="padding-left:10px">
+      <!-- <div class="mainPhotoBox" [ngStyle]="{'background-image': 'url(' + mediaUrl +PropertyDetail.MainPhotoUrl+ ')'}"></div> -->
+    </div>
+    <div class="col-7 mb-2 tranallign" style="padding-right: 10px!important;">
+      <h5>Location Info</h5>
+
+      <div class="row">
+        <span class="col-4"><b>Property ID</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.PropertyID}} </span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Address</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.Address1}} </span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>City</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.CityName}} </span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>State</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.StateAbbr}} </span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>LGA</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.CountyName}} </span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Country</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.CountryCode}} </span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Postal Code</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{tenant.ZipCode}} </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="row m-0">
+      <div class="col-lg-5 no-padding">
+          <div class="btn-group" id="status" data-toggle="buttons">
+              <label class="btn btn-default btn-on  active" style="border-radius: 5px 0 0 5px !important;padding-right: 10px !important;" (click)="onSelectClick(1)">
+                  <input name="selectAll" type="radio" value="1">Matching Tenants</label>
+              <label class="btn btn-default btn-off" style="border-radius: 0 5px 5px 0  !important;padding-right: 10px !important;" (click)="onSelectClick(0)">
+                  <input name="selectAll" type="radio" value="0">All Tenants</label>
+          </div>
+      </div>
+      <div class="col-lg-4 pl-0 mt-1">
+          <div><b style="color:white;"><span *ngIf="!tenantList.length && !IsLoader">No</span><span *ngIf="tenantList.length && !IsLoader">{{tenantList.length}}</span><span  style="margin-right:27px;" *ngIf="IsLoader"><i class="fas fa-spinner fa-spin showspin"></i></span>  Tenant(s) Found!</b></div>
+      </div>
+      <div class="col-md-3 pl-0 mb-2">
+        <div class="input-with-icon">
+            <i class="fas fa-times" title="clear" (click)="clearSearchFilter()" *ngIf="filterInput"></i>
+            <i class="fas fa-filter" *ngIf="!filterInput"></i>
+            <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="filterInput" (ngModelChange)="filterItem(filterInput)">
+          </div>
+    </div>  
+    </div>
+</div>
+<div class="col-md-12">
+  <div class="row m-0">
+    <!-- <table class="table table-striped table-bordered table-sm table-head"> -->
+    <table class="table-vertical table table-striped">
+      <thead>
+        <tr>
+          <th style="width:25%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up"  (click)="sortTenant('TenantName','Ascending')"></i>
+              <i class="fa fa-sort-down"  (click)="sortTenant('TenantName','Descending')"></i>
+            </div>
+            Tenant Name
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'TenantName' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'TenantName' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+          <th style="width:25%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up"  (click)="sortTenant('Address2','Ascending')"></i>
+              <i class="fa fa-sort-down"  (click)="sortTenant('Address2','Descending')"></i>
+            </div>
+            Suite #
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'Address2' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'Address2' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+          <th style="width:20%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up"  (click)="sortTenant('FloorNumber','Ascending')"></i>
+              <i class="fa fa-sort-down"  (click)="sortTenant('FloorNumber','Descending')"></i>
+            </div>
+            Floor #
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+          <th style="width:25%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up"  (click)="sortTenant('OfficePhone','Ascending')"></i>
+              <i class="fa fa-sort-down"  (click)="sortTenant('OfficePhone','Descending')"></i>
+            </div>
+            Phone
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'OfficePhone' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'OfficePhone' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="IsLoader" class="loaderSpin">
+          <td colspan="4"><span class="ml-3"><i class="fas fa-spinner fa-spin showspin ml-3" *ngIf="IsLoader"></i>Loading
+              Tenants</span></td>
+        </tr>
+        <tr *ngFor="let tenant of tenantList">
+          <td data-th=" Tenant Name" (click)="showPropertyTenant(tenant,tenant.PropertyID,tenant.ConfirmedTenantID,tenant.BranchID)">
+            <a title="{{tenant.TenantName}}" href="javascript://" class="prop-name"> {{tenant.TenantName}}</a></td>
+          <!-- class="tenants-txt" -->
+          <td data-th="Suite #">{{tenant.Address2}}</td>
+          <td data-th="Floor #">{{tenant.FloorNumber}}</td>
+          <td data-th="Phone">
+            <font *ngIf="tenant.OfficePhone"> +{{tenant.OfficePhone | slice:0:2}} ({{tenant.OfficePhone |
+              slice:2:4}}) {{tenant.OfficePhone | slice:4:8}} {{tenant.OfficePhone | slice:8:12}}</font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="row m-0">
+    <button class="btn btn-success mb-3" (click)="showMultiplePropertyTenant(tenant,tenant.PropertyID,tenant.ConfirmedTenantID)">View</button>
+  </div>
+</div>

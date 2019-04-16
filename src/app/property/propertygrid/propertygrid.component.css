@@ -1,0 +1,154 @@
+  .table thead th {
+    border-bottom: 0;
+    background: #455463;
+    color: #fff;
+    position: relative;
+  }
+  .table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th {
+    background: #fff;
+}
+/* .arrow-group {
+    display: inline-block;    
+}
+.arrow-group i{
+  cursor: pointer;
+}
+.arrow-group i.fa.fa-sort-up {
+  position: relative;
+  left: 0;
+  height: 5px;
+}
+.arrow-group i.fa.fa-sort-down {
+  position: relative;
+  right: 7.5px;
+  height: 5px;
+  top:5px;
+} */
+
+.grid-align{
+    margin-left: 10px;
+}
+
+.fixedPosition{
+    position: fixed;
+    background: #fff;
+    z-index: 2;
+    padding-bottom: 0;
+    width:91%;
+  }
+  
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+  th, td {
+    padding: 8px 16px;
+    width: 30%;
+  }
+  
+
+  .pane-hScroll {
+    overflow: auto;
+    width: 100%;
+  }
+  .pane-vScroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(65.5vh - 55px);
+  }
+     .map-result{
+          color:white;
+          cursor:pointer;
+      }
+.grid-nav{  
+    background-color: #191970;
+    border: 1px solid #fff;
+    position: absolute;   
+    border-radius: 8px;
+}
+.grid-nav ul{
+    list-style-type: none;
+    padding: 0px;
+}
+.grid-nav ul li{
+    display: inline;
+    padding: 7px 15px;
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+}
+.grid-nav ul li:last-child{
+    border-right: 0px solid #fff;
+}
+.grid-nav ul li a{
+    color: #fff;
+    text-decoration: none;
+}
+.grid-nav .active{
+    background-color:#d94524 ;
+    border-radius: 5px 5px;
+}
+
+.chkBoxStyle{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 21px;
+  top: 23px;
+  z-index: 1;
+}
+.prop-name{
+    color: #20a8d8!important;
+    text-decoration: none!important;
+    background-color: transparent!important;
+    cursor: pointer;
+}
+
+
+  @media (min-width:1400px){
+    .pane-vScroll {
+    height: calc(67.5vh - 55px);
+    }
+}
+
+@media (min-width:1500px){
+    .pane-vScroll {
+        height: calc(69vh - 55px);
+        }
+}
+
+@media (min-width:1700px){
+    .pane-vScroll {
+        height: calc(72vh - 55px);
+        }
+}
+
+@media (min-width:1800px){
+    .pane-vScroll {
+        height: calc(74vh - 55px);
+        }
+    }
+
+@media (min-width:1900px){
+  .pane-vScroll {
+      height: calc(74vh - 55px);
+      }
+  }
+
+@media (min-width:2000px){
+  .pane-vScroll {
+      height: calc(79vh - 55px);
+      }
+  }
+
+@media (min-width:2700px){
+  .pane-vScroll {
+      height: calc(84vh - 55px);
+      }
+  }
+
+  @media (min-width:2800px){
+    .pane-vScroll {
+        height: calc(86vh - 55px);
+        }
+    }

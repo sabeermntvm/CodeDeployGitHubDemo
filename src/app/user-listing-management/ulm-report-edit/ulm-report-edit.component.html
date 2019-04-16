@@ -1,0 +1,77 @@
+<div class="col-lg-12 no-padding tab-content">
+    <div class="row">
+  <div class="col-lg-11 no-padding tab-content edit-done" *ngIf="status === 'Complete'"> Thank you for submitting
+    your changes. Our research team will make these edits in the system and send you a new report with updates.
+  </div>
+    </div>
+  <div class="col-lg-12 tab-content edit-done"
+       *ngIf="status === 'Expired' || status === 'Cancelled'">
+       The link is no longer active. Please ask your agent to send you a fresh link.
+</div>
+<!-- <div class="row"> -->
+  <div class="col-lg-11" *ngIf="status === 'Sent' || status === 'In Progress'">
+   <div class="row">
+    <div class="col-lg-1">
+      <div class="prv-button" style="padding-top: 30px;">
+        <button class="btn btn-primary-blue" (click)="onSave()" style="border-radius:5px !important;width: 82px;"
+                title="Actions"
+                type="button">Submit All
+        </button>
+        <div>
+          * you can submit only once
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-11 no-padding-right ulm" style="margin-top: 20px;">
+      <div>
+        <h4 class="blue prev-rit-head center">Select the Field(s) You Wish to Edit</h4>
+
+        <div class="rep-prev-left" style="font-size: 10px;margin-bottom: 10px;overflow: inherit;"
+             *ngFor="let report of selectedReportList">
+          <div class="col-lg-12 ulm-done-button" *ngIf="!report.hasUserUpdated">
+            <button class="btn btn-primary-blue" style="border-radius:5px !important;"
+                    (click)="saveListing(report.ulmListingId)"> Submit
+            </button>
+          </div>
+          <div class="col-lg-12 no-padding prev-edit " id="listing{{report.ulmListingId}}" *ngIf="report.isEditable"
+               style="margin:10px;"
+               [innerHTML]="report.HTML | safeHtml">
+          </div>
+          <br>
+        </div>
+        <div *ngIf="selectedReportList.length <= 0">
+          <span class="spinui">
+            <i class="fas fa-spinner fa-spin showspin"  style="font-size: 50px;"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+<!-- </div> -->
+
+<div id="testmodal" class="modal fade" style="z-index: 10000">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div><b>Select the Image You Wish to Use</b></div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12" style="margin-bottom: 10px">
+          <div class="col-lg-3 no-padding"><b>Image Library</b></div>
+          <div class="col-lg-9 no-padding">
+            <div class="detl-dashed-lin"></div>
+          </div>
+        </div>
+        <div class="col-lg-3" *ngFor="let media of mediaList">
+          <div class="media-img1">
+            <img class="img-responsive img" data-dismiss="modal" [src]="media.url"
+                 (click)="selectImage(media.PropertyID, media.url)" width="100%">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="col-lg-12 no-padding margin-top-5">
+  <div class="col-lg-6"><img class="img-fluid" src="{{photoUrl}}" style="height: 230px;"></div>
+  <div class="col-lg-6">
+    <div class="col-lg-4 no-padding"><b>Overview</b></div>
+    <div class="col-lg-8 no-padding">
+      <div class="detl-dashed-lin"></div>
+    </div>
+    <div class="col-lg-12 detl no-padding margin-top-5">
+      <ul>
+        <li>Transaction ID <span><b>{{transaction.SaleID}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Type <span><b>{{propertyDetails.PropertyUse}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Size
+          <span *ngIf="CountryId != USCountryCode">
+            <b *ngIf="propertyDetails">{{propertyDetails.BuildingSizeSMFormatted}} SqM</b>
+          </span>
+          <span *ngIf="CountryId == USCountryCode">
+            <b *ngIf="propertyDetails">{{propertyDetails.BuildingSF | number: '.0-0'}} SF</b>
+          </span>
+        </li>
+        <li class="li-dashed"></li>
+        <li>Sale Date <span><b *ngIf="saleInfo">{{saleInfo.DeedOrSaleDate | date: 'dd/MM/yyyy'}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Sale Price <span><b *ngIf="saleInfo">{{saleInfo.SoldPrice | currency:'USD':'symbol':'1.2-2'}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Price/SqM <span><b *ngIf="saleInfo">{{saleInfo.SalePricePerSM | currency:'USD':'symbol':'1.2-2'}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Buyer<span><b *ngIf="saleInfo">{{saleInfo.Buyer}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Seller<span><b *ngIf="saleInfo">{{saleInfo.Seller}}</b></span></li>
+        <li class="li-dashed"></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-lg-6 margin-top-20">
+    <div class="col-lg-5 no-padding">
+      <b>Property Location</b>
+    </div>
+    <div class="col-lg-7 no-padding">
+      <div class="detl-dashed-lin"></div>
+    </div>
+    <div class="col-lg-12 detl no-padding margin-top-5">
+      <ul>
+        <li>Address <span><b *ngIf="propertyDetails">{{propertyDetails.Address}} </b></span></li>
+        <li class="li-dashed"></li>
+        <li>City <span><b>{{propertyDetails.CityName}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>State <span><b>{{propertyDetails.StateName}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>LGA <span><b>{{propertyDetails.CountyName}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Country <span><b>{{propertyDetails.CountryCode}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Postal Code <span><b>{{propertyDetails.ZipCode}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Market <span><b>{{propertyDetails.MarketName}}</b></span></li>
+        <li class="li-dashed"></li>
+        <li>Property ID <span><b>{{propertyDetails.PropertyID}}</b></span></li>
+        <li class="li-dashed"></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-lg-6 margin-top-20" style="margin-bottom: 20px;">
+    <div class="col-lg-3 no-padding"><b>Transaction Notes</b></div>
+    <div class="col-lg-9 no-padding">
+      <div class="detl-dashed-lin"></div>
+    </div>
+    <div class="col-lg-12 detl no-padding margin-top-5 notes-pane3" style="text-align: justify;">
+      <div *ngIf="saleInfo">{{saleInfo.TransactionNotes}}</div>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <a class="view-transaction" (click)="showPropertyDetails()">View Property</a>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<!-- begin #header -->
+<div id="header" class="header navbar-default" style="height:50px; z-index: 99999;">
+  <!-- begin navbar-header -->
+  <div class="navbar-header">
+    <ng-container *ngIf="this.pageSidebarTwo">
+      <button type="button" class="navbar-toggle pull-left" (click)="mobileSidebarToggle()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <button type="button" class="navbar-toggle pull-right" (click)="mobileRightSidebarToggle()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </ng-container>
+    <button type="button" class="navbar-toggle" (click)="mobileSidebarToggle()" *ngIf="!this.pageSettings.pageSidebarTwo && !this.pageSettings.pageWithoutSidebar">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="/" class="navbar-brand navbar-brand-log"><img src="assets/img/EmpiricalCRE_Logo_Primary.png" class="img-fluid"
+        alt="logo" title="Empirical"></a>
+    <button type="button" class="navbar-toggle p-0 m-r-0" (click)="mobileMegaMenuToggle()" *ngIf="this.pageSettings.pageMegaMenu">
+      <span class="fa-stack fa-lg text-inverse m-t-2">
+        <i class="far fa-square fa-stack-2x"></i>
+        <i class="fa fa-cog fa-stack-1x"></i>
+      </span>
+    </button>
+    <button type="button" class="navbar-toggle" (click)="mobileTopMenuToggle()" *ngIf="this.pageSettings.pageTopMenu && this.pageSettings.pageWithoutSidebar">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <ul class="navbar-nav navbar-right smallMedia">
+      <li class="dropdown navbar-user" ngbDropdown>
+        <a href="javascript:;" class="dropdown-toggle" ngbDropdownToggle>
+          <img src="{{mediaUrl+UserPhoto}}" alt="" />
+          <span class="d-none d-md-inline">{{UserName}}</span> <b class="caret"></b>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+          <a href="javascript:;" class="dropdown-item">Edit Profile</a>
+          <a href="javascript:;" class="dropdown-item">Setting</a>
+          <div class="dropdown-divider"></div>
+          <a href="javascript:;" class="dropdown-item" [routerLink]="['login']">Log Out</a>
+        </div>
+      </li>
+      <li class="divider d-none d-md-block" *ngIf="this.pageSidebarTwo"></li>
+      <li class="d-none d-md-block" *ngIf="this.pageSidebarTwo">
+        <a href="javascript:;" (click)="toggleSidebarRight()" class="f-s-14">
+          <i class="fa fa-th"></i>
+        </a>
+      </li>
+    </ul>
+    <div class="searchIcon basesmallMedia">
+        <button type="type" class="btn btn-search" (click)="openNav()"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+ 
+  <!-- end navbar-header -->
+  <!-- begin header-nav -->
+  <ul class="navbar-nav navbar-right bigMedia">
+    <li class="dropdown navbar-user" ngbDropdown>
+      <a href="javascript:;" class="dropdown-toggle" ngbDropdownToggle>
+        <img src="{{mediaUrl+UserPhoto}}" alt="" />
+        <span class="d-none d-md-inline">{{UserName}}</span> <b class="caret"></b>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+        <a href="javascript:;" class="dropdown-item">Edit Profile</a>
+        <a href="javascript:;" class="dropdown-item">Setting</a>
+        <div class="dropdown-divider"></div>
+        <a href="javascript:;" class="dropdown-item" [routerLink]="['login']">Log Out</a>
+      </div>
+    </li>
+    <li class="divider d-none d-md-block" *ngIf="this.pageSidebarTwo"></li>
+    <li class="d-none d-md-block" *ngIf="this.pageSidebarTwo">
+      <a href="javascript:;" (click)="toggleSidebarRight()" class="f-s-14">
+        <i class="fa fa-th"></i>
+      </a>
+    </li>
+  </ul>
+  <ul class="navbar-nav navbar-left bigMediaSearch">
+    <li style="width:22px; height:30px"><i class="fas fa-spinner fa-spin" style="font-size: 20px; margin-top: 14px;" *ngIf="Isloader"></i></li>
+    <li [ngClass]="[ (this.pageSettings.pageLanguageBar) ? 'hidden-xs' : '' ]">
+      <div class="navbar-form">
+        <div class="form-group">
+          <input class="form-control search-frmCntrl ng-pristine ng-valid ng-touched" placeholder="Property Name or Id or Address"
+            type="text" [(ngModel)]="searchValue" (keydown)="onClick($event)">
+        </div>
+      </div>
+    </li>
+    <li [ngClass]="[ (this.pageSettings.pageLanguageBar) ? 'hidden-xs' : '' ]">
+      <div class="navbar-form">
+        <div class="form-group">
+          <select class="form-control search-frmCntrl ng-pristine ng-valid ng-touched" placeholder="" [(ngModel)]="propertyType">
+            <option value="">Select</option>
+            <option value="undefined" hidden selected> Property Type</option>
+            <option *ngFor="let type of propertyTypes" [ngValue]="type.UseTypeID">{{type.UseTypeName}}</option>
+          </select>
+        </div>
+      </div>
+    </li>
+    <li [ngClass]="[ (this.pageSettings.pageLanguageBar) ? 'hidden-xs' : '' ]">
+      <div class="navbar-form">
+        <div class="form-group">
+          <select class="form-control search-frmCntrl ng-pristine ng-valid ng-touched" placeholder="" [(ngModel)]="listingType">
+            <option value="sale">For Sale</option>
+            <option value="lease">For Lease</option>
+            <option value="Lease & Sale">For Lease & Sale</option>
+            <option value="all">All Properties</option>
+          </select>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="navbar-form" style="padding: 0 20px;">
+        <div class="form-group">
+          <button type="button" class="btn btn-search" (click)="search()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="searchIcon basemedia">
+      <button type="type" class="btn btn-search" (click)="openNav()"><i class="fa fa-search"></i></button>
+  </div>
+
+  <!-- ////////////////////////// Mobile View search ///////////////////////// -->
+  <!-- <div class="searchIcon">
+    <button type="type" class="btn btn-search" (click)="openNav()"><i class="fa fa-search"></i></button>
+  </div> -->
+  <div id="mySidenav" class="sidenavSearch">
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()" style="top:0;">&times;</a>
+    <div class="navbar-form">
+      <div class="form-group">
+        <input class="form-control search-frmCntrl ng-pristine ng-valid ng-touched" placeholder="Property Name or Id or Address"
+          type="text" [(ngModel)]="searchValue" (keydown)="onClick($event)">
+      </div>
+    </div>
+    <div class="navbar-form">
+      <div class="form-group">
+        <select class="form-control search-frmCntrl ng-pristine ng-valid ng-touched" placeholder="" [(ngModel)]="propertyType">
+          <option value="">Select</option>
+          <option value="undefined" hidden selected> Property Type</option>
+          <option *ngFor="let type of propertyTypes" [ngValue]="type.UseTypeID">{{type.UseTypeName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="navbar-form">
+      <div class="form-group">
+        <select class="form-control search-frmCntrl ng-pristine ng-valid ng-touched" placeholder="">
+          <option value="">Select</option>
+          <option value="sale">For Sale</option>
+          <option value="lease">For Lease</option>
+          <option value="Lease & Sale">For Lease & Sale</option>
+          <option value="all">All Properties</option>
+        </select>
+      </div>
+    </div>
+    <div class="navbar-form">
+      <div class="form-group">
+        <button type="button" class="btn btn-success" style="width:100%;" (click)="search()">
+          <i class="fas fa-spinner fa-spin showspin" *ngIf="Isloader"></i>
+          Search</button>
+      </div>
+    </div>
+  </div>
+  <!-- ////////////////////////// Mobile View search End///////////////////////// -->
+</div>
+<!-- end #header -->

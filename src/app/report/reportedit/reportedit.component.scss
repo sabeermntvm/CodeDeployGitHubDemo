@@ -1,0 +1,87 @@
+.rep-prev-left {
+  border: 0 !important;
+  width:100%;
+}
+.btn-primary-grey{
+  background: rgb(141, 141, 141);
+  color: #fff;
+}
+.rep-heading {
+  padding: 6.5em 0 80px 0;
+}
+.check-group-heading {
+  background-color: #fff; 
+  color: #191970;
+  padding: 0;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 14px;}
+  .check-group {
+    border: 0px solid #191970;
+    width: 230px;
+    margin: 0 auto;
+    border-radius: 5px;
+    margin: 0; padding: 2px;
+}
+.check-group .checkbox {
+  text-align: left !important;
+  padding-left: 0;
+  color: #191970;
+}
+
+.select_box{
+  color: #de4726;
+  margin: 10px auto;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.prev-edit {
+  // border: 1px solid #191970;
+  // padding: 20px;
+  // font-size: 10px;
+  // width: 600px;
+  // height: 700px;
+  // margin: auto;
+
+  font-size: 14px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.rep-prev-left {
+  margin: 10px;
+}
+
+.zoom-out > .rep-content {
+  transform: scale(0.65);
+  transform-origin: top left;
+  float: left;
+}
+
+.zoom-out.rep-portrait {
+  width: 536.75px;
+  height: 750.6px;
+  overflow: hidden;
+}
+
+.zoom-out.rep-landscape {
+  width: 750.6px;
+  height: 536.75px;
+  overflow: hidden;
+}
+
+.report-edt-btn-new{
+  border-radius:5px !important;width: 100%;width: 200px;
+}
+.mat-slider-horizontal {
+  height: 48px;
+  width: 70% !important;
+  min-width: auto !important;
+}
+
+.ckkboxDrop{
+  float: left;
+  margin-top: 3px;
+  margin-right: 5px;
+}

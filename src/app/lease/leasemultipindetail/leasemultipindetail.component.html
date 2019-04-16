@@ -1,0 +1,218 @@
+<div class="col-md-12">
+  <h4 class="headCol">{{propertyDetails.PropertyName || propertyDetails.Address}} </h4>
+  <button (click)="openPropertySummary(PropertyId,leasetransaction.LeaseID)" class="btn btn-success mb-3 float-right">View</button>
+  <hr>
+  <div class="row">
+    <div class="col-5 mb-2 tranallign center">
+     <!--  <img class="img-fluid" src="../../../assets/img/gallery/gallery-12.jpg"> -->
+     <div class="mainPhotoBox" [ngStyle]="{'background-image': 'url(' + mediaUrl +propertyDetails.MainPhotoUrl+ ')'}"></div>
+    </div>
+    <div class="col-7 mb-2 tranallign" style="padding-right: 10px!important;">
+      <h5>Property Location</h5>
+      <div class="row">
+        <span class="col-4"><b>Property ID</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.PropertyID}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Address</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.Address}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>City</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.CityName}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>State</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.StateName}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>LGA</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.LGA}}</span>
+      </div>
+      <!-- <div class="row">
+        <span class="col-4"><b>Country</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.CountryID}}</span>
+      </div> -->
+      <div class="row">
+        <span class="col-4"><b>Postal Code</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.ZipCode}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Property Type</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.PropertyUse}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Building Size</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.BuildingSizeSM}}</span>
+      </div>
+      <div class="row">
+        <span class="col-4"><b>Land Area(ha)</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">{{propertyDetails.LotSizeAC}}</span>
+      </div>
+      <!-- <div class="row">
+        <span class="col-4"><b>Market</b></span>
+        <span class="col-2 hyphen">-</span>
+        <span class="col-6">xxx</span>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="col-lg-3">
+    <div class="btn-group" id="status" data-toggle="buttons">
+        <label class="btn btn-default btn-on  active" style="border-radius: 5px 0 0 5px !important;padding-right: 10px !important;" (click)="applySearchFilter(1)">
+            <input name="selectAll" type="radio" value="1">Matching Transactions</label>
+        <label class="btn btn-default btn-off" style="border-radius: 0 5px 5px 0  !important;padding-right: 10px !important;" (click)="applySearchFilter(0)">
+            <input name="selectAll" type="radio" value="0">All Transactions</label>
+    </div>
+</div>
+<div class="col-md-12">
+  <div class="row m-0">
+    <table class="table-vertical table table-striped">
+      <thead>
+        <tr>
+
+              <th style="width:15%">
+                <div class="arrow-group">
+                  <i class="fa fa-sort-up" (click)="sortLease('FloorNumber','Ascending',1)"></i>
+                  <i class="fa fa-sort-down" (click)="sortLease('FloorNumber','Descending',1)"></i>
+                </div>
+                Floor #
+                <div class="sort_Group">
+                  <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Ascending'"></i>
+                  <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Descending'"></i>
+                  </div>
+              </th>
+              <th style="width:15%">
+                <div class="arrow-group">
+                  <i class="fa fa-sort-up" (click)="sortLease('SuiteNumber','Ascending')"></i>
+                  <i class="fa fa-sort-down" (click)="sortLease('SuiteNumber','Descending')"></i>
+                </div>
+                Suite #
+                <div class="sort_Group">
+                  <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'SuiteNumber' && sortFun == 'Ascending'"></i>
+                  <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'SuiteNumber' && sortFun == 'Descending'"></i>
+                  </div>
+              </th>
+              <th style="width:20%">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('TenantRep','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('TenantRep','Descending')"></i>
+                  </div>
+                  TenantName
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'TenantRep' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'TenantRep' && sortFun == 'Descending'"></i>
+                    </div>
+                </th>
+          <th style="width:15%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up" (click)="sortLease('DateOccupied','Ascending')"></i>
+              <i class="fa fa-sort-down" (click)="sortLease('DateOccupied','Descending')"></i>
+            </div>
+            Comm. Date
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'DateOccupied' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'DateOccupied' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+          <th style="width:15%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up" (click)="sortLease('ExpirationDate','Ascending')"></i>
+              <i class="fa fa-sort-down" (click)="sortLease('ExpirationDate','Descending')"></i>
+            </div>
+            Expiry Date
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'ExpirationDate' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'ExpirationDate' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+            <th style="width:10%">
+                <div class="arrow-group">
+                  <i class="fa fa-sort-up" (click)="sortLease('LeaseID','Ascending')"></i>
+                  <i class="fa fa-sort-down" (click)="sortLease('LeaseID','Descending')"></i>
+                </div>
+                ID
+                <div class="sort_Group">
+                  <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'LeaseID' && sortFun == 'Ascending'"></i>
+                  <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'LeaseID' && sortFun == 'Descending'"></i>
+                  </div>
+              </th>
+<!--           <th style="width:20%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up" (click)="sortLease('LandLordRep','Ascending')"></i>
+              <i class="fa fa-sort-down" (click)="sortLease('LandLordRep','Descending')"></i>
+            </div>
+            LandLordRep
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'LandLordRep' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'LandLordRep' && sortFun == 'Descending'"></i>
+              </div>
+          </th> -->
+        
+          <!-- <th style="width:15%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up"></i>
+              <i class="fa fa-sort-down"></i>
+            </div>
+            Lease Price
+          </th>
+          <th style="width:15%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up"></i>
+              <i class="fa fa-sort-down"></i>
+            </div>
+            Lease Type
+          </th> -->
+          <th style="width:10%">
+            <div class="arrow-group">
+              <i class="fa fa-sort-up" (click)="sortLease('ListingTypeName','Ascending')"></i>
+              <i class="fa fa-sort-down" (click)="sortLease('ListingTypeName','Descending')"></i>
+            </div>
+            Lease Type
+            <div class="sort_Group">
+              <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'ListingTypeName' && sortFun == 'Ascending'"></i>
+              <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'ListingTypeName' && sortFun == 'Descending'"></i>
+              </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="Isloader">
+          <td colspan="6"><span class="ml-3"><i class="fas fa-spinner fa-spin showspin ml-3" *ngIf="Isloader"></i>Loading
+              Transactions</span></td>
+        </tr>
+        <tr *ngFor="let leasetransaction of leaseTransactionList">
+            <td data-th="LandLordRep">{{leasetransaction.FloorNumber}}</td>
+            <td data-th="TenantRep">{{leasetransaction.SuiteNumber}}</td>
+            <td data-th="TenantRep">{{leasetransaction.TenantName}}</td>
+            <td data-th="Date">{{leasetransaction.DateOccupied}}</td>
+            <td data-th="Date">{{leasetransaction.ExpirationDate}}</td>
+            <td data-th="LeaseID" (click)="showPropertyTransaction(leasetransaction.LeaseID)" style="cursor:pointer;">
+              <a title="" href="javascript://" class="tenants-txt">{{leasetransaction.LeaseID}}</a></td>
+<!--           <td data-th="LandLordRep">{{leasetransaction.LandLordRep}}</td> -->
+         
+          <!-- <td data-th="Lease Price">{{leasetransaction.AskingLeaseRatePerMonthMin}}-{{leasetransaction.AskingLeaseRatePerMonthMax}}</td>
+          <td data-th="Lease Type">{{leasetransaction.LeaseTypeName}}</td> -->
+          <td data-th="Date">{{leasetransaction.ListingTypeName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <button (click)="openPropertySummary(PropertyId,leasetransaction.LeaseID)" class="btn btn-success mb-3 float-left">View</button>
+      </div>
+    </div>
+  </div>

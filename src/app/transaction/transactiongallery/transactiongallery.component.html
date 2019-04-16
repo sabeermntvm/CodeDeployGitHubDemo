@@ -1,0 +1,150 @@
+<div class="row m-0">
+  <div class="col-md-12">
+    <div class="row m-0">
+      <div class="col-md-12 p-0">
+        <div class="map-nav">
+          <ul>
+            <li class="active" *ngIf="TotalResultCount > 0"><span class="map-result">{{TotalResultCount}}</span></li>
+            <li [routerLink]="['/transaction/mapsearch']"><span class="map-result"><i class="fas fa-map"></i> Map View</span></li>
+            <li [routerLink]="['/transaction/resultsGrid']"><span class="map-result"><i class="fas fa-list-ul"></i> Grid
+                  View</span></li>
+            <li class="active" *ngIf="selectedCount > 0"><span class="map-result">{{selectedCount}} Selected</span></li>
+          </ul>
+        </div>
+        <div class="action-btn-row" role="group">
+          <!--<button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary-ash dropdown-toggle" title="Listing Report" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+              <i class="far fa-envelope"></i>
+            </button>
+          <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary-ash dropdown-toggle" title="Print Report" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-print font20"></i>
+            </button>-->
+          <!-- <button id="btnGroupVerticalDrop5" type="button" title="Export to Excel" class="btn btn-primary-ash" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="fas fa-file-excel"></i>
+            </button> -->
+          <button id="btnGroupVerticalDrop6" type="button" (click)="showUserPreferencesModal('Download')" title="Export To Excel" class="btn btn-primary-ash"
+            aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i>
+            </button>
+        </div>
+
+        <div class="sideBarPanelWrap" id="MapSidenavSetting">
+          <a href="javascript:void(0)" *ngIf="CloseActionBtnSet" class="closebtn" (click)="closeSettingsNav()"><i class="fa fa-angle-double-right"></i></a>
+          <div id="MapSidenav" class="sideMapSearch">
+            <app-transactionsettingsearch [sheets]="sheets" [userId]="userId" screen="Transaction" type="download" [(userPreferencesId)]="userPreferencesId"
+              [Type]="Task"></app-transactionsettingsearch>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li *ngIf="pager.currentPage < pager.totalPages">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+              <span class="spinui" *ngIf="Isloader">
+                      <i class="fas fa-spinner fa-spin showspin"></i>
+                    </span>
+            </ul>
+          </div>
+          <div class="col-md-2 float-right offset-md-5 mt-2 pr-0 pl-0">
+            <div class="drop_Box_select">
+              <div class="checkbox checkbox-css chkBoxStyle" style="right: auto !important;
+                    top: 1px !important;">
+                <input type="checkbox" id="cssCheckbox_0" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked)"
+                />
+                <label for="cssCheckbox_0" style="white-space: nowrap !important; color: #fff">Select All</label>
+              </div>
+              <i class="fas fa-chevron-down fa-label" data-toggle="collapse" data-target="#selectOptionDrop"></i>
+            </div>
+            <div id="selectOptionDrop" class="collapse col-md-12 pr-0 pl-0 showDrop">
+              <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(1)">Remove Selected</a>
+              <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(0)">Remove Unselected</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 pl-0" *ngFor="let transaction of transactionList; let i = index;">
+            <div class="checkbox checkbox-css chkBoxStyle">
+              <input type="checkbox" id="propCheckbox_{{i}}" [(ngModel)]='transaction.isSelected' (change)="Selection($event.target.checked);"
+                value="" />
+              <label for="propCheckbox_{{i}}"></label>
+            </div>
+            <div class="gal-img" [ngStyle]='{"background-image":"url(" + mediaUrl + transaction.MainPhotoUrl + ")"}' (click)="showTransactionDetails(transaction.PropertyID,transaction.SaleID)">
+              <div class="dash-gal-img-txt-top">
+                {{transaction.PropertyName}}
+                <br *ngIf="transaction.BuildingSizeSMFormatted">
+                <span class="dash-gal-img-txt-top-det">
+                      <span *ngIf="transaction.BuildingSizeSMFormatted && searchCriteria.CountryId != USCountryCode">{{transaction.BuildingSizeSMFormatted  }} SqM </span>
+                <span *ngIf="transaction.BuildingSF && searchCriteria.CountryId == USCountryCode">{{transaction.BuildingSF | number:'.0-0' }} SF </span>
+                <span>{{transaction.PropertyUse}} Bldg</span><span>  | {{transaction.CityName}} {{transaction.ZipCode}}</span>
+                </span>
+              </div>
+              <div class="dash-img-txt">
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <h5 class="title">
+                                        <div class="addedon" *ngIf="transaction.DeedOrSaleDate" style="    background: #c33636;">Sold On {{transaction.DeedOrSaleDate }}</div>
+                                      </h5>
+                                    </div>
+                                  </div>
+                <span *ngIf="transaction.SoldSF"> Sold For : {{transaction.SoldSF | currency:'USD':'symbol':'1.0-0'}} ({{transaction.SoldSM | currency:'USD':'symbol':'1.0-0' }} / SqM) </span>
+                <br *ngIf="transaction.Buyer">
+                <span *ngIf="transaction.Buyer">Buyer : {{transaction.Buyer}}</span>
+                <br *ngIf="transaction.Seller">
+                <span class="truncate" *ngIf="transaction.Seller" title="{{transaction.Seller}}">Seller : {{transaction.Seller}}</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 mt-2">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li *ngIf="pager.currentPage < pager.totalPages">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+              <span class="spinui" *ngIf="Isloader">
+                        <i class="fas fa-spinner fa-spin showspin"></i>
+                      </span>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

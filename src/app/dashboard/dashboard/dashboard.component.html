@@ -1,0 +1,666 @@
+<div class="row no-padding m-0 topBigmarginSmall">
+	<div class="col-md-12">
+		<div class="wrap_box_pannel dashWrap">
+			<div class="widget widget-stats bg-gradient-blue-office">
+				<!-- <div class="blueBar"></div> -->
+				<div class="stats-icon stats-icon-lg"><i class="far fa-building"></i></div>
+				<div class="stats-content">
+					<div class="stats-title">Office</div>
+					<div class="stats-number">{{officePropertyCount | number}} <span> properties <br>totaling</span></div>
+					<div class="stats-number-sub">{{officePropertySize | number}} SqM</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap_box_pannel dashWrap">
+			<div class="widget widget-stats bg-gradient-red-industrial">
+				<!-- <div class="redBar"></div> -->
+				<div class="stats-icon stats-icon-lg"><i class="fas fa-chart-area"></i></div>
+				<div class="stats-content">
+					<div class="stats-title">Industrial</div>
+					<div class="stats-number">{{industrialPropertyCount | number}}<span> properties <br>totaling</span></div>
+					<div class="stats-number-sub">{{industrialPropertySize | number}} SqM</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap_box_pannel dashWrap">
+			<div class="widget widget-stats bg-gradient-orange-retail">
+				<!-- <div class="orangeBar"></div> -->
+				<div class="stats-icon stats-icon-lg"><i class="fas fa-shopping-bag"></i></div>
+				<div class="stats-content">
+					<div class="stats-title">Retail</div>
+					<div class="stats-number">{{retailPropertyCount | number}}<span> properties <br>totaling</span></div>
+					<div class="stats-number-sub">{{retailPropertySize | number}} SqM</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap_box_pannel dashWrap">
+			<div class="widget widget-stats bg-gradient-others">
+				<!-- <div class="lightBar"></div> -->
+				<div class="stats-icon stats-icon-lg"><i class="fas fa-hotel" style="width: 54px;"></i></div>
+				<div class="stats-content">
+					<div class="stats-title">Other Non-Land</div>
+					<div class="stats-number">{{onlPropertyCount | number}}<span> properties <br>totaling</span></div>
+					<div class="stats-number-sub">{{onlPropertySize | number}} SqM</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap_box_pannel dashWrap">
+			<div class="widget widget-stats bg-gradient-green-land">
+				<!-- <div class="greenBar"></div> -->
+				<div class="stats-icon stats-icon-lg"><i class="fas fa-map-signs"></i></div>
+				<div class="stats-content">
+					<div class="stats-title">Land</div>
+					<div class="stats-number">{{landPropertyCount | number}} <span> for sale <br>totaling</span></div>
+					<div class="stats-number-sub">{{landPropertySize | number}} ha</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row no-padding m-0">
+	<div class="col-lg-12">
+		<div class="row">
+			<h4 class="col-md-3">Recently Added Listings</h4>
+			<div class="col-md-9 dashLine"></div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div id="options" class="m-b-10">
+			<span class="gallery-option-set" id="filter" data-option-key="filter">
+				<a href="javascript:;" class="btn btn-default btn-xs" [ngClass]="{'active' : recentPropertyTabName == 'office'}"
+				 (click)="showRecentProperties('office')">Office</a>
+				<a href="javascript:;" [ngClass]="{'active' : recentPropertyTabName == 'retail'}" class="btn btn-default btn-xs"
+				 (click)="showRecentProperties('retail')">Retail</a>
+				<a href="javascript:;" [ngClass]="{'active' : recentPropertyTabName == 'industrial'}" class="btn btn-default btn-xs"
+				 (click)="showRecentProperties('industrial')">Industrial</a>
+				<a href="javascript:;" [ngClass]="{'active' : recentPropertyTabName == 'all'}" class="btn btn-default btn-xs"
+				 (click)="showRecentProperties('all')">View All</a>
+			</span>
+		</div>
+		<div id="Office" class="gallery mb-2" *ngIf="recentPropertyTabName == 'office'">
+			<owl-carousel [options]="customOptions" [items]="recentOfficeProperties" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of recentOfficeProperties;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a data-lightbox="gallery-group-1">
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0'}} SqM  -->
+									
+										<span class="propdetName">{{property.BuildingSizeSM }} SqM	{{property.PropertyUse}}
+										<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+		<div id="Retail" class="gallery mb-2" *ngIf="recentPropertyTabName == 'retail'">
+			<owl-carousel [options]="customOptions" [items]="recentRetailProperties" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of recentRetailProperties;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a>
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM
+										<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+										 {{property.PropertyUse}}
+										<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+		<div id="Industrial" class="gallery mb-2" *ngIf="recentPropertyTabName == 'industrial'">
+			<owl-carousel [options]="customOptions" [items]="recentIndustrialProperties" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of recentIndustrialProperties;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a>
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM {{property.PropertyUse}}
+									<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row" (click)="showPropertySummary(property.PropertyId)">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+		<div id="All" class="gallery mb-2" *ngIf="recentPropertyTabName == 'all'">
+			<owl-carousel [options]="customOptions" [items]="recentProperties" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of recentProperties;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a>
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM {{property.PropertyUse}}
+									<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row" (click)="showPropertySummary(property.PropertyId)">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel" *ngIf="!property.Price">Rate Not Disclosed</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.Price">{{property.Price}} </span>
+									<span class="col-md-12 addelListLabel" *ngIf="!property.ListingCompanyName">No Active Listing</span>
+									
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingCompanyName">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+</div>
+
+
+ <!--My Listings (BEGIN)-->
+
+<div class="row no-padding m-0">
+	<div class="col-lg-12">
+		<div class="row">
+			<h4 class="col-md-3">My Listings</h4>
+			<div class="col-md-9 dashLine"></div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div id="options" class="m-b-10">
+			<span class="gallery-option-set" id="filter" data-option-key="filter">
+				<a href="javascript:;" class="btn btn-default btn-xs" [ngClass]="{'active' : myListingTabName == 'office'}"
+				 (click)="showMyListings('office')">Office</a>
+				<a href="javascript:;" [ngClass]="{'active' : myListingTabName == 'retail'}" class="btn btn-default btn-xs"
+				 (click)="showMyListings('retail')">Retail</a>
+				<a href="javascript:;" [ngClass]="{'active' : myListingTabName == 'industrial'}" class="btn btn-default btn-xs"
+				 (click)="showMyListings('industrial')">Industrial</a>
+				<a href="javascript:;" [ngClass]="{'active' : myListingTabName == 'all'}" class="btn btn-default btn-xs"
+				 (click)="showMyListings('all')">View All</a>
+			</span>
+		</div>
+		<div id="myListingOffice" class="gallery mb-2" *ngIf="myListingTabName == 'office'">
+			<owl-carousel [options]="customOptions" [items]="myListingsOffice" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of myListingsOffice;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a data-lightbox="gallery-group-1">
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM {{property.PropertyUse}}
+										<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+		<div id="myListingRetail" class="gallery mb-2" *ngIf="myListingTabName == 'retail'">
+			<owl-carousel [options]="customOptions" [items]="myListingsRetail" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of myListingsRetail;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a>
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM {{property.PropertyUse}}
+										<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+		<div id="myListingIndustrial" class="gallery mb-2" *ngIf="myListingTabName == 'industrial'">
+			<owl-carousel [options]="customOptions" [items]="myListingsIndustrial" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of myListingsIndustrial;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a>
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM {{property.PropertyUse}}
+									<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row" (click)="showPropertySummary(property.PropertyId)">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+		<div id="myListingAll" class="gallery mb-2" *ngIf="myListingTabName == 'all'">
+			<owl-carousel [options]="customOptions" [items]="myAllListings" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+				<div class="item" *ngFor="let property of myAllListings;let i = index">
+					<div class="image gallery-group-1" (click)="showPropertySummary(property.PropertyId)">
+						<div class="image-inner">
+							<a>
+								<img src="{{mediaUrl + property.MainPhotoUrl}}" alt="" />
+							</a>
+							<div class="image-wrap-caption" (click)="showPropertySummary(property.PropertyId)">
+								<p class="image-caption">
+									<span class="propName">{{property.PropertyName}}</span>
+									<!-- <span class="propdetName">{{property.BuildingSizeSM | number:'.0-0' }} SqM -->
+									<span class="propdetName">{{property.BuildingSizeSM}} SqM {{property.PropertyUse}}
+									<font *ngIf="property.PropertyUse != 'land'">Bldg</font> | {{property.CityName}}
+										{{property.Zipcode}}</span>
+
+								</p>
+								<span class="addedon">Added On {{property.ListingDate}}</span>
+							</div>
+							<div class="dash-img-txt" (click)="showPropertySummary(property.PropertyId)">
+								<div class="row">
+									<div class="col-md-12">
+										<h5 class="title">
+											<div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">{{property.PropertyUse}} For
+												{{property.RecordTypeName}}</div>
+											<div class="noRecord" *ngIf="!property.ListingID">Not Listed</div>
+										</h5>
+									</div>
+								</div>
+								<div class="desc row" (click)="showPropertySummary(property.PropertyId)">
+									<span class="col-md-12 addelListLabel">
+										<font *ngIf="property.AvailabeSpaceRangeSM && unitId == metricUnit">{{property.AvailabeSpaceRangeSM}} SqM
+											Available </font>
+										<font *ngIf="property.AvailabeSpaceRangeSF && unitId != metricUnit">{{property.AvailabeSpaceRangeSF}} SF
+											Available </font>
+									</span>
+									<span class="col-md-12 addelListLabel" *ngIf="property.ListingStatusName">{{property.ListingStatusName}}</span>
+									<br *ngIf="property.Price">
+									<span class="col-md-12 addelListLabel">{{property.Price || 'Rate Not Disclosed' }} </span>
+									<span class="col-md-12 addelListLabel">{{property.ListingCompanyName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+</div>
+
+
+ <!--My Listings (END)-->
+
+
+
+<div class="row no-padding m-0">
+	<div class="col-lg-12">
+		<div class="row">
+			<h4 class="col-md-3">Recent Listing Activity</h4>
+			<div class="col-md-9 dashLine"></div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="bgRow mb-3">
+			<div id="options" class="m-b-10 ">
+				<span class="gallery-option-set ml-3" id="filter" data-option-key="filter">
+					<a href="javascript:;" class="btn btn-default btn-xs" [ngClass]="{'active' : RecentMarketActivityCounts == 'Today'}"
+					 (click)="getRecentMarketActivityCounts('Today')">Today</a>
+					<a href="javascript:;" class="btn btn-default btn-xs" [ngClass]="{'active' : RecentMarketActivityCounts == 'LastWeek'}"
+					 (click)="getRecentMarketActivityCounts('LastWeek')">Past Week</a>
+					<a href="javascript:;" class="btn btn-default btn-xs" [ngClass]="{'active' : RecentMarketActivityCounts == '30Days'}"
+					 (click)="getRecentMarketActivityCounts('30Days')">30 Days</a>
+					<a href="javascript:;" class="btn btn-default btn-xs" [ngClass]="{'active' : RecentMarketActivityCounts == '60Days'}"
+					 (click)="getRecentMarketActivityCounts('60Days')">60 Days</a>
+				</span>
+			</div>
+			<div class="col-md-12">
+				<div class="row">
+					<div class="wrap_box_pannel dashWrap">
+						<div class="widget widget-stats bg-gradient-teal">
+							<div class="stats-icon stats-icon-lg"><i class="fas fa-dolly"></i></div>
+							<div class="stats-content">
+								<div class="stats-title">{{recentActivityCounts.NewLease.Category}}</div>
+								<div class="stats-number">{{(recentActivityCounts.NewLease.Count| number)||0}}
+									<span> spaces <br>totaling</span>
+								</div>
+								<div class="stats-number-sub" *ngIf="recentActivityCounts.NewLease.Total!=null">{{recentActivityCounts.NewLease.Total}}
+									SqM</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrap_box_pannel dashWrap">
+						<div class="widget widget-stats bg-gradient-lightblue">
+							<div class="stats-icon stats-icon-lg"><i class="fas fa-sign"></i></div>
+							<div class="stats-content">
+								<div class="stats-title">{{recentActivityCounts.NewSale.Category}}</div>
+								<div class="stats-number">{{(recentActivityCounts.NewSale.Count|number)||0}}<span> properties <br>totaling</span>
+								</div>
+								<div class="stats-number-sub" *ngIf="recentActivityCounts.NewSale.Total!=null">{{recentActivityCounts.NewSale.Total}}</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrap_box_pannel dashWrap">
+						<div class="widget widget-stats bg-gradient-blue">
+							<div class="stats-icon stats-icon-lg"><i class="fas fa-file-invoice-dollar"></i></div>
+							<div class="stats-content">
+								<div class="stats-title">{{recentActivityCounts.Leased.Category}}</div>
+								<div class="stats-number">{{(recentActivityCounts.Leased.Count|number)||0}}<span> spaces <br>totaling</span>
+								</div>
+								<div class="stats-number-sub" *ngIf="recentActivityCounts.Leased.Total!=null">{{recentActivityCounts.Leased.Total}}
+									SqM</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrap_box_pannel dashWrap">
+						<div class="widget widget-stats bg-gradient-purple">
+							<div class="stats-icon stats-icon-lg"><i class="fas fa-pen-fancy"></i></div>
+							<div class="stats-content">
+								<div class="stats-title">{{recentActivityCounts.Sold.Category}}</div>
+								<div class="stats-number">{{(recentActivityCounts.Sold.Count|number)||0}}<span> properties <br>totaling</span>
+								</div>
+								<div class="stats-number-sub" *ngIf="recentActivityCounts.Sold.Total!=null">{{recentActivityCounts.Sold.Total}}</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrap_box_pannel dashWrap">
+						<div class="widget widget-stats bg-gradient-purple-light">
+							<div class="stats-icon stats-icon-lg"><i class="fas fa-share-alt"></i></div>
+							<div class="stats-content">
+								<div class="stats-title">{{recentActivityCounts.NewSubLease.Category}}</div>
+								<div class="stats-number">{{(recentActivityCounts.NewSubLease.Count|number)||0}}<span> spaces <br>totaling</span>
+								</div>
+								<div class="stats-number-sub" *ngIf="recentActivityCounts.NewSubLease.Total!=null">{{recentActivityCounts.NewSubLease.Total}}
+									SqM</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- begin row -->
+<div class="row no-padding m-0">
+	<div class="col-lg-12">
+		<div class="row">
+			<h4 class="col-md-3">Space Availability Breakdown</h4>
+			<div class="col-md-9 dashLine"></div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="panel panel-inverse">
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="valueNum">{{spaceBreakDown.TotalOfficeSpace| number}}</span> Office Spaces
+					Available</h4>
+			</div>
+			<div class="panel-body">
+				<ngx-charts-bar-horizontal [scheme]="chartColor" [results]="spaceBreakDown.OfficeSpace" [xAxis]="false" [yAxis]="true"
+				 [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [showDataLabel]="true" [barPadding]="barPadding"
+				 [view]="[310, 200]">
+				</ngx-charts-bar-horizontal>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="panel panel-inverse">
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="valueNum">{{(spaceBreakDown.TotalRetailSpace| number)||0}}</span> Retail
+					Spaces Available</h4>
+			</div>
+			<div class="panel-body">
+				<ngx-charts-bar-horizontal [scheme]="chartColor" [results]="spaceBreakDown.RetailSpace" [xAxis]="false" [yAxis]="true"
+				 [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [showDataLabel]="true" [barPadding]="barPadding"
+				 [view]="[310, 200]">
+				</ngx-charts-bar-horizontal>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="panel panel-inverse">
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="valueNum">{{(spaceBreakDown.TotalIndustrialSpace| number)|| 0}}</span>
+					Industrial Spaces Available</h4>
+			</div>
+			<div class="panel-body">
+				<ngx-charts-bar-horizontal [scheme]="chartColor" [results]="spaceBreakDown.IndustrialSpace" [xAxis]="false" [yAxis]="true"
+				 [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [showDataLabel]="true" [barPadding]="barPadding"
+				 [view]="[310, 200]">
+				</ngx-charts-bar-horizontal>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fdfdfd;
+  }
+  .form-control:focus{
+      box-shadow: none !important;
+      border-color: #c2cfd6;
+  }

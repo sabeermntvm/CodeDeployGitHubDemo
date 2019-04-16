@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="blue prev-rit-head">Set the order your properties will appear in the report package</h4>
+    </div>
+    <div class="col-md-12">
+        <div class="btn-group" id="status" data-toggle="buttons">
+            <label class="btn btn-default btn-off active" (click)="selectView('grid')" style="height: 36px;border-radius: 5px 0 0 5px !important;padding-right: 10px !important;">
+                <input name="selectAll" type="radio" value="1"><i class="fa fa-bars"></i> List View</label>
+            <label class="btn btn-default btn-on" (click)="selectView('gallery')" style="height: 36px;padding-right: 10px !important;">
+                <input name="selectAll" type="radio" value="0"><i class="fa fa-th-large"></i>
+                Gallery View</label>
+            <label class="btn btn-default btn-on" (click)="selectView('report')" style="height: 36px;border-radius: 0 5px 5px 0  !important;padding-right: 10px !important;">
+                <input name="selectAll2" type="radio" value="2"><i class="fas fa-sort-amount-down"></i> Report Order</label>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table dataTableGrid" *ngIf="isGridView">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <div class="checkbox checkbox-css tableChechbox">
+                                <input type="checkbox" id="propheadCheckbox" value="" [(ngModel)]="isSelectAll"
+                                    (change)="onClickSelectAll()" />
+                                <label for="propheadCheckbox"></label>
+                            </div>
+                        </th>
+                        <th (click)="sortList('name',nameOrder)" style="width:140px;cursor: pointer;">
+                            <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortList('name',nameOrder)"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </div> Property Name
+                        </th>
+                        <th (click)="sortList('address',addrOrder)" style="width:140px;cursor: pointer;">
+                            <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortList('address',addrOrder)"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </div>
+                            Address
+                        </th>
+                        <th (click)="sortList('city',cityOrder)" style="width:140px;cursor: pointer;">
+                            <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortList('city',cityOrder)"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </div>
+                            City
+                        </th>
+                        <th (click)="sortList('zip',zipOrder)" style="width:140px;cursor: pointer;">
+                            <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortList('zip',zipOrder)"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </div>
+                            Postal Code
+                        </th>
+                        <th (click)="sortList('type',typeOrder)" style="width:140px;cursor: pointer;">
+                            <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortList('type',typeOrder)"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </div>
+                            Property Type
+                        </th>
+                        <th style="width:140px;cursor: pointer;" (click)="sortList('size',sizeOrder)">
+                            <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortList('size',sizeOrder)"></i>
+                                <i class="fa fa-sort-down"></i>
+                            </div>
+                            Building Size
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let property of selectedPropertyList; let i = index">
+                        <td>
+                            <div class="checkbox checkbox-css tableChechbox">
+                                <input type="checkbox" id='tableChk_{{i}}' value="" [(ngModel)]='property.isSelected' />
+                                <label for='tableChk_{{i}}'></label>
+                            </div>
+                        </td>
+                        <td><a class="prop-name" (click)="showPropertyDetails(property.PropertyId)">
+                                {{property.PropertyName }}</a></td>
+                        <td>{{ property.Address }}</td>
+                        <td>{{ property.City }}</td>
+                        <td>{{ property.ZipCode }}</td>
+                        <td>{{ property.PropertyUse }}</td>
+                        <td>{{ property.BuildingSizeSM}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="row" *ngIf="isGalleryView">
+            <div class="col-lg-12" dnd-sortable-container [sortableData]="_sharedDataService.selectedReportProperties">
+                <div class="row">
+                    <div class="crd-width-gallery" *ngFor="let property of _sharedDataService.selectedReportProperties; let i = index"
+                        dnd-sortable [sortableIndex]="i">
+                        <div class="gal-img" [ngStyle]='{"background-image":"url("+property.ImageUrl+")"}'>
+                            <div class="dash-img-txt">
+                                <span class="spanText">{{property.DisplayOrder}}. {{property.PropertyName }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-lg-4" *ngFor="let property of selectedPropertyList; let i = index" dnd-sortable
+                        [sortableIndex]="i">
+                        <img class="img-responsive" [src]="property.ImageUrl" style="max-height: 300px; width:auto;">
+                        <br>
+                        <p class="padding10">{{property.DisplayOrder}}. {{property.PropertyName }} </p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="isReportView">
+            <div class="col-lg-12" dnd-sortable-container [sortableData]="_sharedDataService.selectedReportSortList">
+                <div class="row">
+                    <div class="col-lg-3 no-padding-left" *ngFor="let item of _sharedDataService.selectedReportSortList; let i = index"
+                        dnd-sortable [sortableIndex]="i">
+                        <p class="redcolor"><b>{{i+1}}.</b></p>
+                        <img class="img-responsive" src="{{item.PreviewImage}}" class="img" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

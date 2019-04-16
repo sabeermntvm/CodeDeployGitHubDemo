@@ -1,0 +1,270 @@
+<div class="row m-0">
+    <div class="col-md-12">
+<div class="row">
+    <div class="col-md-2">
+  <select class="form-control " [(ngModel)]="type" (change)="FiltertypeChange(type)">
+    <option value="">Select Type</option>
+      <option *ngFor="let type of typeList">{{type}}</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <input class="form-control" [(ngModel)]="filterid" placeholder="Id" (change)="FilterPropertyIdChange(filterid)">
+  </div>
+  <div class="col-md-2">
+
+    <select class="form-control"  [(ngModel)]="status"  (change)="FilterstatusChange(status)">
+        <option value="">Select Status</option>
+        <option>Initiated</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+        <option>Rejected</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+        <form class="form-inline">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd"
+
+                     name="d1" #c1="ngModel" [(ngModel)]="startDate" ngbDatepicker [minDate]="startDate-25" [maxDate]="maxDate"
+                 #d1="ngbDatepicker" (ngModelChange)="onStartDateChange(startDate)">
+              <div class="input-group-append">
+                 <button class="btn btn-outline-secondary" (click)="d1.toggle()" type="button">
+                  <i class="fa fa-calendar"></i> 
+                </button>
+              </div>
+            </div>
+          </div>
+        
+          <label class="ml-1 mr-1"><i class="fas fa-minus"></i></label>
+      
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="d2" #c2="ngModel" [(ngModel)]="endDate" ngbDatepicker [minDate]="endDate-25" [maxDate]="maxDate" #d2="ngbDatepicker" (ngModelChange)="onEndDateChange(endDate)">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+      </div>
+  </div>
+  <div class="row">
+      <div class="mt-2 col-lg-10">
+          <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li *ngIf="pager.currentPage < pager.totalPages">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+              <span class="spinui" *ngIf="Isloader">
+                <i class="fas fa-spinner fa-spin showspin"></i>
+              </span>
+            </ul>
+        </div>
+      </div>
+  
+  <div class="card-body p-0">
+    <div class="row m-0">
+      <div class="mt-2 col-md-12 p-0">
+        <a hrefd="#/property/details">
+          <div class="table-scroll">
+                <table class="table table-bordered table-striped" style="margin-bottom: 0">
+                  <thead>
+                  <tr>
+                      <th scope="col" style="width:100px;" (click)="sortProperty('CreatedDate',CreatedDateSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('CreatedDate','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('CreatedDate','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          Date
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'CreatedDate' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'CreatedDate' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+                      <th scope="col" style="width:160px;" (click)="sortProperty('type',TypeSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('type','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('type','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          Type
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'type' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'type' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+                    <th scope="col" style="width:183px;" (click)="sortProperty('PropertyID',PropertyIDSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('PropertyID','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('PropertyID','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Details
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'PropertyID' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'PropertyID' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+                    <th scope="col" style="width:180px;" (click)="sortProperty('FieldName',FieldNameSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('FieldName','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('FieldName','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Field Name
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'FieldName' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'FieldName' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+  
+                    <th scope="col" style="width:155px;" (click)="sortProperty('SuggestedValue',SuggestedValueSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('SuggestedValue','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('SuggestedValue','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Suggested Value
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'SuggestedValue' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'SuggestedValue' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+  
+                    <th scope="col" style="width:200px;" (click)="sortProperty('SuggestionComment',SuggestionCommentSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('SuggestionComment','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('SuggestionComment','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Comment
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'SuggestionComment' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'SuggestionComment' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+                     <th scope="col" style="width:130px;" (click)="sortProperty('SuggestionStatus',SuggestionStatusSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('SuggestionStatus','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('SuggestionStatus','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Status
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'SuggestionStatus' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'SuggestionStatus' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+                    <th scope="col" style="width:130px;" (click)="sortProperty('SentByUserName',SentByUserNameSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('SentByUserName','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('SentByUserName','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Send By
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'SentByUserName' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'SentByUserName' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+                    <th scope="col" style="width:155px;" (click)="sortProperty('UserCompanyName',UserCompanyNameSortOrder)">
+                      <div class="arrow-group">
+                        <i class="fa fa-sort-up" (click)="sortProperty('UserCompanyName','Ascending'); $event.stopPropagation();"></i>
+                        <i class="fa fa-sort-down" (click)="sortProperty('UserCompanyName','Descending'); $event.stopPropagation();"></i>
+                      </div>
+                      Company Name
+                      <div class="sort_Group_white">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sugSearchCriteria.SortParam == 'UserCompanyName' && sugSearchCriteria.SortDirection == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sugSearchCriteria.SortParam  == 'UserCompanyName' && sugSearchCriteria.SortDirection == 'Descending'"></i>
+                      </div>
+                    </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let suggestion of suggestionlist; let i = index;">
+                        <td scope ="col" style="width:100px;">{{ setDate(suggestion.CreatedDate) | date }}</td>
+                        <td scope ="col" style="width:160px;">
+                            {{ suggestion.Type }}</td>
+                      <td scope ="col" style="width:183px;">
+                        <a class="prop-name" (click)="showListingDetails(suggestion.ItemDetails.PropertyId, '')">
+                        {{ suggestion.ItemDetails.PropertyId }}</a>
+                        <span *ngIf = "suggestion.ItemDetails.PropertyName">
+                          ( {{ suggestion.ItemDetails.PropertyName }} )
+                        </span>
+                        <span *ngIf = "suggestion.ItemDetails.TenantId" style="display:block;"> Tenant Id -
+                          {{ suggestion.ItemDetails.TenantId }}
+                        </span>                        
+                        <span *ngIf = "suggestion.ItemDetails.TransactionId" style="display:block;"> Transaction Id - {{ suggestion.ItemDetails.TransactionId }}                        
+                        </span>
+                        <span *ngIf = "suggestion.ItemDetails.ListingId" style="display:block;"> Listing Id - 
+                        {{suggestion.ItemDetails.ListingId }}
+                       </span>             
+                       <span *ngIf = "suggestion.ItemDetails.MediaId" style="display:block;"> Media Id - 
+                          {{suggestion.ItemDetails.MediaId }}
+                         </span>   
+                         <span *ngIf = "suggestion.ItemDetails.ContactFullName" style="display:block;"> 
+                            {{suggestion.ItemDetails.ContactFullName }}
+                           </span>  
+                           <span *ngIf = "suggestion.ItemDetails.SuiteId" style="display:block;"> Suite Id - 
+                              {{suggestion.ItemDetails.SuiteId }}
+                             </span> 
+                             <span *ngIf = "suggestion.ItemDetails.TenantName" style="display:block;"> 
+                              {{suggestion.ItemDetails.TenantName }}
+                             </span> 
+                             <span *ngIf = "suggestion.ItemDetails.BranchId" style="display:block;">Branch Id- 
+                              {{suggestion.ItemDetails.BranchId }}
+                             </span> 
+                             <span *ngIf = "suggestion.ItemDetails.TenantStageId" style="display:block;">TenantStage Id- 
+                              {{suggestion.ItemDetails.TenantStageId }}
+                             </span>            
+                        
+                      </td>
+                      <td scope ="col" style="width:180px;">{{suggestion.FieldName }} </td>
+                      <td scope ="col" style="width:100px;">{{ suggestion.SuggestedValue }}</td>
+                      <td title="{{suggestion.SuggestionComment}}"scope ="col" style="width:200px;">{{ suggestion.SuggestionComment }}</td>
+                      <td scope ="col" style="width:130px;">{{ suggestion.SuggestionStatus }}</td>
+                      <td scope ="col" style="width:130px;">{{ suggestion.SentByUserName }}</td>
+                      <td scope ="col" style="width:130px;">{{ suggestion.UserCompanyName }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="mt-2 col-lg-10">
+          <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li *ngIf="pager.currentPage < pager.totalPages">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+              <span class="spinui" *ngIf="Isloader">
+                <i class="fas fa-spinner fa-spin showspin"></i>
+              </span>
+            </ul>
+        </div>
+      </div>
+  </div>
+  </div>
+  

@@ -1,0 +1,56 @@
+.row span{
+    color: #fff;
+}
+
+.hyphen{margin-top: -5px;}
+
+h5{border:1px solid #fff; color: #fff;padding: 7px;}
+.mainPhotoBox{
+    width:100%; 
+    display: block;
+    background: #fff;
+    margin: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 300px;
+}
+.listingBox{
+    background: #fff;
+    padding: 10px;
+}
+.listingBox h5{
+    background: #8f849c57;
+    color: #000;  
+}
+.list-bottom-icon-wrapper {
+    position: relative;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+    margin-top: 5px;
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.list-bottom-icon-wrapper ul{
+    list-style: none;
+    margin:0;
+    display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+}
+.list-bottom-icon-wrapper ul li{
+    list-style: none;
+    color:#455463;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.smallBorder{
+    border-right:1px solid #ccc;
+}
+.prop-name{
+    color: #20a8d8!important;
+    text-decoration: none!important;
+    background-color: transparent!important;
+    cursor: pointer;
+}

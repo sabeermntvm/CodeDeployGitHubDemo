@@ -1,0 +1,299 @@
+<div class="col-md-12 clearfix" >
+  *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+  <button  class="btn btn-primary btn-sm float-right"  [appFeedback]="'Tenant'">Feedback</button>
+</div>
+<div class="row m-0">
+  <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="row m-0">
+                <div class="col-lg-3 p-0">
+                    <div class="btn-group" id="status" data-toggle="buttons">
+                        <label class="btn btn-default btn-on  active" style="border-radius: 5px 0 0 5px !important;padding-right: 10px !important;" (click)="applySearchFilter(1)">
+                            <input name="selectAll" type="radio" value="1">Matching Tenants</label>
+                        <label class="btn btn-default btn-off" style="border-radius: 0 5px 5px 0  !important;padding-right: 10px !important;" (click)="applySearchFilter(0)">
+                            <input name="selectAll" type="radio" value="0">All Tenants</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0">
+                <div class="col-md-2 pl-0 mt-2">
+                  <div><b><span *ngIf="!tenants.length && !IsLoader">No</span><span *ngIf="tenants.length && !IsLoader">{{tenants.length}}</span><span  style="margin-right:10px;" *ngIf="IsLoader"><i class="fas fa-spinner fa-spin showspin"></i></span>  Tenant(s) Found!</b></div>
+              </div>  
+              <div class="col-md-5 pl-0">
+                <div class="input-with-icon">
+                    <i class="fas fa-times" title="clear" (click)="clearSearchFilter()" *ngIf="filterInput"></i>
+                    <i class="fas fa-filter" *ngIf="!filterInput"></i>
+                    <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="filterInput" (ngModelChange)="filterItem(filterInput)">
+                  </div>
+            </div>
+              <div class="col-md-4 pl-0 mt-2 pr-0">
+                  <label class="float-right-left"><span class="labelText"><b>Px</b></span> <span class="labelText">= Provider Sourced </span></label>
+                  <label class="float-right-left"><span class="labelText"><i class="fa fa-check" style="color:#f17b29" aria-hidden="true"></i></span><span class="labelText"> = Empirical Verified</span></label>
+              </div>
+              <div class="col-md-1 pr-0">
+                  <select class="form-control" [(ngModel)]="pageSize" (change)="filterTenants(pager.currentPage)">
+                      <option value="100">100</option>
+                      <option value="50">50</option>
+                      <option value="20">20</option>
+                      <option value="10">10</option>
+                    </select>
+              </div>
+              </div>
+          </div>
+    </div>
+<div class="row">
+    <div class="table-scroll mt-3">
+        <div class="pane pane--table1">
+          <div class="pane-hScroll">
+            <table class="table dataTableGrid" style="margin-bottom: 0"  *ngIf="tenantsArrayToScroll.length > 0">
+                <thead>
+                    <tr>
+                      <th style="width:60px;"></th>
+                      <th style="width:115px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('FloorNumber','Ascending', 1)"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('FloorNumber','Descending', 1)"></i>
+                        </div>
+                        Floor
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:115px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('Address2','Ascending', 1)"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('Address2','Descending', 1)"></i>
+                        </div>
+                        Suite
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'Address2' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'Address2' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:140px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('TenantName','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('TenantName','Descending')"></i>
+                        </div>
+                        Tenant
+                        <div class="sort_Group">
+                          <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'TenantName' && sortFun == 'Ascending'"></i>
+                          <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'TenantName' && sortFun == 'Descending'"></i>
+                        </div>
+                      </th>
+                      <th style="width:180px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('OfficePhone','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('OfficePhone','Descending')"></i>
+                        </div>
+                        Phone
+                        <div class="sort_Group">
+                        <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'OfficePhone' && sortFun == 'Ascending'"></i>
+                        <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'OfficePhone' && sortFun == 'Descending'"></i>
+                        </div>
+                      </th>
+                      <th  style="width:170px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('CEOName','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('CEOName','Descending')"></i>
+                        </div>
+                        Key Contact
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'CEOName' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'CEOName' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:180px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('Revenue','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('Revenue','Descending')"></i>
+                        </div>
+                        Sales Volume
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'Revenue' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'Revenue' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:140px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('EmployeeCount','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('EmployeeCount','Descending')"></i>
+                        </div>
+                        # of Emp
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'EmployeeCount' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'EmployeeCount' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:140px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('LineOfBusiness','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('LineOfBusiness','Descending')"></i>
+                        </div>
+                        Industry
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'LineOfBusiness' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'LineOfBusiness' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:100px;">
+                        <div class="arrow-group">
+                          <i class="fa fa-sort-up" (click)="sortTenants('SICCode','Ascending')"></i>
+                          <i class="fa fa-sort-down" (click)="sortTenants('SICCode','Descending')"></i>
+                        </div>SIC
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'SICCode' && sortFun == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'SICCode' && sortFun == 'Descending'"></i>
+                            </div>
+                      </th>
+                      <th style="width:150px;"></th>
+                    </tr>
+                  </thead>
+            </table>
+            <div class="pane-vScroll" infiniteScroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollUpDistance]="1.5"
+            [infiniteScrollThrottle]="2"
+            (scrolled)="onScroll()"
+            [scrollWindow]="false"
+            >
+            <!-- [infiniteScrollDisabled]="isFullListDisplayed" -->
+              <table class="table dataTableGrid">
+                <ng-container  *ngFor="let tenant of tenantsArrayToScroll; let k = index;">
+                <tbody>
+                  <tr id="valueTenantRow{{k}}">
+                    <td style="width:60px;"><a class="table-drop-toggle" data-toggle="collapse" (click)="getTenantDetails(tenant)"
+                      href="#group-of-rows-1{{k}}"></a></td>
+                    <td style="width:115px;">{{tenant.FloorNumber}}</td>
+                    <td style="width:115px;">{{tenant.Address2}}</td>
+                    <td style="width:140px;">{{tenant.TenantName}}</td>
+                    <td style="width:180px;"><span *ngIf="tenant.OfficePhone">+{{tenant.OfficePhone | slice:0:2}} ({{tenant.OfficePhone |
+                        slice:2:4}}) {{tenant.OfficePhone | slice:4:8}} {{tenant.OfficePhone | slice:8:12}}</span></td>
+                    <td style="width:170px;">{{tenant.CEOName}}</td>
+                    <td style="width:180px;">{{tenant.Revenue | currency:'USD':'symbol':'1.0-0'}}</td>
+                    <td style="width:140px;">{{tenant.EmployeeCount}}</td>
+                    <td style="width:140px;">{{tenant.LineOfBusiness}}</td>
+                    <td style="width:100px;">{{tenant.SICCode}}</td>
+                    <td style="width:150px;"> <label *ngFor="let item of tenant.TenantProviders">
+                        <span class="ml-2" [style.color]="item.LabelColor">
+                          <i *ngIf="!item.DisplayText" class="fa fa-check"
+                            aria-hidden="true"></i>
+                          <font *ngIf="item.DisplayText"><b>{{item.DisplayText}}</b></font>
+                        </span>
+                      </label></td>
+                  </tr>
+                </tbody>
+                <tbody>
+                    <tr class="p-0 m-0 border-0">
+                      <td colspan="11" class="p-0 m-0 border-0">
+                        <div class="collapse highLightRow" [class.show]="k==expandData" id="group-of-rows-1{{k}}">
+                          <!-- <div class="row"> -->
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <label class="listHeadLabel">{{tenant.TenantName}}</label>
+                              </div>
+                            </div>
+                            <div class="row" *ngIf="tenant.TenantData">
+                              <div class="col-md-4" *ngFor="let key of objectKeys(tenant.TenantData)">
+                                <div class="row m-0 form-group viewCol">
+                                  <label class="col-6 form-control-label">{{tenant.TenantData[key].DisplayText}}</label>
+                                  <label class="col-6"><b *ngIf="tenant.TenantData[key].FieldValue">
+                                     <span *ngIf="tenant.TenantData[key].FieldName != 'OfficePhone'">{{tenant.TenantData[key].FieldValue}}</span>
+        
+                                     <span *ngIf="tenant.TenantData[key].FieldName == 'OfficePhone'">+{{tenant.TenantData[key].FieldValue | slice:0:2}} ({{tenant.TenantData[key].FieldValue |
+                                        slice:2:4}}) {{tenant.TenantData[key].FieldValue | slice:4:8}} {{tenant.TenantData[key].FieldValue | slice:8:12}}
+                                     </span>
+        
+                                      <span class="ml-2" *ngIf="tenant.TenantProviders.length>1" [style.color]="tenant.TenantData[key].LabelColor">
+                                        <i *ngIf="tenant.TenantData[key].FieldSource == '1'" class="fa fa-check"
+                                          aria-hidden="true"></i>
+                                        {{tenant.TenantData[key].ProviderDisplayText}}
+                                      </span></b>
+                                      <i class="fas fa-check-double check-icon text-primary ml-1" (click)="onTenantSuggestion(tenant.TenantData[key].DisplayText,tenant.TenantName,tenant.Tenant_Stage_ID,tenant.BranchID,tenant.ConfirmedTenantID)"></i>
+                                  </label>
+                                  <i *ngIf="!tenant.TenantData[key].FieldValue" class="fas fa-check-double check-icon text-primary ml-1" (click)="onTenantSuggestion(tenant.TenantData[key].DisplayText,tenant.TenantName,tenant.Tenant_Stage_ID,tenant.BranchID,tenant.ConfirmedTenantID)"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- </div> -->
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+    <!-- <div class="row">
+      <div class="col-md-11 pl-0 mt-2" style="overflow:auto;">
+        <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(1)">««</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(pager.currentPage - 1)">«</a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+            <a (click)="setPage(page)">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.currentPage + 1)">»</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.totalPages)">»»</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-1 mt-2 pr-0">
+        <select class="form-control" [(ngModel)]="pageSize" (change)="filterTenants(pager.currentPage)">
+            <option value="100">100</option>
+            <option value="50">50</option>
+            <option value="20">20</option>
+            <option value="10">10</option>
+          </select>
+    </div>  
+    </div> -->
+  </div>
+</div>
+
+<!-- <div class="row m-0">
+  <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-11 pl-0 mt-2" style="overflow:auto;">
+            <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+            </ul>
+          </div>
+     <div class="col-md-1 mt-1 pr-0" *ngIf="tenantsArrayToScroll.length >0">
+              <select class="form-control" [(ngModel)]="pageSize" (change)="filterTenants(pager.currentPage)">
+                <option value="100">100</option>
+                <option value="50">50</option>
+                <option value="20">20</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+    </div>
+  </div>
+</div> -->

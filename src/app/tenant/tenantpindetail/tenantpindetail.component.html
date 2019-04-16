@@ -1,0 +1,104 @@
+<div class="col-md-12">
+  <div class="row m-0">
+    <button class="btn btn-success mb-3" (click)="showPropertyTenant(tenant.PropertyID,tenant.ConfirmedTenantID,tenant.BranchID)">View</button>
+  </div>
+</div>
+<div class="col-md-12">
+  <h4 style="color:#fff;">{{tenant.TenantName}}</h4>
+  <hr>
+  <div class="col-12 mb-2 p-0">
+    <img class="img-fluid" src="{{mediaUrl + tenant.TenantPhotoUrl}}">
+    <!-- <div class="mainPhotoBox" [ngStyle]="{'background-image': 'url(' + mediaUrl +PropertyDetail.MainPhotoUrl+ ')'}"></div> -->
+  </div>
+  <h5>Overview</h5>
+  <div class="row">
+    <span class="col-4"><b>Tenant ID</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.ConfirmedTenantID}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Phone</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="tenant.OfficePhone">O:+{{tenant.OfficePhone | slice:0:2}} ({{tenant.OfficePhone | slice:2:4}}) {{tenant.OfficePhone | slice:4:8}} {{tenant.OfficePhone | slice:8:12}}</span>
+
+  </div>
+  <div class="row">
+    <span class="col-4"><b>WebSite</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.Website}}   </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>SIC</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.ISIC}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Industry</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.LineOfBusiness}}
+        </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Headquarters</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="tenant.IsCountryHQ"><b>Yes</b></span>
+    <span class="col-6" *ngIf="!tenant.IsCountryHQ"><b>No</b></span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Est.Move-In</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.MoveInDate | date: 'MM/dd/yyyy'}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>{{OccupiedHeader}}</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="unitId != metricUnit">{{tenant.OccupiedSF}}</span>
+    <span class="col-6" *ngIf="unitId == metricUnit">{{tenant.OccupiedSM}}</span>
+  </div>
+
+  <h5>Location Info</h5>
+
+  <div class="row">
+    <span class="col-4"><b>Address</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.Address1}} </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>City</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.CityName}} </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>State</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.StateAbbr}} </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>LGA</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.CountyName}} </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Country</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.CountryCode}} </span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Postal Code</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.ZipCode}} </span>
+  </div>
+
+  <h5>Key Contacts</h5>
+  <div class="row">
+    <span class="col-4"><b>CEO Name</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.CEOName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>CEO Title</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{tenant.CEOTitle}}</span>
+  </div>
+  <button class="btn btn-success mb-3 float-left" (click)="showPropertyTenant(tenant.PropertyID,tenant.ConfirmedTenantID,tenant.BranchID)">View</button>
+</div>

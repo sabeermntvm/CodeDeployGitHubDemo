@@ -1,0 +1,326 @@
+<div class="row m-0">
+    <div class="col-md-12">
+      <div class="row m-0">
+        <div class="col-md-12 p-0">
+          <div class="map-nav">
+            <ul>
+              <li class="active" *ngIf="TotalResultCount > 0"><span class="map-result">{{TotalResultCount}}</span></li>
+              <li [routerLink]="['/transaction/mapsearch']"><span class="map-result"><i class="fas fa-map"></i> Map View</span></li>
+              <li [routerLink]="['/transaction/transactionGallery']"><span class="map-result"><i class="fas fa-th"></i> Gallery View</span></li>
+              <li class="active" *ngIf="selectedCount > 0"><span class="map-result">{{selectedCount}} Selected</span></li>
+            </ul>
+          </div>
+  
+          <div class="action-btn-row" role="group">
+            <!--<button id="btnGroupVerticalDrop1" type="button" (click)="sendReport()" class="btn btn-primary-ash dropdown-toggle"
+              title="Listing Report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="far fa-envelope"></i>
+            </button>
+            <button id="btnGroupVerticalDrop1" type="button" (click)="showReport()" class="btn btn-primary-ash dropdown-toggle"
+              title="Print Report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-print font20"></i>
+            </button>-->
+            <!-- <button id="btnGroupVerticalDrop5" type="button" (click)="showUserPreferencesModal('Download')" title="Export to Excel"
+              class="btn btn-primary-ash" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-file-excel"></i>
+            </button> -->
+            <button id="btnGroupVerticalDrop6" type="button" (click)="showUserPreferencesModal('Download')" title="Export to Excel" class="btn btn-primary-ash"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i>
+            </button>
+          </div>
+          <!-- <div id="myMapSidenav" class="sideMapSearch">
+            <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+            <app-transactionsettingsearch [sheets]="sheets" [userId]="userId" screen="Property" Type="Settings"
+              [(userPreferencesId)]="userPreferencesId" [type]="Task"></app-transactionsettingsearch>
+          </div> -->
+          <div class="sideBarPanelWrap" id="MapSidenavSetting">
+              <a href="javascript:void(0)" *ngIf="CloseActionBtnSet" class="closebtn" (click)="closeNav()"><i
+                  class="fa fa-angle-double-right"></i></a>
+              <div id="MapSidenav" class="sideMapSearch">
+                  <app-transactionsettingsearch [sheets]="sheets" [userId]="userId" screen="Transaction" type="download"
+                  [(userPreferencesId)]="userPreferencesId"
+                  [Type]="Task"></app-transactionsettingsearch>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row m-0">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-5 p-0 mt-2 border">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">««</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">«</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">»</a>
+                </li>
+                <li *ngIf="pager.currentPage < pager.totalPages">
+                  <a (click)="setPage(pager.totalPages)">»»</a>
+                </li>
+                <span class="spinui" *ngIf="Isloader">
+                  <i class="fas fa-spinner fa-spin showspin"></i>
+                </span>
+              </ul>              
+            </div>
+            <div class="col-md-2 float-right offset-md-5 mt-2 pr-0 pl-0">
+              <div class="drop_Box_select">
+                <div class="checkbox checkbox-css chkBoxStyle" style="right: auto !important;
+                  top: 1px !important;">
+                  <input type="checkbox" id="cssCheckbox_0" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked);" />
+                  <label for="cssCheckbox_0" style="white-space: nowrap !important; color: #fff">Select All</label>
+                </div>
+                <i class="fas fa-chevron-down fa-label" data-toggle="collapse" data-target="#selectOptionDrop"></i>
+              </div>
+              <div id="selectOptionDrop" class="collapse col-md-12 pr-0 pl-0 showDrop">
+                <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(1)">Remove Selected</a>
+                <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(0)">Remove
+                  Unselected</a>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="row m-0">
+          <div class="mt-2 col-md-12 p-0">
+            <a hrefd="#/property/details">
+              <div class="table-scroll">
+                <div class="pane pane--table1">
+                  <div class="pane-hScroll">
+                    <table class="table table-bordered table-sm table-head" style="margin-bottom: 0">
+                      <thead>
+                        <tr>
+                          <th style="width:30px; text-align: center;">
+                            <div class="checkbox checkbox-css tableChechbox">
+                              <input type="checkbox" id="propheadCheckbox" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked);" />
+                              <label for="propheadCheckbox"></label>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:130px;" (click)="sortTransaction('SaleID',SaleIDSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('SaleID','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('SaleID','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            View
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'SaleID' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'SaleID' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:183px;" (click)="sortTransaction('Address',AddressSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('Address','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('Address','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Address
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'Address' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'Address' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+  
+                          <th scope="col" style="width:180px;" (click)="sortTransaction('PropertyName',PropertyNameSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('PropertyName','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('PropertyName','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Property Name
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'PropertyName' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'PropertyName' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+  
+                          <th scope="col" style="width:160px;" (click)="sortTransaction('CityName',CityNameSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('CityName','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('CityName','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                           City
+                           <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'CityName' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'CityName' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                          </th>
+  
+                          <th scope="col" style="width:150px;" (click)="sortTransaction('ZipCode',ZipCodeSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('ZipCode','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('ZipCode','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Postal Code
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'ZipCode' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'ZipCode' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+  
+                          <th scope="col" style="width:130px;" (click)="sortTransaction('SoldSF',SoldSFSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('SoldSF','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('SoldSF','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                           Size
+                           <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'SoldSF' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'SoldSF' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                          </th>
+                          <th scope="col" style="width:130px;" (click)="sortTransaction('PropertyUse',PropertyUseSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('PropertyUse','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('PropertyUse','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Type
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'PropertyUse' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'PropertyUse' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:130px;" (click)="sortTransaction('SoldPrice',SoldPriceSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('SoldPrice','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('SoldPrice','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Sold Price
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'SoldPrice' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'SoldPrice' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:130px;" (click)="sortTransaction('SoldDate',SoldDateSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('SoldDate','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('SoldDate','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                           Sold Date
+                           <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'SoldDate' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'SoldDate' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                          </th>
+                          <th scope="col" style="width:152px;" (click)="sortTransaction('SalePricePerSM',SalePricePerSMSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('SalePricePerSM','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('SalePricePerSM','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                           Price/SqM
+                           <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'SalePricePerSM' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'SalePricePerSM' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                          </th>
+                          <th scope="col" style="width:160px;" (click)="sortTransaction('Buyer',BuyerSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortTransaction('Buyer','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortTransaction('Buyer','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                           Buyer
+                           <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'Buyer' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'Buyer' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                          </th>
+                          <th scope="col" style="width:160px;" (click)="sortTransaction('Seller',SellerSortOrder)">
+                              <div class="arrow-group">
+                                <i class="fa fa-sort-up" (click)="sortTransaction('Seller','Ascending'); $event.stopPropagation();"></i>
+                                <i class="fa fa-sort-down" (click)="sortTransaction('Seller','Descending'); $event.stopPropagation();"></i>
+                              </div>
+                             Seller
+                             <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'Seller' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'Seller' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                            </th>
+                        </tr>
+                      </thead>
+  
+                    </table>
+                    <div class="pane-vScroll">
+                      <table class="table table-striped table-bordered table-sm table-head">
+                        <tbody>
+                          <tr *ngFor="let transaction of transactionList; let i = index;">
+                            <td style="width:30px;">
+                              <div class="checkbox checkbox-css tableChechbox">
+                                <input type="checkbox" id="propCheckbox_{{i}}" [(ngModel)]='transaction.isSelected' (change)="Selection($event.target.checked);"
+                                  value="" />
+                                <label for="propCheckbox_{{i}}"></label>
+                              </div>
+                            </td>
+                            <td style="width:130px;"><a class="prop-name" (click)="openDetailNav(transaction)">{{transaction.SaleID}} </a></td>
+                            <td style="width:183px;"><a class="prop-name" (click)="showPropertySummary(transaction.PropertyID,transaction.SaleID)">{{transaction.Address}}</a></td>
+                            <td style="width:180px;"><a class="prop-name" (click)="showPropertySummary(transaction.PropertyID,transaction.SaleID)">{{transaction.PropertyName}}</a></td>
+                            <td style="width:160px;">{{transaction.CityName}}</td>
+                            <td style="width:150px;">{{transaction.ZipCode}}</td>
+                            <td style="width:130px;" *ngIf="UnitId == metricUnit">{{ transaction.SoldSM | number }}</td>
+                            <td style="width:130px;" *ngIf="UnitId != metricUnit">{{ transaction.SoldSF | number }}</td>                            
+                            <td style="width:130px;">{{transaction.PropertyUse}}</td>
+                            <td style="width:130px;">{{transaction.SoldPrice | currency:'USD':'symbol':'1.0-0' }}</td>
+                            <td style="width:130px;">{{transaction.DeedOrSaleDate | date: 'dd/MM/yyyy'}}</td>
+                            <td style="width:152px;">{{transaction.SalePricePerSM | currency:'USD':'symbol':'1.0-0'}}</td>
+                            <td style="width:160px;">{{transaction.Buyer}}</td>
+                            <td style="width:160px;">{{transaction.Seller}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-5 p-0 mt-2 border">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">««</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">«</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">»</a>
+                </li>
+                <li *ngIf="pager.currentPage < pager.totalPages">
+                  <a (click)="setPage(pager.totalPages)">»»</a>
+                </li>
+                <span class="spinui" *ngIf="Isloader">
+                  <i class="fas fa-spinner fa-spin showspin"></i>
+                </span>
+              </ul>             
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="myMapDetailSideBar" class="sideMapSearch">
+      <div>
+          <a href="javascript:void(0)" class="closebtn" (click)="closeDetailNav()">&times;</a>
+          <app-transactionpindetail  [transaction]="transactionInfo" (onClose)="closeTransactionModal()"></app-transactionpindetail>
+      </div>
+  </div> -->
+  <div class="sideBarPanelWrap" id="MapSidenavWrapDetail">
+      <a href="javascript:void(0)" *ngIf="CloseActionBtnDetail" class="closebtn" (click)="closeDetailNav($event)"><i class="fa fa-angle-double-right"></i></a>
+      <div id="MapDetailSideBar" class="sideMapSearch">
+          <app-transactionpindetail  [transaction]="transactionInfo" (onClose)="closeTransactionModal()"></app-transactionpindetail>
+      </div>
+    </div>

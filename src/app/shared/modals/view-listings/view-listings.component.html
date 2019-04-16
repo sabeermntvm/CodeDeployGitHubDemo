@@ -1,0 +1,47 @@
+<div class="col-lg-12 no-padding margin-top-5">
+  <div class="col-lg-12">
+    <div class="padding10">
+      The items below indicate additional listings that are active on the selected property. Select a card to view the
+      listing details.
+    </div>
+  </div>
+  <div class="col-lg-4" *ngFor="let listing of addListings">
+    <div class="card card1" (click)="showListingDetails(listing.PropertyID, listing.ListingID);onClose.emit()">
+      <div class="card-header detl-card-header"></div>
+      <div class="card-body">
+        <div *ngIf="listing.RecordTypeName == 'Sale'">
+          <b class="listing-type">For {{listing.RecordTypeName}}</b>
+          <br/>
+          <br/>
+          <div>{{listing.ListingStatusName}}</div>
+          <div>${{listing.AskingSalePrice}}</div>
+          <div>{{property.BuildingSizeSM}} SqM</div>
+          <div>{{listing.PercentageOccupied}}% Occupied</div>
+          <br/>
+          <br/>
+          <div>Offered By:</div>
+          <div>{{listing.ListingCompanyName}}</div>
+          <div>{{listing.ListingBroker1}}</div>
+          <div *ngIf="listing.CompanyMainPhotoUrl"><img style="max-width: 70px;max-height: 70px;" [src]="preImageUrl + listing.CompanyMainPhotoUrl"></div>
+          <div class="listingmodal-bottom-right"><a data-dismiss="modal" (click)="showListingDetails(listing.PropertyID, listing.ListingID);onClose.emit()"><i class="fa fa-share"></i></a></div>
+        </div>
+        <div *ngIf="listing.RecordTypeName == 'Lease'">
+          <b class="listing-type">For {{listing.ListingTypeDisplayName}}</b>
+          <br/>
+          <br/>
+          <div *ngIf="listing.ListingStatusName">{{listing.ListingStatusName}}</div>
+          <div *ngIf="listing.LeaseRatePerYear">${{listing.LeaseRatePerYear}}/Yr{{listing.LeaseTypeName}}</div>
+          <div *ngIf="listing.TotalAvailableSM">{{listing.TotalAvailableSM}} SqM Available</div>
+          <div *ngIf="listing.TotalVacantSM">{{listing.TotalVacantSM}}SqM Vacant</div>
+          <br/>
+          <br/>
+          <div>Offered By:</div>
+          <div *ngIf="listing.ListingCompanyName">{{listing.ListingCompanyName}}</div>
+          <div *ngIf="listing.ListingBroker1">{{listing.ListingBroker1}}</div>
+          <div *ngIf="listing.CompanyMainPhotoUrl"><img style="max-width: 70px;max-height: 70px;" [src]="preImageUrl + listing.CompanyMainPhotoUrl"></div>
+          <div class="listingmodal-bottom-right"><a data-dismiss="modal" (click)="showListingDetails(listing.PropertyID, listing.ListingID);onClose.emit()"><i class="fa fa-share"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

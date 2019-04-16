@@ -1,0 +1,474 @@
+<div class="mapSearchIcon">
+    <button type="type" class="btn btn-search" (click)="openNav()"><i class="fa fa-filter"></i></button>
+</div>
+<div class="sideBarPanelWrap" id="MapSidenavWrap">
+        <form [formGroup]="leaseSearchForm">
+                
+    <a href="javascript:void(0)" style="background: #455463c2" *ngIf="CloseActionBtn" class="closebtn" (click)="closeNav()"><i
+            class="fa fa-angle-double-right"></i></a>
+    <div id="MapSidenav" class="sideMapSearch" style="background: #455463">
+        <div *ngIf="SideNav">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success mb-2 float-left"  type="button" style="width:49%; position: relative;" (click)="onSearchClick()"><i
+                                class="fas fa-spinner fa-spin showspin" *ngIf="Isloader"></i>SEARCH</button>
+                        <button class="btn btn-primary mb-2  float-right"  type="button" style="width:49%;" (click)="onSearchResetClick()">RESET</button>
+                    </div>
+                </div>
+                <button type="button" class="searchBtnActions whiteBorder mb-2" (click)="DrawShape('polygon')"><i class="fas fa-draw-polygon"></i>
+                    Draw Polygon
+                    <span class="pull-right innerpages-circle" *ngIf="isSelectDrawPolyGon"><i class="fa fa-check"></i></span></button>
+                <button type="button" class="searchBtnActions whiteBorder mb-0" (click)="DrawShape('circle')"><i class="fas fa-circle"></i>
+                    Draw Radius
+                    <span class="pull-right innerpages-circle" *ngIf="isSelectDrawCircle"><i class="fa fa-check"></i></span></button>
+                <hr>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#location"
+                        aria-expanded='true'><i class="fas fa-location"></i>Location
+                        <span class="pull-right innerpages-circle" *ngIf=" isCitySelected || isPostalCodeSelected"><i
+                                class="fa fa-check"></i></span>
+                    </button>                                         
+                    <div id="location" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <ng-select class="mb-2" formControlName="cityArray" placeholder="Select City" [items]="CityList" [virtualScroll]="true"
+                            [typeahead]="cityInput" [loading]="cityLoading" bindLabel="City" bindValue="CityID"
+                            [multiple]="true" [(ngModel)]="cityArray" (change)="onSelectCity($event)"></ng-select>
+                    </div>
+                    <div id="location"  class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <ng-select class="mb-2"formControlName="zipCodeArray" placeholder="Select Postal Code" [items]="ZipCodes" [virtualScroll]="true"
+                            [typeahead]="zipcodeInput" [loading]="zipcodeLoading" bindLabel="ZipCode" bindValue="ZipCode"
+                            [multiple]="true" [(ngModel)]="zipCodeArray" (change)="onSelectZipCode($event)"></ng-select>
+                    </div>                   
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#propertyType"
+                        aria-expanded='true'>Property Type
+                        <span class="innerpages-circle pull-right" *ngIf="isPropertyTypeSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="propertyType" class="collapse show mb-2 mt-2 pl-2 pr-2">                        
+                        <ng-select formControlName="propertyTypeArray" [items]="propertyTypes" bindLabel="UseTypeName" bindValue="UseTypeID"
+                        [virtualScroll]="true" placeholder="Select Property" [multiple]="true" [(ngModel)]="propertyTypeArray"
+                        (change)="onPropertyTypeSelected($event)"></ng-select>
+                    </div>
+                </div>
+                <div class="expandBox">
+                        <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#listingType"
+                        aria-expanded='true'>Specific Use
+                        <span class="innerpages-circle pull-right" *ngIf="isSpecificUseSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="specificUse" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="col-md-12" *ngIf="!SpecificUseList || SpecificUseList.length<=0">
+                            <p style="color:#fff;">Please first select a property type.</p>
+                        </div>
+                        <ng-select *ngIf="SpecificUseList.length>0" formControlName="specificUseArray" [items]="SpecificUseList" bindLabel="SpecificUsesName"
+                            bindValue="SpecificUsesID" [virtualScroll]="true"  groupBy="PropertyTypeName" placeholder="Select Listing" [multiple]="true"
+                            [(ngModel)]="specificUseArray" (change)="onSpecificUseSelected($event)"></ng-select>
+                    </div>
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#PropertySize"
+                        aria-expanded='true'>Property Size
+                        <span class="pull-right innerpages-circle" *ngIf="isPropertySizeSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="PropertySize" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5"> <input formControlName="PropertySizeMin" type="text" class="form-control" placeholder="Min"
+                                    (blur)="onBlurMethod();checkValidations()" [ngClass]="{'error-field':(PropertySizeMinError)}" currencyMask [options]="formatOptions" [(ngModel)]="leaseSearchCriteria.PropertySizeMin">
+                                    <div class="validation-error" *ngIf="(PropertySizeMinError)">Min value cannot be greater than max value</div></span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5"> <input formControlName="PropertySizeMax" type="text" class="form-control" placeholder="Max"
+                                    (blur)="onBlurMethod();checkValidations()"  [ngClass]="{'error-field':(PropertySizeMinError)}"currencyMask [options]="formatOptions" [(ngModel)]="leaseSearchCriteria.PropertySizeMax">
+                                    <div class="validation-error" *ngIf="(PropertySizeMinError)">Min value cannot be greater than max value</div></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#PropertyGrade"
+                        aria-expanded='true'>Property Grade
+                        <span class="pull-right innerpages-circle" *ngIf="isPropertyGradeSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="SaleType" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            
+                            <span class="col-12"> 
+                                    <ng-select *ngIf="PropertyGradesList.length>0" formControlName="PropertyGradesArray" [items]="PropertyGradesList" bindLabel="ClassTypeName"
+                                            bindValue="ClassTypeID" [virtualScroll]="true"   placeholder="Select Property Grades" 
+                                            [multiple]="true"
+                                            [(ngModel)]="PropertyGradesArray" (change)="onSelectBuildingClass($event)"></ng-select>
+<!-- 
+                                <input type="text" class="form-control" placeholder="Property Grade"
+                                    (blur)="onBlurMethod()" [(ngModel)]="leaseSearchCriteria.PropertyGrades"> -->
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Tenancy"
+                        aria-expanded='true'>Tenancy
+                        <span class="pull-right innerpages-circle" *ngIf="isTenancySelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="SaleType" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-12"> 
+                                    <ng-select *ngIf="TenancyList.length>0" formControlName="TenancyArray" [items]="TenancyList" bindLabel="TenancyName"
+                                            bindValue="TenancyID" [virtualScroll]="true"   placeholder="Select Tenancy" 
+                                            [multiple]="true"
+                                            [(ngModel)]="TenancyArray" (change)="onSelectTenancy($event)"></ng-select>
+                                <!-- <input type="text" class="form-control" placeholder="Tenancy"
+                                    (blur)="onBlurMethod()" [(ngModel)]="leaseSearchCriteria.Tenancys"> -->
+                                </span>
+                        </div>
+                    </div>
+                </div>  
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#LeasedSqM"
+                        aria-expanded='true'>Leased SqM
+                        <span class="pull-right innerpages-circle" *ngIf="isLeasedSqMSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="LeasedSqM" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5"> <input formControlName="LeasedSqMMin" type="text" class="form-control" placeholder="Min"
+                                    (blur)="onBlurMethod();checkValidations()" [ngClass]="{'error-field':(LeasedSqMMinError)}" currencyMask [options]="formatOptions" [(ngModel)]="LeasedSqMMin">
+                                    <div class="validation-error" *ngIf="(LeasedSqMMinError)">Min value cannot be greater than max value</div></span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5"> <input formControlName="LeasedSqMMax" type="text" class="form-control" placeholder="Max"
+                                    (blur)="onBlurMethod();checkValidations()"  [ngClass]="{'error-field':(LeasedSqMMinError)}" currencyMask [options]="formatOptions" [(ngModel)]="LeasedSqMMax">
+                                    <div class="validation-error" *ngIf="(LeasedSqMMinError)">Min value cannot be greater than max value</div></span>
+                        </div>
+                    </div>
+                </div>                              
+                <!-- <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#ExecutionDate"
+                        aria-expanded='true'>Execution/Commencement Date
+                        <span class="pull-right innerpages-circle" *ngIf="isExecutionDateSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="ExecutionDate" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                   
+                                        <input class="form-control calendar" formControlName="ExecutionDateMin" (ngModelChange)="onDateChanged('ExecutionDateMin',$event);checkValidations()" [ngClass]="{'error-field':(ExecutionDateMinError)}"
+                                        placeholder="Start"  (click)="d1.toggle()" [(ngModel)]="ExecutionDateMin"
+                                        ngbDatepicker [minDate]="ExecutionDateMin-25" [maxDate]="maxDate" #d1="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(ExecutionDateMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                  
+                                        <input class="form-control calendar" formControlName="ExecutionDateMax" (ngModelChange)="onDateChanged('ExecutionDateMax',$event);checkValidations()" [ngClass]="{'error-field':(ExecutionDateMinError)}"
+                                        placeholder="End"  (click)="d2.toggle()" [(ngModel)]="ExecutionDateMax"
+                                        ngbDatepicker [minDate]="ExecutionDateMax-25" [maxDate]="maxDate" #d2="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(ExecutionDateMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>   -->
+                
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#DateOccupied"
+                        aria-expanded='true'>Commencement Date
+                        <span class="pull-right innerpages-circle" *ngIf="isDateOccupiedSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="DateOccupied" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                    <!-- <input class="form-control calendar" formControlName="DateOccupiedMin" (ngModelChange)="onDateChanged('ExecutionDateMin',$event)"
+                                        placeholder="Min" #c2="ngModel" (click)="d1.toggle()" [(ngModel)]="DateOccupiedMin"
+                                        ngbDatepicker [minDate]="minDate" [maxDate]="maxDate" #d1="ngbDatepicker"> -->
+                                        <input class="form-control calendar" formControlName="DateOccupiedMin" (ngModelChange)="onDateChanged('DateOccupiedMin',$event);checkValidations()" [ngClass]="{'error-field':(DateOccupiedMinError)}"
+                                        placeholder="Start"  (click)="d1.toggle()" [(ngModel)]="DateOccupiedMin"
+                                        ngbDatepicker [minDate]="DateOccupiedMin-25" [maxDate]="maxDate" #d1="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(DateOccupiedMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                    <!-- <input class="form-control calendar" formControlName="ExecutionDateMax" (ngModelChange)="onDateChanged('ExecutionDateMax',$event)"
+                                        placeholder="Max" #c2="ngModel" (click)="d2.toggle()" [(ngModel)]="ExecutionDateMax"
+                                        ngbDatepicker [minDate]="minDate" [maxDate]="maxDate" #d2="ngbDatepicker"> -->
+                                        <input class="form-control calendar" formControlName="DateOccupiedMax" (ngModelChange)="onDateChanged('DateOccupiedMax',$event);checkValidations()" [ngClass]="{'error-field':(DateOccupiedMinError)}"
+                                        placeholder="End"  (click)="d2.toggle()" [(ngModel)]="DateOccupiedMax"
+                                        ngbDatepicker [minDate]="DateOccupiedMax-25" [maxDate]="maxDate" #d2="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(DateOccupiedMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>      
+                
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse"
+                        data-target="#ExpiryDate" aria-expanded='true'>Lease Expiry Date
+                        <span class="pull-right innerpages-circle" *ngIf="isExpiryDateSelected"><i
+                                class="fa fa-check"></i></span>
+                    </button>
+                    <div id="ExpiryDate" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5">
+                                <div class="input-group-append">
+                               
+                                    <input formControlName="ExpiryDateMin" class="form-control calendar"
+                                        (ngModelChange)="onDateChanged('ExpiryDateMin',$event);checkValidations()"
+                                        [ngClass]="{'error-field':(ExpiryDateMinError)}" placeholder="Start"
+                                        (click)="d7.toggle()" [(ngModel)]="ExpiryDateMin" ngbDatepicker
+                                        [minDate]="ExpiryDateMin-25" [maxDate]="ExpiryDateMin+25" #d7="ngbDatepicker">
+                                    <div class="validation-error" *ngIf="(ExpiryDateMinError)">Min value cannot be
+                                        greater than max value</div>
+                                </div>
+
+                            </span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                  
+                                    <input formControlName="ExpiryDateMax" class="form-control calendar"
+                                        (ngModelChange)="onDateChanged('ExpiryDateMax',$event);checkValidations()"
+                                        [ngClass]="{'error-field':(ExpiryDateMinError)}" placeholder="End"
+                                        (click)="d8.toggle()" [(ngModel)]="ExpiryDateMax" ngbDatepicker
+                                        [minDate]="ExpiryDateMax-25" [maxDate]="ExpiryDateMax+25" #d8="ngbDatepicker">
+                                    <div class="validation-error" *ngIf="(ExpiryDateMinError)">Min value cannot be
+                                        greater than max value</div>
+                                </div>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>        
+                <!-- <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#SignDate"
+                        aria-expanded='true'>Sign Date
+                        <span class="pull-right innerpages-circle" *ngIf="isSignDateSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="SignDate" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                        <input class="form-control calendar" formControlName="SignDateMin" (ngModelChange)="onDateChanged('SignDateMin',$event);checkValidations()" [ngClass]="{'error-field':(SignDateMinError)}"
+                                        placeholder="Min"  (click)="d3.toggle()" [(ngModel)]="SignDateMin"
+                                        ngbDatepicker [minDate]="SignDateMin-25" [maxDate]="maxDate" #d3="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(SignDateMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                        <input class="form-control calendar" formControlName="SignDateMax" (ngModelChange)="onDateChanged('SignDateMax',$event);checkValidations()" [ngClass]="{'error-field':(SignDateMinError)}"
+                                        placeholder="Max"  (click)="d6.toggle()" [(ngModel)]="SignDateMax"
+                                        ngbDatepicker [minDate]="SignDateMax-25" [maxDate]="maxDate" #d6="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(SignDateMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#SubleaseFilter"
+                        aria-expanded='true'>Sublease filter
+                        <span class="pull-right innerpages-circle" *ngIf="isSubleaseFilterSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="SubleaseFilter" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="radio radio-css radio-inline">
+                                    <input formControlName="SubLeaseFilter" type="radio" name="SubLeaseFilter" id="inline-radio1" value="1"  [(ngModel)]="leaseSearchCriteria.SubLeaseFilter" (click)="onBlurMethod(1)" />
+                                    <label for="inline-radio1">Include Sublease</label>
+                                </div>
+
+                                <div class="radio radio-css radio-inline">
+                                    <input formControlName="SubLeaseFilter" type="radio" name="SubLeaseFilter" id="inline-radio2" value="2"  [(ngModel)]="leaseSearchCriteria.SubLeaseFilter" (click)="onBlurMethod(2)" />
+                                <label for="inline-radio2">Exclude Sublease</label>
+                                </div>
+                            </div>
+                        </div>    
+                        <div class="row">
+                            <div class="col-md-12">           
+                                         <div class="radio radio-css radio-inline">
+                                    <input formControlName="SubLeaseFilter" type="radio" name="SubLeaseFilter" id="inline-radio3" value="3"  [(ngModel)]="leaseSearchCriteria.SubLeaseFilter" (click)="onBlurMethod(3)" />
+                                    <label for="inline-radio3">Sublease Only</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#LandLordRepCompany"
+                        aria-expanded='true'>Landlord Rep Company
+                        <span class="pull-right innerpages-circle" *ngIf="isLandLordRepCompany"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="LandLordRepCompany" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                        <span class="col-12"><ng-select formControlName="landlordRepCompanyArray" placeholder="--Select--" [items]="LandLordRepCompanyList" [virtualScroll]="true"
+                                [typeahead]="landLordRepCompanyInput" [loading]="landlordRepCompanyLoading" bindLabel="CompanyName" bindValue="CompanyID"
+                                [multiple]="true" [(ngModel)]="landlordRepCompanyArray" (change)="onLandLordRepCompanySelect($event)"></ng-select>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#TenantRepCompany"
+                        aria-expanded='true'>Tenant Rep Company
+                        <span class="pull-right innerpages-circle" *ngIf="isTenantRepCompanySelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="TenantRepCompany" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-12">
+                                    <ng-select formControlName="tenantRepCompanyArray" placeholder="--Select--" [items]="TenantRepCompanyList" [virtualScroll]="true"
+                                    [typeahead]="tenantRepCompanyInput" [loading]="tenantRepCompanyLoading" bindLabel="CompanyName" bindValue="CompanyID"
+                                    [multiple]="true" [(ngModel)]="tenantRepCompanyArray" (change)="onTenantRepCompanySelect($event)"></ng-select>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#SelectOwner"
+                        aria-expanded='true'>Landlord/Owner Name
+                        <span class="pull-right innerpages-circle" *ngIf="isLandLordnameSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="SelectOwner" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-12">
+                                    <ng-select formControlName="landLordNameArray" placeholder="--Select--" [items]="LandLordNameList" [virtualScroll]="true"
+                                    [typeahead]="landLordNameInput" [loading]="landLordNameLoading" bindLabel="CompanyName" bindValue="ContactID"
+                                    [multiple]="true" [(ngModel)]="landLordNameArray" (change)="onLandLordNameSelect($event)"></ng-select>
+                            </span>
+                        </div>
+                    </div>
+                </div>                
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#DateCreated"
+                        aria-expanded='true'>Date Created
+                        <span class="pull-right innerpages-circle" *ngIf="isDateCreatedSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="DateCreated" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                        <span class="col-5">
+                                <div class="input-group-append">
+                                    <!-- <input formControlName="DateCreatedMin" class="form-control calendar" (ngModelChange)="onDateChanged('DateCreatedMin',$event)"
+                                        placeholder="Min" #c2="ngModel" (click)="d5.toggle()" [(ngModel)]="DateCreatedMin"
+                                        ngbDatepicker [minDate]="minDate" [maxDate]="maxDate" #d5="ngbDatepicker"> -->
+                                        <input formControlName="DateCreatedMin" class="form-control calendar" (ngModelChange)="onDateChanged('DateCreatedMin',$event);checkValidations()" [ngClass]="{'error-field':(DateCreatedMinError)}"
+                                        placeholder="Start" (click)="d5.toggle()" [(ngModel)]="DateCreatedMin"
+                                        ngbDatepicker [minDate]="DateCreatedMin-25" [maxDate]="maxDate" #d5="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(DateCreatedMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                                
+                            </span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5">
+                                <div class="input-group-append">
+                                    <!-- <input formControlName="DateCreatedMax" class="form-control calendar" (ngModelChange)="onDateChanged('DateCreatedMax',$event)"
+                                        placeholder="Max" #c2="ngModel" (click)="d4.toggle()" [(ngModel)]="DateCreatedMax"
+                                        ngbDatepicker [minDate]="minDate" [maxDate]="maxDate" #d4="ngbDatepicker"> -->
+                                        <input formControlName="DateCreatedMax" class="form-control calendar" (ngModelChange)="onDateChanged('DateCreatedMax',$event);checkValidations()" [ngClass]="{'error-field':(DateCreatedMinError)}"
+                                        placeholder="End" (click)="d4.toggle()" [(ngModel)]="DateCreatedMax"
+                                        ngbDatepicker [minDate]="DateCreatedMax-25" [maxDate]="maxDate" #d4="ngbDatepicker">
+                                        <div class="validation-error" *ngIf="(DateCreatedMinError)">Min value cannot be greater than max value</div>
+                                </div>
+                               
+                            </span>
+                        </div>
+                    </div>  
+                </div>                
+                <hr>
+                <p style="color: #fff;">Select filters before clicking apply</p>
+
+                <button class="btn btn-success mb-2 float-left"  type="button" style="width:49%; position: relative;" (click)="onSearchClick()"><i
+                        class="fas fa-spinner fa-spin showspin" *ngIf="Isloader"></i>SEARCH</button>
+                <button class="btn btn-primary mb-2  float-right"  type="button" style="width:49%;" (click)="onSearchResetClick()">RESET</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+<div class="map-nav" *ngIf="leaseCompCount > 0">
+    <ul>
+        <li class="active"><span class="map-result">{{leaseCompCount}}</span></li>
+        <li><span class="map-result" [routerLink]="['/lease/resultsGrid']"><i class="fas fa-list-ul"></i> Grid
+                View</span></li>
+        <li><span class="map-result" [routerLink]="['/lease/leasegallery']"><i class="fas fa-list-ul"></i> Gallery
+                View</span></li>
+    </ul>
+</div>
+<div class="refresh-nav" *ngIf="isViewportChange">
+    <button class="refreshButton" (click)="refreshResults()"><i class="fas fa-spinner fa-spin showspin" *ngIf="IsRefreshloader"></i>Refresh
+        Results</button>
+</div>
+<div class="wrapB LegentMedia">
+    <div class="pinColorWrap">
+        <div class="pinBox"><span><img src="assets/img/blue.png" class="float-left"></span><span class="label">Office</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/red.png" class="float-left"></span><span class="label">Industrial</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/orange.png" class="float-left"></span><span class="label">Retail</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/brown.png" class="float-left"></span><span class="label">Multi-Family</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/Magentha.png" class="float-left"></span><span class="label">Special
+                Use</span> </div>
+        <div class="pinBox"><span><img src="assets/img/green.png" class="float-left"></span><span class="label">Land</span>
+        </div>
+    </div>
+</div>
+<div class="Legenticon">
+    <button type="type" class="btn btn-search" style="padding: 5px 8px 8px 9px;" (click)="openLegent()">
+        <img src="assets/img/legent.png">
+    </button>
+</div>
+
+<div class="LegentWrap" id="LegentDetailSideBar">
+    <a href="javascript:void(0)" *ngIf="legentCloseActionBtn" class="closebtn" (click)="closeLegent()"><i class="fa fa-angle-double-right"></i></a>
+    <div id="LegentSideBar" class="LegentBox">
+        <div class="wrapB">
+            <div class="pinColorWrap">
+                <div class="pinBox"><span><img src="assets/img/blue.png" class="float-left"></span><span class="label">Office</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/red.png" class="float-left"></span><span class="label">Industrial</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/orange.png" class="float-left"></span><span class="label">Retail</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/brown.png" class="float-left"></span><span class="label">Multi-Family</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/Magentha.png" class="float-left"></span><span class="label">Special
+                        Use</span> </div>
+                <div class="pinBox"><span><img src="assets/img/green.png" class="float-left"></span><span class="label">Land</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapB" [ngClass]="{'wrapB-smallposition': SideNav && !pageSettings.pageSidebarMinified && hasSearchResult}" *ngIf="showClearBtn">
+    <button class="clearButton btn-align" (click)="clearPolygon()">
+        Clear Shape</button>
+</div>
+<div class="map" id="mainmap" [ngClass]="{'shortest-map': SideNav && !pageSettings.pageSidebarMinified,'short-map-leftpanel': !SideNav && !pageSettings.pageSidebarMinified ,'shorten-map': SideNav && pageSettings.pageSidebarMinified}"></div>
+
+<div class="sideBarPanelWrap" id="MapSidenavWrapDetail">
+    <a href="javascript:void(0)" *ngIf="CloseActionBtnDetail" class="closebtn" (click)="closeDetailNav()"><i class="fa fa-angle-double-right"></i></a>
+    <div id="MapDetailSideBar" class="sideMapSearch">
+        <div *ngIf="SideDetailNav">
+            <app-leasepindetail [leasetransaction]="leaseInfo"></app-leasepindetail>
+        </div>
+    </div>
+</div>
+
+<div class="sideBarPanelWrap" id="MapSidenavWrapMultiDetail">
+    <a href="javascript:void(0)" *ngIf="CloseActionBtnMultiDetail" class="closebtn" (click)="closeMultiDetailNav()"><i
+            class="fa fa-angle-double-right"></i></a>
+    <div id="MapMultiDetailSideBar" class="sideMapSearch">
+        <div *ngIf="SideMultiDetailNav">
+            <app-leasemultipindetail [PropertyId]="selectedPropertyId" [leasetransaction]="leaseInfo"></app-leasemultipindetail>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="btnDownload"><a (click)="downloadFile()" style="float: right;"><i class="fa fa-download"></i></a></div>
+<div class="SpinnerCircle" *ngIf="spinnerStatus">
+<i class="fa fa-spinner fa-spin"></i>
+</div>
+<div  style="height: 70vh;overflow: auto">
+  <pdf-viewer [src]="pdfSrc" 
+  [render-text]="true"
+  style="display: block;"
+   [show-all]="true"
+   [stick-to-page]="true"
+   [original-size]="false"
+   [autoresize]="true"
+   (after-load-complete)="callBackFn($event)"
+></pdf-viewer>
+</div>

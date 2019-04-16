@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="blue prev-rit-head">Select which images to include in your report package or upload your own images</h4>
+    </div>
+    <div class="col-md-12">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel *ngFor="let prop of _sharedDataService.selectedPropertListingDetails;let propIndex = index">
+                <ng-template ngbPanelTitle>
+                    <span class="indexBox">{{propIndex + 1}}</span><span class="acrdHead"><b>{{prop.allInfo.PropertyName}}
+                            <span>
+                                <font *ngIf="prop.allInfo.ListingCompanyName"> - {{prop.allInfo.ListingCompanyName}}
+                                </font>
+                                <font *ngIf="prop.allInfo.TotalAvailable"> - {{prop.allInfo.TotalAvailable}} SqM</font>
+                            </span>
+                            <!--<span *ngIf="prop.allInfo.GeneralUse"> - For {{prop.allInfo.GeneralUse}}
+                        <font *ngIf="prop.allInfo.TotalAvailable"> - {{prop.allInfo.TotalAvailable}} SqM</font></span>-->
+                        </b>
+                    </span>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="crd-width-gallery">
+                                <div class="media-img1 image-upload">
+                                    <label for="inputFiles_{{propIndex}}">
+                                        <i class="fa fa-upload" aria-hidden="true"></i>
+                                        <span class="uploadLabel">Upload File</span>
+                                    </label>
+                                    <input id="inputFiles_{{propIndex}}" name="files[]" multiple="" type="file" accept="image/*"
+                                        (change)="fileChangeEvent($event, propIndex)">
+                                </div>
+                            </div>
+
+                            <div class="crd-width-gallery" *ngFor="let media of prop.PropertyMedia;let mediaIndex = index">
+                                <div class="dash-gal-img-txt-top">
+                                    <div class="checkbox checkbox-css chkBoxStyle">
+                                        <input type="checkbox" id="cssCheckbox{{propIndex}}_{{mediaIndex}}" value=""
+                                            [(ngModel)]='media.isSelected' (change)="selectMedia($event, mediaIndex, propIndex)" />
+                                        <label for="cssCheckbox{{propIndex}}_{{mediaIndex}}"></label>
+                                    </div>
+                                </div>
+                                <div class="gal-img" (click)="selectMedia($event, mediaIndex, propIndex)" [ngStyle]='{"background-image":"url("+media.url+ ")"}'>
+                                    <!-- <a  (click)="selectMedia($event, mediaIndex, propIndex, media)">sdfhsd</a> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!!prop.ListingMedia && prop.ListingMedia.length>0">
+                        <div class="col-md-12">
+                            <div class="row pt-1 pb-1">
+                                <h4 class="col-md-2 pl-0">Listing Media</h4>
+                                <div class="col-md-10 dashLine"></div>
+                            </div>
+                            <div class="crd-width-gallery" *ngFor="let listingMedia of prop.ListingMedia;let listMediaIndex = index">
+                                <div class="dash-gal-img-txt-top">
+                                    <div class="checkbox checkbox-css chkBoxStyle">
+                                        <input type="checkbox" id="cssCheckboxlist_{{propIndex}}_{{listMediaIndex}}"
+                                            value="" [(ngModel)]='listingMedia.isSelected' (change)="selectMedia($event, listMediaIndex, propIndex)" />
+                                        <label for="cssCheckboxlist_{{propIndex}}_{{listMediaIndex}}"> </label>
+                                    </div>
+                                </div>
+                                <div class="gal-img" (click)="selectMedia($event, listMediaIndex, propIndex)" [ngStyle]='{"background-image":"url("+listingMedia.url+ ")"}'>
+                                    <!-- <a  (click)="selectMedia($event, mediaIndex, propIndex, media)">sdfhsd</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+
+
+
+    <!-- <div class="col-md-12" *ngFor="let prop of _sharedDataService.selectedProperties;let propIndex = index">
+        <div class="row">
+            <div class="col-lg-12">
+                <span class="indexBox">{{propIndex + 1}}</span><span class="valueName">{{prop.PropertyName}}</span>
+            </div>
+            <div class="col-lg-10 mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="crd-width-gallery" *ngFor="let media of prop.PropertyMedia;let mediaIndex = index">
+                            <div class="checkbox checkbox-css chkBoxStyle">
+                                <input type="checkbox" id="cssCheckbox{{mediaIndex}}" value="" [(ngModel)]='media.isSelected'
+                                    (change)="selectMedia($event, mediaIndex, propIndex)" />
+                                <label for="cssCheckbox{{mediaIndex}}"></label>
+                            </div>
+                            <div class="gal-img" [ngStyle]='{"background-image":"url("+media.url+ ")"}' (click)="selectMedia($event, mediaIndex, propIndex)">
+                            </div>
+                        </div>
+
+                        <div class="checkbox checkbox-css chkBoxStyle">
+                                <input type="checkbox" id="cssCheckbox{{mediaIndex}}" value="" [(ngModel)]='media.isSelected'
+                                    (change)="selectMedia($event, mediaIndex, propIndex)" />
+                                <label for="cssCheckbox{{mediaIndex}}"></label>
+                            </div>
+                            <div class="gal-img" [ngStyle]='{"background-image":"url("+media.url+ ")"}' (click)="selectMedia($event, mediaIndex, propIndex)">
+                            </div>
+    
+                            <div class="media-img1">
+                                <label>
+                                    <img [class.check]="media.isSelected" class="img-responsive img-check img" [src]="media.url"
+                                        (click)="selectMedia($event, mediaIndex, propIndex)" width="100%">
+                                    <a class="overlay">
+                                        <i class="fa fa-check font40" style="color:#fff"></i>
+                                    </a>
+                                    <input type="checkbox" class="hidden" autocomplete="off">
+                                </label>
+                            </div>
+                            <p class="center"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 mt-6 mb-3">
+                <div class="media-img1 image-upload">
+                    <label for="inputFiles_{{propIndex}}">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <span class="uploadLabel">Upload File</span>
+                    </label>
+
+                    <input id="inputFiles_{{propIndex}}" name="files[]" multiple="" type="file" accept="image/*"
+                        (change)="fileChangeEvent($event, propIndex)">
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

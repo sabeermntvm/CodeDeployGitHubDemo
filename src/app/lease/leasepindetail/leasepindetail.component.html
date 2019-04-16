@@ -1,0 +1,139 @@
+<div class="col-md-12">
+  <div class="row m-0">
+    <!-- <button class="btn btn-success mb-3" (click)="showPropertyTenant()">View</button> -->
+    <button class="btn btn-success mb-3" (click)="openPropertySummary(propertyDetails.PropertyID,leasetransaction.LeaseID)">View</button>
+    
+  </div>
+</div>
+<div class="col-md-12">
+  <h4 style="color:#fff;">{{leasetransaction.PropertyName || leasetransaction.Address}}</h4>
+  <hr>
+  <div class="col-12 mb-2 p-0">
+   <!--  <img class="img-fluid" src="../../../assets/img/gallery/gallery-11.jpg"> -->
+     <div class="mainPhotoBox" [ngStyle]="{'background-image': 'url(' + mediaUrl +propertyDetails.MainPhotoUrl+ ')'}"></div>
+  </div>
+  <h5>Transaction Overview</h5>
+  <div class="row">
+    <span class="col-4"><b>Tenant Name</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.TenantName}}</span>
+  </div>
+  <div class="row" *ngFor="let leaseDetail of leasetransactionDetail.LeaseInfo">
+    <span class="col-4"><b>Commencement Date</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leaseDetail.DateOccupied}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Floor</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.FloorNumber}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Suite</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.SuiteNumber}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Lease SqM</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="leasetransaction.LeasedSM">{{leasetransaction.LeasedSM}} SqM</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Expiry Date</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.ExpirationDate}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Direct/Sublease</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.ListingTypeName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Starting Rent/SqM/Yr</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="leasetransaction.StartingRatePerSMPerYr">$ {{leasetransaction.StartingRatePerSMPerYr}}</span>
+   </div>
+  <div class="row">
+    <span class="col-4"><b>Landlord Rep</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.LandLordRep}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Tenant Rep</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.TenantRep}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Transaction Origination</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.TransactionOriginationTypeName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Dealing#</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.DealingNumber}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Folio</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.Folio}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Lease Folio</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{leasetransaction.LeaseFolio}}</span>
+  </div>
+  <div class="row">
+      <span class="col-4"><b>Head Title</b></span>
+      <span class="col-2 hyphen">-</span>
+      <span class="col-6">{{leasetransaction.HeadTitle}}</span>
+    </div>
+  <h5>Property Location</h5>
+  <div class="row">
+    <span class="col-4"><b>Property ID</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.PropertyID}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Address</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.Address}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>City</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.CityName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>State</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.StateName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>LGA</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.LGA}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Country</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.CountryID}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Postal Code</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6">{{propertyDetails.ZipCode}}</span>
+  </div>
+  <h5>Transaction Notes</h5>
+  <div class="row">
+    <div class="col-12">
+      <p style="color:#fff;">
+      {{leasetransaction.Comments}}        
+      </p>
+    </div>
+  </div>
+
+  <button class="btn btn-success mb-3 float-left" (click)="openPropertySummary(propertyDetails.PropertyID,leasetransaction.LeaseID)">View</button>
+  
+  <!-- <button class="btn btn-success mb-3 float-left" (click)="showPropertyTenant()">View</button> -->
+</div>

@@ -1,0 +1,118 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+body {
+  font-family: 'Open Sans', 'sans-serif';
+}
+.mega-dropdown {
+  position: static !important;
+}
+.mega-dropdown-menu {
+    padding: 20px 0px;
+    width: 100%;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.mega-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0;
+}
+.mega-dropdown-menu > li > ul > li {
+  list-style: none;
+}
+.mega-dropdown-menu > li > ul > li > a {
+  display: block;
+  color: #222;
+  padding: 3px 5px;
+}
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+}
+.mega-dropdown-menu .dropdown-header {
+  font-size: 18px;
+  color: #ff3546;
+  padding: 5px 60px 5px 5px;
+  line-height: 30px;
+}
+
+.carousel-control {
+  width: 30px;
+  height: 30px;
+  top: -35px;
+
+}
+.left.carousel-control {
+  right: 30px;
+  left: inherit;
+}
+.carousel-control .glyphicon-chevron-left, 
+.carousel-control .glyphicon-chevron-right {
+  font-size: 12px;
+  background-color: #fff;
+  line-height: 30px;
+  text-shadow: none;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.chartFilter {
+  display: block;
+  position: absolute;
+  right: 58px;
+  z-index: 1;
+}
+.chartFilterCog {
+  display: block;
+  position: absolute;
+  right: 33px;
+  z-index: 1;
+}
+.btn {
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 12px;
+  transition: all .1s ease-in-out;
+  box-shadow: none!important;
+  margin-top: 3px;
+}
+.btn-search{
+  background: none;
+  border:0;
+}
+.btn-search i{font-size: 20px; color: #fff;}
+.labelName{
+  width:100%; 
+  /* border-bottom: 1px solid #ccc; */
+  color: #fff;
+  font-weight: 600px;
+  font-size: 15px;
+  /* margin-bottom: 15px;
+  padding-bottom: 5px; */
+}
+
+hr{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.checkbox.checkbox-css label {
+  padding-left: 24px;
+  margin: 0;
+  color: #fff !important;
+}
+
+/* .sideBarPanelWrap .closebtn {
+  position: absolute;
+  top: 48px;
+  left: -32px;
+  font-size: 17px;
+  margin-left: 0px;
+  z-index: 9999999;
+  color: #fff;
+  background: #455463;
+  padding: 7px 10px;
+} */
+
+/* .sideBarPanelWrap .closebtn{color: #fff;}
+.sideBarPanelWrap .closebtn:hover {
+  text-decoration: none;
+} */

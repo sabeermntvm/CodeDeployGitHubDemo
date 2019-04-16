@@ -1,0 +1,343 @@
+
+.propRow{
+    width:100%; border:1px solid;
+
+    a{
+        width:100%; padding: 10px; background: #2e353c; float: left;
+    }
+}
+.acrdHead{
+    padding-top: 10px; margin-left: 36px; font-size: 14px; text-decoration: none !important;
+}
+.acrdHead:focus{text-decoration: none !important;}
+.dashLine{
+    height: 1px;
+    background-color: #cdcdce;
+    margin-top: 13px;
+}
+.toggleSuite{
+    width: 100% !important;
+    font-weight: bold;
+    float: left!important;
+    margin-bottom: 10px!important;
+    border-radius: 0;
+    padding: 10px 15px!important;
+    margin-top: 0!important;
+    border-bottom: 1px solid #f2f3f4!important;
+    background-color: #f2f3f4!important;
+    font-weight: 600!important;
+}
+.toggleSuite[aria-expanded]:after { 
+    font-family: "Font Awesome 5 Free";
+     content: "\f107";
+     font-size: 20px;
+     color: #2e353c;
+     margin: 0;
+     float:right;
+     position: absolute;
+     right: 24px;
+     top: 12px;
+    }
+  
+  .toggleSuite[aria-expanded=true]:after {
+    content:'\f106';
+    font-size: 20px;
+    color: #2e353c;
+    margin: 0;
+    float:right;
+    position: absolute;
+    right: 24px;
+    top: 12px;
+  }
+
+a.toggleSuite {
+    color: #2d353c;
+    text-decoration: none;
+    text-align: left;
+}
+.dropdown-item{
+    cursor: pointer;
+}
+.toggleSuite:first-child {
+    border-radius: 4px 4px 0 0;
+}
+.dash-img-txt{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    min-height: 61px;    
+    padding: 2px 0 0 5px;
+    color: #fff;
+    position: absolute;
+    bottom: 0%;
+    font-size:1em;
+    height: auto !important;
+  }
+  .gal-img {
+    height: 150px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 0;
+    cursor: pointer;
+    position: relative;
+    background-position: center center;
+}
+.dash-gal-img-txt-top{
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 90%;
+    font-size: 14px;
+    padding: 2px 0 0 4px;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    height: 44px;
+    top: 7%;
+    line-height: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 1;
+}
+.spanText{
+    float: left;
+    width: 100%;
+}
+.crd-width-gallery{
+    width: 20%;
+    padding: 1%;
+    float: left;
+    position: relative;
+}
+
+.pBtn{
+    background: #d9e0e7;
+    color: #000;
+}
+
+.btnActive{
+    background: #1976ad;
+    color: #fff;
+}
+
+.btn-primary{
+    background: #1976ad
+}
+.dashmargin{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.chkBoxStyle{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 6%;
+  top: 7%;
+  z-index: 1;
+}
+
+.image-upload > input
+{
+    display: none;
+}
+
+.check
+{
+  opacity:1;
+  color:#996;
+}
+
+.indexBox{
+    padding: 6px;
+    width: 30px;
+    height: 30px;
+    background: #de4726;
+    color: #fff;
+    float: left;
+    text-align: center;
+    font-weight: bolder;
+    top: 6px;
+    position: absolute;
+}
+.valueName{
+    color : midnightblue;
+    font-weight: bold; padding: 7px;
+    float: left;
+    margin-left: 10px;
+}
+
+.image-upload {
+        border: 1px solid #f2f3f4;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        width: 100%;
+        float: left;
+        height: 149px;
+        box-shadow: 0px 0px 5px 1px #c7c7c7;
+        float: left;
+        padding-top: 20%;
+}
+
+.image-upload label{    
+    color: midnightblue;
+    text-align: center !important;
+    font-size: x-large;
+}
+
+    .uploadLabel {
+        font-size: 12px;
+        width: 100%;
+        float: left;
+    }
+
+.overlay {
+    position: absolute;
+    text-align: center;
+    top: 30%;
+    width: 100%;
+}
+
+.mt-6{
+    margin-top:5.5em;
+}
+
+.blue {
+    color: #455463;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+@media (max-width: 767px){
+    .gal-img{
+        height: 114px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 0;
+        cursor: pointer;
+        position: relative;
+        background-position: center center;
+    }
+    .dash-gal-img-txt-top{
+        width:100%;
+    }
+    .image-upload{
+        height: 114px;
+    }
+    .chkBoxStyle{
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 10px;
+        top: 3px;
+        z-index: 1;
+    }
+}
+@media (max-width: 567px){
+    .image-upload{
+        height: 114px;
+        float: none;
+    }
+    .crd-width-gallery {
+        width: 100%;
+        margin: 5px auto;
+        float: none;
+        height: auto;
+    }
+
+    .dashLine{
+        height: 1px;
+        background-color: #cdcdce;
+        margin-top: 8px;
+        margin-bottom: 13px;
+    }
+
+    .dashmargin{
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .gal-img{
+        height: 200px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 0;
+        cursor: pointer;
+        position: relative;
+        background-position: center center;
+    }
+}
+
+@media (min-width:1400px){
+    .gal-img{
+        height: 200px;
+    }
+    .image-upload{
+        height: 200px;
+    }
+}
+
+@media (min-width:1500px){
+    .gal-img{
+        height: 200px;
+    }
+    .image-upload{
+        height: 200px;
+    }
+}
+
+@media (min-width:1700px){
+    .gal-img{
+        height: 200px;
+    }
+    .image-upload{
+        height: 200px;
+    }
+}
+
+@media (min-width:1800px){
+    .gal-img{
+        height: 220px;
+    }
+    .image-upload{
+        height: 220px;
+    }
+ }
+
+@media (min-width:1900px){
+    .gal-img{
+        height: 300px;
+    }
+    .image-upload{
+        height: 300px;
+    }
+  }
+
+@media (min-width:2000px){
+    .gal-img{
+        height: 250px;
+    }
+    .image-upload{
+        height: 250px;
+    }
+  }
+
+@media (min-width:2700px){
+    .gal-img{
+        height: 320px;
+    }
+    .image-upload{
+        height: 320px;
+    }
+  }
+
+  @media (min-width:2800px){
+    .gal-img{
+        height: 500px;
+    }
+    .image-upload{
+        height: 500px;
+    }
+    }

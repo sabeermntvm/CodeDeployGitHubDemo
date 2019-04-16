@@ -1,0 +1,75 @@
+.valueNum{
+    background: #7f878e; 
+    color: #fff;
+    padding: 5px 10px;
+    margin-right: 10px;
+    margin-left: -9px;
+}
+.panel-inverse>.panel-heading {
+    background: #455463;
+}
+
+.wrap_box_pannel{
+    width:20%;
+    float: left;
+    padding: 5px;
+}
+.image-caption span{
+    width:100%;
+    float: left;
+}
+.propdetName{
+    font-size: 13px;
+}
+.propName{
+    font-weight:600px; font-size:15px;
+}
+.dash-img-txt{
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    min-height: 61px;    
+    padding: 2px 0 0 5px;
+    color: #fff;
+    position: absolute;
+    bottom: 0%;
+    font-size:13px;
+    height: auto !important;
+  }
+  .gallery .image{
+      cursor: pointer;
+  }
+
+  .dash-img-txt .title{
+      margin-top:-25px;
+  }
+
+  .addelListLabel{
+    min-height: 18px;
+  }
+@media (max-width:1100px){
+    .wrap_box_pannel{
+        width:50%;
+    }
+    .widget{
+        margin-bottom: 0;
+    }
+}
+@media (max-width:570px){
+    .wrap_box_pannel{
+        width:100%;
+    }
+    .widget{
+        margin-bottom: 0;
+    }
+}
+@media (min-width:1600px){
+    .wrap_box_pannel{
+        width:250px;
+    }
+    .propName{
+        font-size: 20px;
+    }
+    .propdetName,.desc,.addedon,.green_sale, .blue_lease, .rose_sublease, .noRecord {
+        font-size: 14px;
+    }
+}

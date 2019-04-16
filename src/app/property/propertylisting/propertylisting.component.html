@@ -1,0 +1,927 @@
+<div class="row pl-0"  >
+    <div class="col-md-7">
+        *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+    </div>
+    <div class="col-md-4" >
+        <angular2-multiselect [data]="listingFilterList" [(ngModel)]="listingFilterselected" [settings]="listingFiltersettings" (onSelect)="onListingFilterChange()"
+        (onDeSelect)="onListingFilterChange()" (onSelectAll)="onListingFilterChange()" (onDeSelectAll)="onListingFilterChange()">
+        </angular2-multiselect>
+</div>
+        <div class="col-md-1">
+        <button  class="btn btn-primary btn-sm float-right"  [appFeedback]="'Listing'">Feedback</button>
+    </div>
+</div>
+<!-- <div class="col-md-12 clearfix mb-2 pl-0"  >
+        *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+        <button  class="btn btn-primary btn-sm float-right"  [appFeedback]="'Listing'">Feedback</button>
+    </div> -->
+<div class="card-accordion">
+    <div class="row">
+    <div class="col-md-6 pl-0 mt-2">
+            <div style="margin-left: 15px;"><b style="font-size: 15px;"><span *ngIf="!currentListings.length && !IsLoader">No</span><span *ngIf="currentListings.length && !IsLoader">{{currentListings.length}}</span><span  style="margin-right:30px;" *ngIf="IsLoader"><i class="fas fa-spinner fa-spin showspin"></i></span>  Listing(s) Found! Click to Expand</b>
+                <span style="
+                font-size: 15px;
+                margin-left: 15px;
+                color: #ea7727;
+                font-weight: bold;
+            ">
+                    Property is <span *ngIf="PropertyOccupancy">{{PropertyOccupancy}}</span><span *ngIf="!PropertyOccupancy">0</span>% Occupied
+            </span>
+            </div>
+            
+        </div>  
+
+    <!--<ng-select [items]="listingFilterList" [virtualScroll]="true" placeholder=""
+                        bindLabel="ListingStatusName" bindValue="ListingStatusID" placeholder="--Select--" [multiple]="true"
+                        [(ngModel)]="listingFilterArray" (change)="onListingFilterSelected($event)">
+                    </ng-select>-->
+    <!-- <div class="col-md-2 offset-md-6 mb-2">
+        <angular2-multiselect [data]="listingFilterList" [(ngModel)]="listingFilterselected" [settings]="listingFiltersettings" (onSelect)="onListingFilterChange()"
+            (onDeSelect)="onListingFilterChange()" (onSelectAll)="onListingFilterChange()" (onDeSelectAll)="onListingFilterChange()">
+        </angular2-multiselect>
+    </div> -->
+</div>
+    <div class="accordion-row" *ngFor="let listing of currentListings ;let i=index">
+        <a data-toggle="collapse" href="#listing{{i}}" class="btn btnAcrdn">
+            <span class="text-inverse" (click)="showListingDetails(listing.ListingID)" style="text-align:left; white-space: pre-line;">
+                <!--{{listing.GeneralUse}}-->
+                <font *ngIf="listing.RecordTypeID==1">
+                    <font *ngIf="listing.ListingTypeName">{{listing.ListingTypeName}}
+                        <font *ngIf="listing.ListingTypeName != 'Sublease' "> Lease</font>
+                    </font>
+                </font>
+                <font *ngIf="listing.RecordTypeID!=1">
+                    <font *ngIf="listing.RecordTypeName">Direct  {{listing.RecordTypeName}}</font>
+                </font>
+
+                <!--For {{listing.RecordTypeName}}-->
+                <font *ngIf="listing.ListingCompanyName"> <b>|</b> {{listing.ListingCompanyName}} </font>
+                <font *ngIf="listing.RecordTypeID==1 && listing.TotalAvailableSM && unitId == metricUnit"> <b>|</b> {{listing.TotalAvailableSM
+                    | number:
+                    '.0-0'}} SqM
+                    <font *ngIf="listing.ListingStatusID == 1 || listing.ListingStatusID == 2 || listing.ListingStatusID == 6">Available
+                    </font>
+                    <font *ngIf="listing.ListingStatusID != 1 && listing.ListingStatusID != 2 && listing.ListingStatusID != 6">{{listing.ListingStatusName}}
+                    </font>
+
+                </font>
+                <font *ngIf="listing.RecordTypeID==1 && listing.TotalAvailable && unitId != metricUnit"> <b>|</b> {{listing.TotalAvailable |
+                    number: '.0-0'}} SF
+                    <font *ngIf="listing.ListingStatusID == 1 || listing.ListingStatusID == 2 || listing.ListingStatusID == 6">Available
+                    </font>
+                    <font *ngIf="listing.ListingStatusID != 1 && listing.ListingStatusID != 2 && listing.ListingStatusID != 6">{{listing.ListingStatusName}}
+                    </font>
+
+                </font>
+                <font *ngIf="listing.RecordTypeID!=1 && listing.AskingSalePrice && listing.HasNegotiableSalePrice!=1"> <b>|</b> {{listing.AskingSalePrice | currency: 'USD' | lowercase}} 
+<!--                         <font *ngIf="listing.ListingStatusID == 1 || listing.ListingStatusID == 2 || listing.ListingStatusID == 6">Available
+                        </font> -->
+                        <font *ngIf="listing.ListingStatusID != 1 && listing.ListingStatusID != 2 && listing.ListingStatusID != 6">{{listing.ListingStatusName}}
+                        </font>
+
+                    </font>
+            </span>
+        </a>
+
+        <div id="listing{{i}}" class="collapse" style="padding: 17px 0px;" [class.show]="i == expandListing">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row viewCol">
+                            <div class="checkbox checkbox-css checkBoxMargin">
+                                    <input type="checkbox" id="propCheckbox_{{i}}" [(ngModel)]='listing.isSelected' (change)="Selection($event.target.checked,listing);"
+                                      value="" />
+                                    <label for="propCheckbox_{{i}}"> Include in Report</label>
+                                  </div>
+                                </div>
+                        <!-- **** Listing Type Lease Begins.. ****-->
+                        <div class="row viewCol" *ngIf="listing.RecordTypeID==1">
+                            <div class="col-md-4">
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Total Available</label>
+                                    <label class="col-6"><b *ngIf="unitId == metricUnit && listing.TotalAvailableSM">{{listing.TotalAvailableSM
+                                                    | number: '.0-0'}} SqM </b> 
+                                                    <b *ngIf="unitId != metricUnit  && listing.TotalAvailable">{{listing.TotalAvailable
+                                                            | number: '.0-0'}} SF </b></label>
+                                    <!-- <label class="col-6"> </label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Min Div</label>
+                                    <label class="col-6">
+                                        <b *ngIf="unitId == metricUnit && listing.MinDivSM">{{listing.MinDivSM
+                                                    | number: '.0-0'}} SqM </b> 
+                                        <b *ngIf="unitId != metricUnit && listing.MinDiv">{{listing.MinDiv | number: '.0-0'}} SF </b> 
+                                                </label>
+                                    <!-- <label class="col-6"></label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Max Contig</label>
+                                    <label class="col-6"><b *ngIf="unitId == metricUnit && listing.MaxContigSM">{{listing.MaxContigSM
+                                                    | number: '.0-0'}} SqM </b>
+                                                    <b *ngIf="unitId != metricUnit && listing.MaxContig">{{listing.MaxContig
+                                                            | number: '.0-0'}} SF </b>
+                                                </label>
+                                    <!-- <label class="col-6"> </label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Vacant</label>
+                                    <label class="col-6"><b *ngIf="unitId == metricUnit && listing.TotalVacantSM">{{listing.TotalVacantSM
+                                                    | number: '.0-0'}} SqM </b>
+                                                    <b  *ngIf="unitId != metricUnit && listing.TotalVacant">{{listing.TotalVacant
+                                                            | number: '.0-0'}} SF </b>
+                                                </label>
+                                    <!-- <label class="col-6"></label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6 p-0">Number of Spaces</label>
+                                    <label class="col-6"><b>{{listing.NoOfSpaces}}</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Asking Rate/Yr</label>
+                                    <label class="col-6"><b><span *ngIf="listing.AskingLeaseRatePerYrText">{{listing.AskingLeaseRatePerYrText}}</span><span *ngIf="!listing.AskingLeaseRatePerYrText">Not Disclosed</span></b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Asking Rate/Mo</label>
+                                    <label class="col-6"><b><span *ngIf="listing.AskingLeaseRatePerMoText">{{listing.AskingLeaseRatePerMoText}}</span><span *ngIf="!listing.AskingLeaseRatePerMoText">Not Disclosed</span></b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Total Monthly Asking</label>
+                                    <label class="col-6"><b><span *ngIf="listing.TotalMonthlyRateText">{{listing.TotalMonthlyRateText}}</span><span *ngIf="!listing.TotalMonthlyRateText">Not Disclosed</span></b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Rate Type</label>
+                                    <label class="col-6"><b>{{listing.LeaseTypeName}}</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Listing Date</label>
+                                    <label class="col-6" *ngIf="listing.ListingDate"><b>{{listing.ListingDate |
+                                                    date: 'dd/MM/yyyy'}}</b></label>
+                                    <label class="col-6" *ngIf="!listing.ListingDate"><b>{{listing.CreatedDate
+                                                    | date: 'dd/MM/yyyy'}}</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Listing Type</label>
+                                    <label class="col-6"><b>{{listing.ListingTypeName}}</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Status</label>
+                                    <label class="col-6"><b>{{listing.ListingStatusName}}</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Listing Use</label>
+                                    <label class="col-6"><b>{{listing.GeneralUse}}</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Sublease Expiration</label>
+                                    <label class="col-6">
+                                        <b *ngIf="listing.ListingTypeID != 2">N/A</b>
+                                        <b *ngIf="listing.ListingTypeID == 2">{{listing.SubleaseExpirationDate}}</b>
+                                    </label>
+                                    <!-- <label class="col-6"></label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Sublessor</label>
+                                    <label class="col-6"><b *ngIf="listing.ListingTypeID != 2">N/A</b>
+                                        <b *ngIf="listing.ListingTypeID == 2">{{listing.Sublessor}}</b>
+                                    </label>
+                                    <!-- <label class="col-6"></label> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- **** Listing Type Lease Ends. ****-->
+                        <!-- **** Listing Type SALE Begins.. ****-->
+                        <div class="row viewCol" *ngIf="listing.RecordTypeID!=1">
+                            <div class="col-md-4">
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Status</label>
+                                    <label class="col-6"><b>{{listing.ListingStatusName}}</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Sale Price</label>
+                                    <label *ngIf="listing.HasNegotiableSalePrice!=1" class="col-6"><b>{{listing.AskingSalePrice | currency: 'USD' | lowercase}} </b> </label>
+                                    <label *ngIf="listing.HasNegotiableSalePrice==1"class="col-6"><b>Price Not Disclosed </b> </label>
+
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">{{SalePriceLabel}}</label>
+                                    <label class="col-6"><b *ngIf="unitId == metricUnit && listing.SalePricePerSM">{{listing.SalePricePerSM
+                                                    | currency: 'USD' | lowercase}}  </b>
+                                                    <b *ngIf="unitId != metricUnit && listing.SalePricePerSF">{{listing.SalePricePerSF
+                                                            | currency: 'USD' | lowercase}} </b>
+                                                </label>
+                                    <!-- <label class="col-6"> </label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Sale Type</label>
+                                     <label class="col-6"><b>{{listing.SaleTypeName}}</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Listing Date</label>
+                                    <label class="col-6"><b *ngIf="listing.ListingDate">{{listing.ListingDate |
+                                                    date: 'dd/MM/yyyy'}}</b>
+                                                    <b *ngIf="!listing.ListingDate">{{listing.CreatedDate
+                                                            | date: 'dd/MM/yyyy'}}</b>
+                                                </label>
+                                    <!-- <label class="col-6"></label> -->
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID" *ngIf="unitId == metricUnit">
+                                    <label class="col-6">Strata Sale</label>
+                                    <label class="col-6"><b>
+                                                 <span *ngIf="listing.IsCondoSale==1">Yes</span>
+                                                  <span *ngIf="listing.IsCondoSale==0">No</span>
+                                           </b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID" *ngIf="unitId != metricUnit">
+                                    <label class="col-6">Condo Sale</label>
+                                    <label class="col-6"><b>
+                                                 <span *ngIf="listing.IsCondoSale==1">Yes</span>
+                                                  <span *ngIf="listing.IsCondoSale==0">No</span>
+                                           </b></label>
+                                </div>
+                                <!-- <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                            <label class="col-6">Total Monthly Asking</label>
+                                            <label class="col-6"><b><span *ngIf="listing.TotalMonthlyRateText">{{listing.TotalMonthlyRateText}}</span><span *ngIf="!listing.TotalMonthlyRateText">Not Disclosed</span></b></label>
+                                        </div> -->
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Occupancy</label>
+                                    <label class="col-6"><b *ngIf="listing.PercentageOccupied">{{listing.PercentageOccupied}} %</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Cap Rate</label>
+                                    <label class="col-6"><b *ngIf="listing.CAPRate">{{listing.CAPRate}} %</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Days on Market</label>
+                                    <label class="col-6"><b>{{listing.ListingAge}}</b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Part of Portfolio Sale</label>
+                                    <label class="col-6"><b>
+                                                 <span *ngIf="listing.IsPortfolio==1">Yes</span>
+                                                  <span *ngIf="listing.IsPortfolio==0">No</span>
+                                           </b></label>
+                                </div>
+                                <div class="row m-0" [appEditSuggestion]="'Listing'" [listingId]="listing.ListingID">
+                                    <label class="col-6">Taxes</label>
+                                    <label class="col-6"><b *ngIf="unitId == metricUnit && listing.FS_TaxesPerSM">{{listing.FS_TaxesPerSM | number: '.0-0'}} SqM</b>
+                                        <b *ngIf="unitId != metricUnit && listing.FS_TaxesPerSF">{{listing.FS_TaxesPerSF | number: '.0-0'}} SF</b>
+                                    </label>
+                                    <!-- <label class="col-6" ></label> -->
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- **** Listing Type SALE Ends. ****-->
+
+
+
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="listHeadSubLabel">Listing Notes</label>
+                                        <p class="commentsParaProp" style="font-weight:bold;font-family: sans-serif;" [innerHTML]="listing.ListingNotes"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="listHeadSubLabel">Marketing URL</label>
+                                        <p class="commentsParaProp" style="font-weight:bold;font-family: sans-serif;">{{listing.MarketingURL}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row m-0">
+                                    <label class="listHeadLabel mt-2">Listing Media</label>
+                                </div>
+                                <div class="row m-0">
+                                    <div class="testimonial-group container p-0" style="max-width:100%;">
+                                        <div class="row m-0" style="display: block">
+                                            <ng-container *ngFor="let image of listingMediaImageList; let i = index;">
+                                                <div class="crd-width-gallery" *ngIf="image.ListingId == listing.ListingID"
+                                                    data-toggle="modal" data-target="#myModalListing" (click)="imageclick(i,image.mediaList.Path,true)">
+                                                    <div class="gal-img" [ngStyle]="{'background-image': 'url('+mediaUrl+image.mediaList.Path+')'}">
+                                                        <div class="dash-img-txt">
+                                                            <span class="spanText" *ngIf="image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}/{{image.mediaList.MediaSubTypeName}}</span>
+                                                            <span class="spanText" *ngIf="!image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}</span>
+                                                            <span class="spanText">{{image.mediaList.CreatedDate | date:
+                                                                'dd/MM/yyyy'}}</span>
+                                                            <span class="spanText">{{image.mediaList.MediaName}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="mediaCard" *ngIf="image.ListingId == listing.ListingID"
+                                                    data-toggle="modal" data-target="#myModalListing" (click)="imageclick(i,image.mediaList.Path,true)">
+                                                    <img src="{{mediaUrl + image.mediaList.Path}}" class="width-full searchBtnActions" />
+                                                </div> -->
+                                            </ng-container>
+                                            <ng-container *ngFor="let image of listingMediaNonImageList">
+                                                <!-- <div class="mediaCard pointer" *ngIf="image.ListingId == listing.ListingID"
+                                                    (click)="downloadFile(nonImageUrl + image.mediaList.Path)">
+                                                    <img src="/assets/img/gallery/gallery-pdf-12.jpg" class="width-full" />
+                                                </div> -->
+                                                <div class="crd-width-gallery" *ngIf="image.ListingId == listing.ListingID"
+                                                    (click)="downloadFile(nonImageUrl + image.mediaList.Path)">
+                                                    <div class="gal-img" [ngStyle]="{'background-image': 'url(assets/img/gallery/gallery-pdf-12.jpg)'}">
+                                                        <div class="dash-img-txt">
+                                                            <span class="spanText" *ngIf="image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}/{{image.mediaList.MediaSubTypeName}}</span>
+                                                            <span class="spanText" *ngIf="!image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}</span>
+                                                            <span class="spanText">{{image.mediaList.CreatedDate | date:
+                                                                'dd/MM/yyyy'}}</span>
+                                                            <span class="spanText">{{image.mediaList.MediaName}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-3" *ngIf="listing.RecordTypeID==1">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-5 no-padding">
+                                <label class="labelInName">Space @ {{propertyName}}</label>
+                                <div class="btn-group" id="status" data-toggle="buttons">
+                                    <label class="btn btn-default btn-on  active" (click)="onSelectClick(1)" style="height: 36px;border-radius: 5px 0 0 5px !important;padding-right: 10px !important;">
+                                        <input name="selectAll" type="radio" value="1">Matching Spaces</label>
+                                    <label class="btn btn-default btn-off" (click)="onSelectClick(0)" style="height: 36px;border-radius: 0 5px 5px 0  !important;padding-right: 10px !important;">
+                                        <input name="selectAll" type="radio" value="0">All Spaces</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 no-padding">
+                                <div class="dashed-lin marginDash"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1" style="display:block;" *ngIf="listing.RecordTypeID==1">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table dataTableGrid">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Suite ID</th>
+                                        <th>Suite #</th>
+                                        <th>Floor</th>
+                                        <th>{{AvailableSpaceLabel}}</th>
+                                        <th>Max Contig</th>
+                                        <th>Asking Rate</th>
+                                        <th>Vacant</th>
+                                        <th>Avail Date</th>
+                                        <th>Use</th>
+                                        <th>Date on Market</th>
+                                        <th>Excl Available</th>
+                                    </tr>
+                                </thead>
+                                <ng-container *ngFor="let suite of suiteList;let k=index;">
+                                    <tbody *ngIf="suite.ListingId == listing.ListingID">
+                                        <tr class="clickable">
+                                            <td>
+                                                <a class="table-drop-toggle" data-toggle="collapse" href="#group-of-rows-1{{k}}" (click)="getSuiteMedia(suite.SuiteData.SuiteID);">
+                                                </a>
+                                            </td>
+                                            <td>{{suite.SuiteData.SuiteID}}</td>
+                                            <td>{{suite.SuiteData.SuiteNumber}}</td>
+                                            <td>{{suite.SuiteData.FloorNumber}}</td>
+                                            <td *ngIf="unitId == metricUnit">{{suite.SuiteData.AvailableSM | number: '.0-0'}}
+                                            </td>
+                                            <td *ngIf="unitId != metricUnit">{{suite.SuiteData.AvailableSF | number: '.0-0'}}
+                                            </td>
+                                            <td *ngIf="unitId == metricUnit">{{suite.SuiteData.AvailableSM | number: '.0-0'}}
+                                            </td>
+                                            <td *ngIf="unitId != metricUnit">{{suite.SuiteData.AvailableSF | number: '.0-0'}}
+                                            </td>
+                                            <td><span *ngIf="suite.SuiteData.AskingRateText"></span>{{suite.SuiteData.AskingRateText}}
+                                                <span *ngIf="!suite.SuiteData.AskingRateText">Not Disclosed</span>
+                                            </td>
+                                            <td *ngIf="suite.SuiteData.IsVacant">Yes </td>
+                                            <td *ngIf="!suite.SuiteData.IsVacant">No </td>
+                                            <td><span *ngIf="suite.SuiteData.DateAvailable">{{suite.SuiteData.DateAvailable
+                                                    | date: 'dd/MM/yyyy'}}</span><span *ngIf="!suite.SuiteData.DateAvailable">Now</span></td>
+                                            <td>{{suite.SuiteData.SpaceUseTypeName}}</td>
+                                            <td>{{suite.SuiteData.DateOnMarket | date: 'dd/MM/yyyy'}}</td>
+                                            <td *ngIf="suite.SuiteData.ExclAvailable">Yes </td>
+                                            <td *ngIf="!suite.SuiteData.ExclAvailable">No </td>
+                                        </tr>
+                                    </tbody>
+
+                                    <tbody>
+                                        <tr class="p-0 m-0 border-0">
+                                            <td colspan="11" class="p-0 m-0 border-0">
+                                                <div class="row collapse m-0" id="group-of-rows-1{{k}}" *ngIf="suite.ListingId == listing.ListingID">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="nameHeadabel">Suite
+                                                                    {{suite.SuiteData.SuiteNumber}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-7">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="listHeadLabel">Space Overview</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Space Type</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.SpaceUseTypeName}}</b></label>
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Status</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.SuiteStatusName}}</b></label>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Available</label>
+                                                                <label class="col-6 table-col-6">
+                                                                    <b  *ngIf="unitId == metricUnit && suite.SuiteData.AvailableSM">{{suite.SuiteData.AvailableSM}} SqM</b>
+                                                                    <b *ngIf="unitId != metricUnit && suite.SuiteData.AvailableSF">{{suite.SuiteData.AvailableSF}} SF</b>
+                                                                </label>
+                                                                <!-- <label class="col-6 table-col-6">
+                                                                </label> -->
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Date on
+                                                                            Market</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.DateOnMarket
+                                                                                | date: 'dd/MM/yyyy'}}</b></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Minimum Div</label>
+                                                                <label class="col-6 table-col-6"><b *ngIf="unitId == metricUnit && suite.SuiteData.MinSM">{{suite.SuiteData.MinSM}} SqM</b>
+                                                                    <b *ngIf="unitId != metricUnit && suite.SuiteData.MinSF">{{suite.SuiteData.MinSF}} SF</b>
+                                                                </label>
+                                                                <!-- <label class="col-6 table-col-6" ></label> -->
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Date Available</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.DateAvailable
+                                                                                | date: 'dd/MM/yyyy'}}</b></label>
+                                                            </div>
+                                                            <!--<div class="col-sm-6">
+                                                                        <label class="col-6 table-col-6">Floors</label>
+                                                                        <label class="col-6 table-col-6"><b>{{suite.SuiteData.FloorNumber}}</b></label>
+                                                                    </div>-->
+
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID"> 
+                                                                <label class="col-6 table-col-6">Max Contiguous</label>
+                                                                <label class="col-6 table-col-6"><b  *ngIf="unitId == metricUnit && suite.SuiteData.AvailableSM">{{suite.SuiteData.AvailableSM}}
+                                                                                SqM</b>
+                                                                                <b *ngIf="unitId != metricUnit && suite.SuiteData.AvailableSF">{{suite.SuiteData.AvailableSF}}
+                                                                                        SF</b>
+                                                                            </label>
+                                                                <!-- <label class="col-6 table-col-6"></label> -->
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Date Vacant</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.DateVacant
+                                                                                | date: 'dd/MM/yyyy'}}</b></label>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Vacant</label>
+                                                                <label class="col-6 table-col-6">
+                                                                    <b *ngIf="suite.SuiteData.IsVacant">Yes</b>
+                                                                    <b *ngIf="!suite.SuiteData.IsVacant">No</b>
+                                                                </label>
+                                                                <!-- <label class="col-6 table-col-6"></label> -->
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">To Show </label>
+                                                                <label class="col-6 table-col-6"><b>Broker</b></label>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--<div class="row viewCol">
+                                                                    <div class="col-sm-6">
+                                                                        <label class="col-6 table-col-6"># of
+                                                                            Restrooms </label>
+                                                                        <label class="col-6 table-col-6"><b>{{suite.SuiteData.NumberOfRestRooms}}</b></label>
+
+                                                                    </div>
+                                                                </div>-->
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="listHeadLabel">Financials</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">{{AskingRateLabel}}</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.AskingRateText}}</b></label>
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Rate Type</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.LeaseRateTypeName}}</b></label>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Asking
+                                                                            Rate/Mo</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.TotalMonthlyRateText}}</b></label>
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Term</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.LeaseTerms}}</b></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row viewCol">
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Total Monthly Asking</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.TotalMonthlyRateText}}</b></label>
+                                                            </div>
+                                                            <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                <label class="col-6 table-col-6">Fitout
+                                                                            Costs</label>
+                                                                <label class="col-6 table-col-6"><b>{{suite.SuiteData.TIAllowance
+                                                                                | currency: 'USD' | lowercase}}</b></label>
+                                                            </div>
+                                                        </div>
+                                                        <ng-container *ngIf="suite.SuiteData.SpaceUseTypeName == 'Industrial'">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label class="listHeadLabel">Industrial/Loading</label>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Dock High</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.DockHighDoors}}</b></label>
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Dock High Notes</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.DockHighDoorsNotes}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Grade Level</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.GradeLevelDoorsTypeName}}</b></label>
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Grade Level Notes</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.GradeLevelDoorsNotes}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Truckwells</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.TruckwellDoors}}</b></label>
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Truckwell Notes</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.TruckwellDoorsNotes}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Clear Height</label>
+                                                                    <label class="col-6 table-col-6"><b *ngIf="suite.SuiteData.ClearHeightMinM && unitId == metricUnit">{{suite.SuiteData.ClearHeightMinM}}
+                                                                            <font *ngIf="suite.SuiteData.ClearHeightMaxM">-{{suite.SuiteData.ClearHeightMaxM}} </font> m</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.ClearHeightMin && unitId != metricUnit"><b>{{suite.SuiteData.ClearHeightMin}}
+                                                                           <font *ngIf="suite.SuiteData.ClearHeightMax">-{{suite.SuiteData.ClearHeightMax}} </font>  m</b></label>
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Office Space</label>
+                                                                    <label class="col-6 table-col-6"><b *ngIf="suite.SuiteData.OfficeSpaceSM && unitId == metricUnit">{{suite.SuiteData.OfficeSpaceSM}} SqM</b>
+                                                                        <b *ngIf="suite.SuiteData.OfficeSpaceSF && unitId != metricUnit">{{suite.SuiteData.OfficeSpaceSF}} SF</b>
+                                                                    </label>
+                                                                    <!-- <label class="col-6 table-col-6"></label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Column Spacing</label>
+                                                                    <label class="col-6 table-col-6"><b *ngIf="suite.SuiteData.ColumnSpacing1M && unitId == metricUnit">{{suite.SuiteData.ColumnSpacing1M}}
+                                                                         <font *ngIf="suite.SuiteData.ColumnSpacing2M"> X{{suite.SuiteData.ColumnSpacing2M}}</font>m</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.ColumnSpacing1 && unitId != metricUnit"><b>{{suite.SuiteData.ColumnSpacing1}}
+                                                                             <font *ngIf="suite.SuiteData.ColumnSpacing2"> X{{suite.SuiteData.ColumnSpacing2}}</font> m</b></label>
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6"># of Offices</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.NumberOfOffices}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Sprinklers</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.SprinklerTypeName}}</b></label>
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Office A/C</label>
+                                                                    <label class="col-6 table-col-6">
+                                                                        <b *ngIf="suite.SuiteData.OfficeAC==1">Yes</b>
+                                                                        <b *ngIf="suite.SuiteData.OfficeAC==0">No</b>
+                                                                    </label>
+                                                                    <!-- <label class="col-6 table-col-6"></label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Yard-Fenced</label>
+                                                                    <label class="col-6 table-col-6">
+                                                                            <b *ngIf="suite.SuiteData.HasYardFenced==1">Yes</b>
+                                                                            <b *ngIf="suite.SuiteData.HasYardFenced==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6" *ngIf="suite.SuiteData.HasYardFenced==1"><b>Yes</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.HasYardFenced==0"><b>No</b></label> -->
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Office Heat</label>
+                                                                    <label class="col-6 table-col-6">
+                                                                            <b *ngIf="suite.SuiteData.OfficeHeat==1">Yes</b>
+                                                                            <b *ngIf="suite.SuiteData.OfficeHeat==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6" *ngIf="suite.SuiteData.OfficeHeat==1"><b>Yes</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.OfficeHeat==0"><b>No</b></label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Yard-Unfenced</label>
+                                                                    <label class="col-6 table-col-6">
+                                                                            <b *ngIf="suite.SuiteData.HasYardUnfenced==1">Yes</b>
+                                                                            <b *ngIf="suite.SuiteData.HasYardUnfenced==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6" *ngIf="suite.SuiteData.HasYardUnfenced==1"><b>Yes</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.HasYardUnfenced==0"><b>No</b></label> -->
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Whse HVAC</label>
+                                                                    <label class="col-6 table-col-6">
+                                                                            <b *ngIf="suite.SuiteData.WhseHVAC==1">Yes</b>
+                                                                            <b *ngIf="suite.SuiteData.WhseHVAC==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6" *ngIf="suite.SuiteData.WhseHVAC==1"><b>Yes</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.WhseHVAC==0"><b>No</b></label> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Yard-Paved</label>
+                                                                    <label class="col-6 table-col-6">
+                                                                            <b *ngIf="suite.SuiteData.HasYardPaved==1">Yes</b>
+                                                                            <b *ngIf="suite.SuiteData.HasYardPaved==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6" *ngIf="suite.SuiteData.HasYardPaved==1"><b>Yes</b></label>
+                                                                    <label class="col-6 table-col-6" *ngIf="suite.SuiteData.HasYardPaved==0"><b>No</b></label> -->
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Phase</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.Phase}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Finished Ofc-Mezz</label>
+                                                                    <label class="col-6 table-col-6"><b *ngIf="suite.SuiteData.FinishedOfcMezz==1">Yes
+                                                                            <font  *ngIf="suite.SuiteData.FinishedOfcMezzSizeSM && unitId == metricUnit">/{{suite.SuiteData.FinishedOfcMezzSizeSM}} SqM</font>
+                                                                            <font  *ngIf="suite.SuiteData.FinishedOfcMezzSize && unitId != metricUnit">/{{suite.SuiteData.FinishedOfcMezzSize}}SF</font>
+                                                                            </b>
+                                                                            <b *ngIf="suite.SuiteData.FinishedOfcMezz==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6"></label> -->
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Volts</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.Volts}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Unfinished Ofc-Mezz</label>
+                                                                    <label class="col-6 table-col-6"><b *ngIf="suite.SuiteData.UnFinishedOfcMezz==1">Yes
+                                                                            <font  *ngIf="suite.SuiteData.UnFinishedOfcMezzSizeSM && unitId == metricUnit">/{{suite.SuiteData.UnFinishedOfcMezzSizeSM}} SqM</font>
+                                                                            <font  *ngIf="suite.SuiteData.UnFinishedOfcMezzSize && unitId != metricUnit">/{{suite.SuiteData.UnFinishedOfcMezzSize}}SF</font>
+                                                                            </b>
+                                                                            <b *ngIf="suite.SuiteData.UnFinishedOfcMezz==0">No</b>
+                                                                        </label>
+                                                                    <!-- <label class="col-6 table-col-6"></label> -->
+                                                                </div>
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Amps</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.Amps}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row viewCol">
+
+                                                                <div class="col-sm-6" [appEditSuggestion]="'Suite'" [listingId]="listing.ListingID" [suiteId]="suite.SuiteData.SuiteID">
+                                                                    <label class="col-6 table-col-6">Restrooms</label>
+                                                                    <label class="col-6 table-col-6"><b>{{suite.SuiteData.NumberOfRestRooms}}</b></label>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                    <div class="col-md-5">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="listHeadLabel">Suite Media</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row netMedia p-0">
+                                                            <div class="col-md-12">
+                                                                <div style=" float: left;" class="mr-2" *ngFor="let image of suiteMediaImageList;let i = index">
+                                                                    <div class="crd-width-gallery" *ngIf="image.suiteId == suite.SuiteData.SuiteID"
+                                                                        data-toggle="modal" data-target="#myModalListing"
+                                                                        (click)="imageclick(i,image.mediaList.Path,false)">
+                                                                        <div class="gal-img" [ngStyle]="{'background-image': 'url('+mediaUrl+image.mediaList.Path+')'}">
+                                                                            <div class="dash-img-txt">
+                                                                                <span class="spanText" *ngIf="image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}/{{image.mediaList.MediaSubTypeName}}</span>
+                                                                                <span class="spanText" *ngIf="!image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}</span>
+                                                                                <span class="spanText">{{image.mediaList.CreatedDate
+                                                                                    | date:
+                                                                                    'dd/MM/yyyy'}}</span>
+                                                                                <span class="spanText" title="{{image.mediaList.MediaName}}">{{image.mediaList.MediaName}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- <div class="col-4 mb-3" *ngIf="image.suiteId == suite.SuiteData.SuiteID"
+                                                                    data-toggle="modal" data-target="#myModalListing"
+                                                                    (click)="imageclick(i,image.mediaList.Path,false)">
+                                                                    <img src="{{mediaUrl + image.mediaList.Path}}"
+                                                                        class="width-full" />
+                                                                </div> -->
+                                                                </div>
+
+                                                                <div  style=" float: left;" class="mr-2" *ngFor="let image of suiteMediaNonImageList">
+                                                                        <div class="crd-width-gallery" *ngIf="image.suiteId == suite.SuiteData.SuiteID"
+                                                                        (click)="downloadFile(nonImageUrl + image.mediaList.Path)"
+                                                                        >
+                                                                        <div class="gal-img" [ngStyle]="{'background-image': 'url(assets/img/gallery/gallery-pdf-12.jpg)'}">
+                                                                            <div class="dash-img-txt">
+                                                                                <span class="spanText" *ngIf="image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}/{{image.mediaList.MediaSubTypeName}}</span>
+                                                                                <span class="spanText" *ngIf="!image.MediaSubTypeName">{{image.mediaList.MediaTypeName}}</span>
+                                                                                <span class="spanText">{{image.mediaList.CreatedDate
+                                                                                    | date:
+                                                                                    'dd/MM/yyyy'}}</span>
+                                                                                <span class="spanText">{{image.mediaList.MediaName}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <div class="col-4 mb-3" *ngIf="image.suiteId == suite.SuiteData.SuiteID"
+                                                                        (click)="downloadFile(nonImageUrl + image.mediaList.Path)">
+                                                                        <img src="/assets/img/gallery/gallery-pdf-12.jpg"
+                                                                            class="width-full">
+                                                                    </div> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="listHeadLabel">Space Notes</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <p class="commentsParaProp">
+                                                                    {{suite.SuiteData.SuiteComments}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </ng-container>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-12 m-0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="listHeadLabel">Listing Agent(s)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-group container p-0" style="max-width:100%;">
+                            <div class="row m-0" style="display: block">
+                                <ng-container *ngFor="let agent of LisingAgentsList; let i = index;">
+                                    <div class="crd-width" *ngIf="listing.ListingID == agent.ListingId">
+                                        <div class="contact-wrap">
+                                            <div class="contact_card">
+                                                <div class="profile-detail-mid">
+                                                    <label class="contactName m-2">
+                                                        <b>{{agent.Agent.AgentFirstName}}</b>
+                                                        {{agent.Agent.AgentLastName}}
+                                                    </label>
+                                                </div>
+                                                <div class="profile-detail-bottom">
+                                                    <div class="profile-side">
+                                                        <div class="icon-side sideHeight">
+                                                            <div class="label-icon"><i class="fas fa-building"></i></div>
+                                                        </div>
+                                                        <div class="icon-side">
+                                                            <div class="label-icon"><i class="fas fa-phone"></i></div>
+                                                        </div>
+                                                        <div class="icon-side">
+                                                            <div class="label-icon"><i class="fas fa-fax"></i></div>
+                                                        </div>
+                                                        <div class="icon-side">
+                                                            <div class="label-icon"><i class="fas fa-envelope-square"></i></div>
+                                                        </div>
+                                                        <div class="icon-side">
+                                                            <div class="label-icon"><i class="fas fa-at"></i></div>
+                                                        </div>
+                                                        <div class="icon-side sideBtmHeight">
+                                                            <div class="label-icon"><i class="fas fa-address-card"></i></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="profile-right-side">
+                                                        <div class="icon-side iconHeightSide"><label><span>
+                                                                    <b>{{agent.Agent.AgentCompanyName}}</b>
+                                                                </span></label></div>
+                                                        <div class="icon-side">
+                                                            <label>
+                                                                <font *ngIf="agent.Agent.AgentPhone">{{agent.Agent.AgentPhone
+                                                                    |
+                                                                    slice:0:2}} ({{agent.Agent.AgentPhone |
+                                                                    slice:2:4}}) {{agent.Agent.AgentPhone |
+                                                                    slice:4:8}}
+                                                                    {{agent.Agent.AgentPhone | slice:8:12}}</font>
+                                                            </label>
+                                                        </div>
+                                                        <div class="icon-side">
+                                                            <label>
+                                                                <font *ngIf="agent.Agent.OfficeFax">{{agent.Agent.OfficeFax
+                                                                    | slice:0:2}}
+                                                                    ({{agent.Agent.OfficeFax | slice:2:4}})
+                                                                    {{agent.Agent.OfficeFax | slice:4:8}}
+                                                                    {{agent.Agent.OfficeFax |
+                                                                    slice:8:12}}</font>
+                                                            </label>
+                                                        </div>
+                                                        <div class="icon-side"><label class="truncate" title="{{agent.Agent.AgentWebsite}}"><a class="hyperlink"  (click)="goToLink(agent.Agent.AgentWebsite)">{{agent.Agent.AgentWebsite}}</a></label></div>
+                                                        <div class="icon-side"><label class="truncate">{{agent.Agent.AgentEmail}}</label></div>
+                                                        <div class="icon-side iconHeightSide" style="white-space: initial"><label>{{agent.Agent.AddressText}}</label></div>
+                                                        <div class="icon-side" style="background: #fff; text-align: right;  min-height: 30px !important;">
+                                                            <img src="{{imagePath+agent.Agent.Path}}" style="height:30px;" *ngIf="agent.Agent.Path">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div *ngIf="showModal">
+    <div id="myModalListing" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <app-image-viewer-modal [galleryOptions]="galleryOptions" [galleryImages]="galleryImages"></app-image-viewer-modal>
+    </div>
+</div>

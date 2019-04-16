@@ -1,0 +1,316 @@
+ngx-gallery
+{
+    height: calc(80vh - 55px);
+}
+a.back-to-results {
+    color: #fff !important;
+    display: inline-block;
+    background: #888888 !important;
+    padding: 2px 5px;
+    font-size: 86%;
+    border-radius: 4px;
+    top: -10px;
+    position: absolute;
+    left: 6px;
+}
+.mainPhotoHgt{
+    height: 158px;
+}
+.angleArrowUp{
+    font-size: 20px;
+    color: #2e353c;
+    margin: 0;
+}
+.netMedia{
+    max-height: 290px;
+    overflow: auto;
+}
+.netMedia_head{
+    max-height: 230px;
+    overflow: auto;
+}
+.text-inverse:hover{
+    text-decoration:  none !important;
+}
+.btn-link:hover{
+    text-decoration: none !important;
+}
+.table-col-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+.btn-primary-ash {
+    color: #fff;
+    background: #455463;
+    cursor: pointer;
+    border-radius: 0;
+    padding: 7px 10px;
+    width: 40px;
+}
+
+.mainImageWrapper{
+    width:30%;
+    float: left;
+    background: #fff;
+    position: relative;
+    padding: 4px;
+    height: 250px;
+    -webkit-box-shadow: 1px 1px 13px -2px rgba(82,82,82,1);
+    -moz-box-shadow: 1px 1px 13px -2px rgba(82,82,82,1);
+    box-shadow: 1px 1px 13px -2px rgba(82,82,82,1);
+}
+.ImageWrapper{
+    width:100%;
+    float: left;
+    position: relative;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    cursor: pointer;
+}
+.mainSliderWrapper{
+    width:40%;
+    float: left;
+    position: relative;
+    padding: 0 20px;
+    height: 250px;
+}
+.mainMapWrapper{
+    width:30%;
+    float: left;
+    /* border:1px solid #fff; */
+    position: relative;
+    /* padding: 10px; */
+    height: 250px;
+}
+.addressWrapper{
+    width: 100%; border:0px solid green;
+}
+.sliderWrap{
+    position: absolute;
+    bottom: -4px;
+    width: 94%;
+    padding-left: 9px;
+}
+
+.headClass{
+   background: none; 
+   color: #32373c;
+    width: 100%;
+}
+.headClass-sub{
+    padding: 2px 0;
+}
+.headClass h4{
+    color: #32373c;
+    margin: 5px 0;
+}
+
+.owl-theme .owl-nav {
+    width: 100%;
+    top: 28% !important;
+    position: absolute;
+}
+
+.map {
+    position: absolute;
+    top: 11px !important;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    z-index: 0;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.map-head{height: 100%;
+    width: 100%;
+    margin-top: 0px;}
+
+.prevNxt-btn{
+    float:left;
+}
+.prevNxt-btn i{font-size: 15px;}
+.prevNxt-btn-wrap{
+    float:right;
+    margin-right: 10px;
+    /* position: absolute;
+    right: 0; */
+}
+
+.font-15{
+    font-size: 15px;
+}
+
+.textflow{
+    text-align: right;
+    float:right;
+}
+
+    @media (max-width: 767px){
+        .nav-pills .nav-link, .nav-pills>li>a {
+            padding: 6px 12px;
+            border-radius: 3px;
+        }
+        .textflow{
+            text-align: left;
+            float:left;
+            width: 100%;
+        } 
+        .table-col-6 {
+            -ms-flex: 0 0 20%;
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+        .mainPhotoHgt{
+            height: auto;
+            max-width: 100%;;
+            width:100%;
+        }
+        .mainImageWrapper{width:100%; margin-bottom: 10px; height: 350px;}
+        .mainSliderWrapper{width:100%; margin-bottom: 10px; height: 350px;}
+        .mainMapWrapper{width:100%; margin-bottom: 10px;}
+    }
+    @media (max-width: 567px){
+        .prevNxt-btn-wrap{
+            float:right;
+        }
+        .headClass {
+            background: #fff;
+            color: #32373c;
+            padding: 2px 8px;
+            width: 100%;
+            margin-top: 10px;
+          }
+          .headClass h4{font-size: 14px;}
+          .alignText{
+              float:left;
+              text-align: left;
+              width:100%;
+          }
+        .mainImageWrapper{width:100%; margin-bottom: 10px; height: 300px;}
+        .mainSliderWrapper{width:100%; margin-bottom: 10px; height: 300px;}
+    }
+
+    @media (min-width:1400px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:300px;
+        }
+        h4 {
+            font-size: 25px;
+        }
+    }
+    
+    @media (min-width:1500px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:300px;
+        }
+        .viewCol .col-6{
+            font-size: 14px;
+        }
+    }
+    
+    @media (min-width:1700px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:300px;
+        }
+        .viewCol .col-6{
+            font-size: 15px;
+        }
+        h4 {
+            font-size: 28px;
+        }
+    }
+    
+    @media (min-width:1800px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:350px;
+        }
+        .viewCol .col-6{
+            font-size: 17px;
+        }
+    }
+    
+    @media (min-width:1900px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:300px;
+        }
+      }
+    
+    @media (min-width:2000px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:400px;
+        }
+        h4 {
+            font-size: 32px;
+        }
+      }
+    
+    @media (min-width:2700px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:550px;
+        }
+      }
+    
+      @media (min-width:2800px){
+        .mainImageWrapper, .mainSliderWrapper, .mainMapWrapper{
+            height:800px;
+        }
+        .viewCol .col-6{
+            font-size: 20px;
+        }
+        h4 {
+            font-size: 34px;
+        }
+        }
+
+
+        .modal-body {
+            padding: 4px;
+            min-height: 200px;
+        }
+        @media (min-width: 576px){
+        .modal-dialog {
+        /* max-width: 500px!important; */
+        margin: 4.75rem auto;
+        top:0px;
+    }
+    .fullscreen {
+        max-width: 100%!important;
+        max-height: 100%!important;
+        height: 100%!important;
+        margin: 4.75rem auto;
+        top:0px;
+    }
+    }
+    @media (max-width: 576px){
+        .modal-dialog {
+        top:65px;
+    }
+    }
+    .modalClose{
+        position: absolute;
+        z-index: 1;
+        top: -34px;
+        right: -15px;
+        background: none;
+        border: 0;
+        color: #fff;
+        font-size: 25px;
+    }
+    
+    .item img{
+        cursor: pointer;
+    }
+
+    .ngx-gallery-preview-icons .ngx-gallery-icon{
+        font-size: 20px;
+    }
+
+    @media (min-width: 576px){
+        .modal-dialog {
+            max-width: 50% !important;
+        }
+}

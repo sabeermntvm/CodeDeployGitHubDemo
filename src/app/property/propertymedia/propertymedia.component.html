@@ -1,0 +1,214 @@
+<div class="col-md-12 clearfix" >
+    *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+    <button  class="btn btn-primary btn-sm float-right"  [appFeedback]="'Media'">Feedback</button>
+</div>
+<div class="row m-0">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row ml-0 mr-0">
+          <div class="col-md-2 p-0">
+            <button type="button" class="btn float-left rounded-0 pBtn" [ngClass]="{'btnActive' : viewDataMedia == 1}"
+              (click)="viewmedia(1)">Property</button>
+            <div class="dropdown  float-left">
+              <button type="button" class="btn dropdown-toggle rounded-0 pBtn" [ngClass]="{'btnActive' : viewDataMedia == 2}"
+                data-toggle="dropdown">
+                Listing
+              </button>
+
+              <div class="dropdown-menu">
+                <a class="dropdown-item" *ngFor="let listing of propertyListings; let i = index;" (click)="viewListingMedia(2,listing)">
+                  {{listing.GeneralUse}} For {{listing.RecordTypeName}}
+                  <font *ngIf="listing.ListingCompanyName"> <b>|</b> {{listing.ListingCompanyName}} </font>
+                  <font *ngIf="listing.TotalAvailableSM && unitId == metricUnit"> - {{listing.TotalAvailableSM |
+                    number:
+                    '.0-0'}} SqM Available </font>
+                  <font *ngIf="listing.TotalAvailable && unitId != metricUnit"> - {{listing.TotalAvailable | number:
+                    '.0-0'}}
+                    SF Available </font>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10 pt-2" style="margin-left:0; padding-left:0;">
+            <hr class="linebar">
+            <span class="selectedListData" *ngIf="viewDataMedia != 1">
+              {{selectedListing.GeneralUse}} <font *ngIf="selectedListing.RecordTypeName"> For
+                {{selectedListing.RecordTypeName}} </font>
+              <font *ngIf="selectedListing.TotalAvailableSM && unitId == metricUnit"> -
+                {{selectedListing.TotalAvailableSM | number:
+                '.0-0'}} SqM Available </font>
+              <font *ngIf="selectedListing.TotalAvailable && unitId != metricUnit"> - {{selectedListing.TotalAvailable
+                |
+                number: '.0-0'}}
+                SF Available </font>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row" *ngIf="viewDataMedia == 1">
+      <div class="col-md-12" *ngIf="!!mediaList && mediaList.length>0">
+        <div class="row mt-3 mb-2 ml-0 mr-0">
+          <h4 class="col-md-3 p-0 mt-1">Property Media</h4>
+          <div class="col-md-9 dashLine "></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" *ngFor="let mediatype of mediaTypeList;">
+            <div class="row mt-3 mb-2 ml-0 mr-0">
+              <h5 class="col-md-3 p-0 mt-1">{{mediatype}}</h5>
+              <div class="col-md-9 dashLine "></div>
+            </div>
+            <div class="row">
+
+
+                  <div  *ngFor="let media of filterMediaItems(mediatype); let i = index;" class="crd-width-gallery parent" data-toggle="modal"
+                    data-target="#myModalMedia" (click)="imageclick(i,media.Path,'',mediatype)">
+                    <div   class="gal-img" [ngStyle]="{'background-image': 'url('+mediaUrl+media.Path+')'}">
+                      <div class="dash-img-txt" *ngIf="mediatype == media.MediaTypeName">
+                        <span class="spanText" *ngIf="media.MediaSubTypeName">{{media.MediaTypeName}}/{{media.MediaSubTypeName}}</span>
+                        <span class="spanText" *ngIf="!media.MediaSubTypeName">{{media.MediaTypeName}}</span>
+                        <span class="spanText">{{media.CreatedDate | date: 'dd/MM/yyyy'}}</span>
+                        <span class="spanText">{{media.MediaName}}</span>
+                      </div>
+                    </div>
+                    <div class="edit-icon-wrap child " >
+                      <i class="fas fa-check-double text-primary ml-1  " (click)="onMediaSuggestion(media,$event)"></i>
+                    </div>
+                 </div>
+                  
+                
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="!!propertyNonMediaList && propertyNonMediaList.length>0">
+        <div class="row mt-3 mb-2 ml-0 mr-0">
+          <h4 class="col-md-3 p-0 mt-1">Property Attachments</h4>
+          <div class="col-md-9 dashmargin dashLine"></div>
+        </div>
+        <div class="row">
+          <div *ngFor="let media of propertyNonMediaList; let i = index;" class="crd-width-gallery parent" >
+          <div class="gal-img" [ngStyle]="{'background-image': 'url(assets/img/gallery/gallery-pdf-12.jpg)'}" (click)="downloadFile(nonImageUrl + media.Path)">
+            <div class="dash-img-txt">
+              <span class="spanText" *ngIf="media.MediaSubTypeName">{{media.MediaTypeName}}/{{media.MediaSubTypeName}}</span>
+              <span class="spanText" *ngIf="!media.MediaSubTypeName">{{media.MediaTypeName}}</span>
+              <span class="spanText">{{media.CreatedDate | date: 'dd/MM/yyyy'}}</span>
+              <span class="spanText">{{media.MediaName}}</span>
+            </div>
+          </div>
+          <div class="edit-icon-wrap child" >
+              <i class="fas fa-check-double text-primary ml-1 " (click)="onMediaSuggestion(media,$event)"></i>
+            </div>
+          </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="viewDataMedia != 1">
+      <div class="col-md-12">
+        <div class="row mt-3 mb-2 ml-0 mr-0">
+          <h4 class="col-md-3 p-0 mt-1">Listing Media</h4>
+          <div class="col-md-9 dashLine dashmargin"></div>
+        </div>
+        <div *ngIf="!showListingImageMedia">
+          <div>No Listing Media</div>
+        </div>
+        <div *ngIf="showListingImageMedia">
+              <div  *ngFor="let media of listingMediaImageList; let i = index;" >
+            <div class="crd-width-gallery parent" *ngIf="media.ListingId == selectedListingId">
+              <div class="gal-img" [ngStyle]="{'background-image': 'url('+mediaUrl+media.mediaList.Path+')'}" data-toggle="modal" data-target="#myModalMedia" (click)="imageclick(i,media.mediaList.Path);">
+                <div class="dash-img-txt">
+                  <span class="spanText" *ngIf="media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}/{{media.mediaList.MediaSubTypeName}}</span>
+                  <span class="spanText" *ngIf="!media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}</span>
+                  <span class="spanText">{{media.mediaList.CreatedDate | date: 'dd/MM/yyyy'}}</span>
+                  <span class="spanText">{{media.mediaList.MediaName}}</span>
+                </div>
+              </div>
+              <div class="edit-icon-wrap child" >
+                  <i class="fas fa-check-double text-primary ml-1" (click)="onMediaSuggestion(media,$event)"></i>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="showListingNonImageMedia">
+        <div class="row mt-3 mb-2 ml-0 mr-0">
+          <h4 class="col-md-3 p-0 mt-1">Listing Attachments</h4>
+          <div class="col-md-9 dashmargin dashLine"></div>
+        </div>
+          <div *ngFor="let media of listingMediaNonImageList; let i = index;"  >
+          <div class="crd-width-gallery parent" *ngIf="media.ListingId == selectedListingId">
+            <div class="gal-img" [ngStyle]="{'background-image': 'url(assets/img/gallery/gallery-pdf-12.jpg)'}" (click)="downloadFile(nonImageUrl + media.mediaList.Path)">
+              <div class="dash-img-txt">
+                <span class="spanText" *ngIf="media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}/{{media.mediaList.MediaSubTypeName}}</span>
+                <span class="spanText" *ngIf="!media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}</span>
+                <span class="spanText">{{media.mediaList.CreatedDate | date: 'dd/MM/yyyy'}}</span>
+                <span class="spanText">{{media.mediaList.MediaName}}</span>
+              </div>
+            </div>
+            <div class="edit-icon-wrap child" >
+              <i class="fas fa-check-double text-primary ml-1" (click)="onMediaSuggestion(media,$event)"></i>
+            </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="col-md-12" *ngIf="showSuiteMedia">
+        <div class="row mt-3 mb-2 ml-0 mr-0">
+          <h4 class="col-md-3 p-0 mt-1">Suite Media</h4>
+          <div class="col-md-9 dashmargin dashLine"></div>
+        </div>
+        <div class="row" *ngFor="let suite of suiteList; let k = index;">
+          <div class="col-md-12" *ngIf="suite.ListingId == selectedListingId">
+            <a class="btn toggleSuite" aria-expanded="true" data-toggle="collapse" href="#group-of-rows-1{{k}}" (click)="getSuiteMedia(suite.SuiteData.SuiteID);">
+              Suite {{suite.SuiteData.SuiteNumber}}/{{suite.SuiteData.FloorNumber}}
+            </a>
+          </div>
+          <div class="col-md-12 mb-2 collapse show" id="group-of-rows-1{{k}}" *ngIf="suite.ListingId == selectedListingId">
+            <div *ngFor="let media of suiteMediaImageList; let i = index;">
+              <div  class="crd-width-gallery parent" *ngIf="media.suiteId == suite.SuiteData.SuiteID">
+                <div class="gal-img" [ngStyle]="{'background-image': 'url('+mediaUrl+media.mediaList.Path+')'}" data-toggle="modal" data-target="#myModalMedia" (click)="imageclick(i,media.mediaList.Path,suite.SuiteData.SuiteID)">
+                  <div class="dash-img-txt">
+                    <span class="spanText" *ngIf="media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}/{{media.mediaList.MediaSubTypeName}}</span>
+                    <span class="spanText" *ngIf="!media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}</span>
+                    <span class="spanText">{{media.mediaList.CreatedDate | date: 'dd/MM/yyyy'}}</span>
+                    <span class="spanText">{{media.mediaList.MediaName}}</span>
+                  </div>
+                </div>
+                <div class="edit-icon-wrap child" >
+                  <i class="fas fa-check-double text-primary ml-1" (click)="onMediaSuggestion(media,$event)"></i>
+                </div>
+              </div>
+            </div>
+             
+            <div *ngFor="let media of suiteMediaNonImageList; let i = index;" >
+              <div class="crd-width-gallery parent" *ngIf="media.suiteId == suite.SuiteData.SuiteID">
+                <div class="gal-img" [ngStyle]="{'background-image':'url(assets/img/gallery/gallery-pdf-12.jpg)'}"
+                  (click)="downloadFile(nonImageUrl + media.mediaList.Path)">
+                  <div class="dash-img-txt">
+                    <span class="spanText" *ngIf="media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}/{{media.mediaList.MediaSubTypeName}}</span>
+                    <span class="spanText" *ngIf="!media.mediaList.MediaSubTypeName">{{media.mediaList.MediaTypeName}}</span>
+                    <span class="spanText">{{media.mediaList.CreatedDate | date: 'dd/MM/yyyy'}}</span>
+                    <span class="spanText">{{media.mediaList.MediaName}}</span>
+                  </div>
+                </div>
+                <div class="edit-icon-wrap child" >
+                  <i class="fas fa-check-double text-primary ml-1 " (click)="onMediaSuggestion(media,$event)"></i>
+                </div>
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModal">
+    <div id="myModalMedia" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <app-image-viewer-modal [name]="name" [galleryOptions]="galleryOptions" [galleryImages]="galleryImages"></app-image-viewer-modal>
+</div>
+</div>

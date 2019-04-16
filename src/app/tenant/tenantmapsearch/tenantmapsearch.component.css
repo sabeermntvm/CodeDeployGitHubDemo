@@ -1,0 +1,125 @@
+.error-field{
+  border:1px solid #f00;
+  }
+.showspin{
+    font-size: 15px;
+    margin-top: 0;
+    position: absolute;
+    left: 5px;
+  }
+.innerpages-circle{
+    background: #f5b335;
+    border-radius: 17px;
+    color: #191970;
+    font-size: 12px;
+    text-align: center;
+    padding: 0px 3px;
+    margin-left: 10px;
+}
+.radio.radio-css label {
+    padding-left: 24px;
+    margin: 0;
+    color:#fff !important;
+}
+.shorten-map{
+    width:66% !important;
+    -moz-transition: width 300ms ease-in-out !important;
+  -webkit-transition:width 300ms ease-in-out !important;
+  -o-transition:width 300ms ease-in-out !important;
+  transition:width 300ms ease-in-out !important;
+}
+.short-map-leftpanel{
+  width:85.3% !important;
+  -moz-transition: width 300ms ease-in-out !important;
+-webkit-transition:width 300ms ease-in-out !important;
+-o-transition:width 300ms ease-in-out !important;
+transition:width 300ms ease-in-out !important;
+}
+.shortest-map{
+  width:55.5% !important;
+  -moz-transition: width 300ms ease-in-out !important;
+-webkit-transition:width 300ms ease-in-out !important;
+-o-transition:width 300ms ease-in-out !important;
+transition:width 300ms ease-in-out !important;
+}
+.shorten-mapDetail{
+    width:54%;
+    -moz-transition: width 300ms ease-in-out !important;
+  -webkit-transition:width 300ms ease-in-out !important;
+  -o-transition:width 300ms ease-in-out !important;
+  transition:width 300ms ease-in-out !important;
+}
+.shorten-multimapDetail{
+    width:45%;
+    -moz-transition: width 300ms ease-in-out !important;
+  -webkit-transition:width 300ms ease-in-out !important;
+  -o-transition:width 300ms ease-in-out !important;
+  transition:width 300ms ease-in-out !important;
+}
+.fullWidth-map{
+    width:100%;
+}
+
+@media (max-width: 767px){
+.shorten-mapDetail{
+    width: 35%;
+}
+.shorten-map {
+    width: 35% !important;
+}
+.short-map-leftpanel{
+  width:auto !important;
+ }
+}
+
+
+@media (min-width:1500px){
+  .shortest-map{
+    width:55.5% !important;
+  }
+  .shorten-map{
+  width:67% !important;
+  }
+  .btn-align{
+    margin: 10px;
+  }
+}
+
+@media (min-width:1700px){
+  .shortest-map{
+    width:57.5% !important;
+  }
+}
+
+@media (min-width:1800px){
+  .shortest-map{
+    width:58.5% !important;
+  }
+  }
+
+@media (min-width:2000px){
+  .shorten-map{
+  width: 67.5% !important;
+  }
+  .shortest-map{
+    width:59.5% !important;
+  }
+}
+
+@media (min-width:2700px){
+  .shortest-map{
+    width:62.5% !important;
+  }
+  .shorten-map{
+  width:68% !important;
+  }
+}
+
+@media (min-width:2800px){
+  .shortest-map{
+    width:65% !important;
+  }
+  .shorten-map{
+  width:70% !important;
+  }
+  }

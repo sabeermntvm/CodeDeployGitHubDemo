@@ -1,0 +1,46 @@
+
+        .modal-body {
+            padding: 4px;
+            // height: calc(72vh - 55px);
+             min-height: 200px;
+        }
+        .modal-dialog {
+            max-width: 50%!important;
+            margin: 4.75rem auto;
+            top:0px;
+        }
+        @media (max-width: 699px){
+            .modal-dialog {
+            max-width: 80%!important;
+            top:65px;
+            }
+        }
+        @media (min-width: 600px){
+        
+    .fullscreen {
+        max-width: 100%!important;
+        max-height: 100%!important;
+        height: 100%!important;
+        margin: 4.75rem auto;
+        top:0px;
+    }
+    }
+
+    .modalClose{
+        position: absolute;
+        z-index: 1;
+        top: -34px;
+        right: -15px;
+        background: none;
+        border: 0;
+        color: #fff;
+        font-size: 25px;
+    }
+    
+    .item img{
+        cursor: pointer;
+    }
+
+    .ngx-gallery-preview-icons .ngx-gallery-icon{
+        font-size: 20px;
+    }

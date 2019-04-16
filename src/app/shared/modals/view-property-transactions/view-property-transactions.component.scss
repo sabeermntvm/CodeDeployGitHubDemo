@@ -1,0 +1,20 @@
+.intrepid-modal{
+    left: 300px !important;
+    width: calc(100% - 300px);
+    padding-left: 130px;
+    padding-top: 0px;
+}
+
+.testClass{
+    width:300px!important;
+}
+.tenants-pane{
+    max-height: 450px;
+    overflow-y: auto;
+}
+.tenants-txt{
+    text-overflow: ellipsis;    
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+}

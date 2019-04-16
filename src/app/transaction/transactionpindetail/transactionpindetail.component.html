@@ -1,0 +1,112 @@
+<div class="col-md-12">
+  <div class="row">
+      <button (click)="openPropertySummary(transaction.PropertyID,transaction.SaleID)" class="btn btn-success mb-3 float-left">View</button>
+  </div>
+</div>
+
+<div class="col-md-12" *ngIf="transaction">
+  <h4 style="color:#fff;">{{transaction.PropertyName || propertyDetails.Address}}</h4>
+  <hr>
+  <div class="col-12 mb-2 p-0">    
+    <img class="mainPhotoBox" src="{{photoUrl}}">
+  </div>
+  <h5>Overview</h5>  
+  <div class="row">
+      <span class="col-4"><b>Transaction ID</b></span>
+      <span class="col-2 hyphen">-</span>
+      <span class="col-6">{{transaction.SaleID}}</span>
+    </div>
+  <div class="row">
+    <span class="col-4"><b>Type</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.PropertyUse}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Size</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6"  *ngIf="propertyDetails">
+      <span *ngIf="CountryId != USCountryCode">
+        <b *ngIf="propertyDetails">{{propertyDetails.BuildingSizeSMFormatted}} SqM</b>
+      </span>
+      <span *ngIf="CountryId == USCountryCode">
+        <b *ngIf="propertyDetails">{{propertyDetails.BuildingSF | number: '.0-0'}} SF</b>
+      </span></span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Sale Date </b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="saleInfo">{{saleInfo.DeedOrSaleDate | date: 'dd/MM/yyyy'}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Sale Price </b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="saleInfo">{{saleInfo.SoldPrice | currency:'USD':symbol:'1.2-2'}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Price/SqM </b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="saleInfo">{{saleInfo.SalePricePerSM | currency:'USD':symbol:'1.2-2'}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Buyer</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="saleInfo">{{saleInfo.Buyer}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Seller</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="saleInfo">{{saleInfo.Seller}}</span>
+  </div>
+
+  <h5>Property Location</h5>
+  <div class="row">
+      <span class="col-4"><b>Property ID</b></span>
+      <span class="col-2 hyphen">-</span>
+      <span class="col-6" *ngIf="transaction">{{transaction.PropertyID}}</span>
+    </div>
+  <div class="row">
+    <span class="col-4"><b>Address</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.Address}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>City</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.CityName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>State</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.StateName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>LGA</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.CountyName}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Country</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.CountryCode}}</span>
+  </div>
+  <div class="row">
+    <span class="col-4"><b>Postal Code</b></span>
+    <span class="col-2 hyphen">-</span>
+    <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.ZipCode}}</span>
+  </div>
+  <div class="row">
+      <span class="col-4"><b>Market</b></span>
+      <span class="col-2 hyphen">-</span>
+      <span class="col-6" *ngIf="propertyDetails">{{propertyDetails.MarketName}}</span>
+    </div>
+ 
+  <h5>Transaction Notes</h5>
+  <div class="row">
+    <div class="col-12">
+      <p style="color:#fff;" *ngIf="saleInfo">
+          {{saleInfo.TransactionNotes}}
+      </p>
+    </div>
+  </div>
+  <button (click)="openPropertySummary(transaction.PropertyID,transaction.SaleID)" class="btn btn-success mb-3 float-left">View</button>
+</div>

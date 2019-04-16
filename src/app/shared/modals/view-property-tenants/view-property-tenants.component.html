@@ -1,0 +1,32 @@
+
+<div class="tenants-pane">
+  <table class="table table-bordered table-sm table-head">
+        <thead>
+            <tr>
+                <th class="table-40">Tenant Name<i class="fa fa-sort left5"></i></th>
+                <th class="table-15">Suite # <i class="fa fa-sort left5"></i></th>
+                <th class="table-15">Floor #<i class="fa fa-sort left5"></i></th>             
+                <th class="table-30">Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tenant of tenantList">
+                <td (click)="showPropertyTenant(tenant,tenant.PropertyID,tenant.ConfirmedTenantID)" style="cursor:pointer;"><a title="{{tenant.TenantName}}" href="javascript://" class="tenants-txt"><b>{{tenant.TenantName}}</b></a></td>
+                <td>{{tenant.Address2}}</td>
+                <td>{{tenant.FloorNumber}}</td>               
+                <td><span *ngIf="tenant.OfficePhone">  O:+{{tenant.OfficePhone | slice:0:2}} ({{tenant.OfficePhone | slice:2:4}}) {{tenant.OfficePhone | slice:4:8}} {{tenant.OfficePhone | slice:8:12}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+        <br>
+        <div class="col-md-12">
+            <a class="view-property" (click)="showMultiplePropertyTenant(PropertyId)">View Property</a>
+        </div>
+</div>
+     <!--<div *ngIf="showTenantDetails">
+    <intrepid-modal [(visible)]="showTenantDetails" [title]="tenantTitle" [size]="suiteModalSize" [bodyTemplate]="bodyTemplate">
+      <ng-template #bodyTemplate>
+        <app-view-tenant [tenant]="selectedTenantInfo" [CountryId]="CountryId" (onClose)="closeTenantModal($event)"></app-view-tenant>
+      </ng-template>
+    </intrepid-modal>
+  </div>-->

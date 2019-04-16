@@ -1,0 +1,216 @@
+.dash-img-txt{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    min-height: 61px;    
+    padding: 2px 0 0 5px;
+    color: #fff;
+    position: absolute;
+    bottom: 0%;
+    font-size:13px;
+    height: auto !important;
+  }
+  .gal-img {
+    margin-top: 15px;
+    /* height: 250px; */
+    height: calc(50vh - 55px);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 0;
+    cursor: pointer;
+    position: relative;
+    background-position: center center;
+}
+.chkBoxStyle{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 21px;
+  top: 23px;
+  z-index: 1;
+}
+
+.green_sale,.blue_lease,.rose_sublease,.noRecord{
+    top: -40%;
+    padding: 1px 10px;
+    position: absolute;
+    border-radius: 2px;
+    color: #fff;
+    left: 3px;
+    font-size:13px!important;
+}
+.green_sale{background: green}
+.blue_lease{background: rgb(0, 119, 255)}
+.rose_sublease{ background: rgb(255, 0, 221)}
+.noRecord{background: #000;}
+  
+  .btn-default.btn-on.active {
+     background-color: #191970;
+     color: white!important;
+  }
+  .btn-group > .btn:first-child {
+      margin-left: 0;
+  }
+  .btn-xs {
+      border-radius: 3px;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 1px 7px;
+  }
+  
+  .btn-default {
+      background-color: #fff;
+      border-color: #eaeaea;
+      color: #6a6c6f;
+  }
+  
+  .btn {
+      border-radius: 0px !important;
+  }
+  
+  .btn-xs, .btn-group-xs > .btn {
+      padding: 1px 5px;
+      font-size: 12px;
+      line-height: 1.5;
+      border-radius: 3px;
+  }
+  .btn-default.btn-off.btn-xs.active {
+      background-color: #191970;
+     color: white!important;
+  }
+
+  .gallery-but{
+    margin-top: -6px;   
+  }
+  .gallery-but .btn{margin-right:5px;}  
+   .map-result{
+          color:white;
+          cursor:pointer;
+      }
+.grid-nav{  
+    background-color: #191970;
+    border: 1px solid #fff;
+    position: absolute;   
+    border-radius: 8px;
+}
+.grid-nav ul{
+    list-style-type: none;
+    padding: 0px;
+}
+.grid-nav ul li{
+    display: inline;
+    padding: 7px 15px;
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+}
+.grid-nav ul li:last-child{
+    border-right: 0px solid #fff;
+}
+.grid-nav ul li a{
+    color: #fff;
+    text-decoration: none;
+}
+.grid-nav .active{
+    background-color:#d94524 ;
+    border-radius: 5px 5px;
+}
+.dash-gal-img-txt-top-det{
+    font-weight: normal!important;
+    font-size:14px!important;
+}
+.dash-gal-img-txt-top {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    font-size: 18px;
+    padding: 2px 0 0 4px;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    height: 53px;
+    top: 0%;
+    /* font-weight: bold; */
+    line-height: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (min-width:1500px){
+    .dash-gal-img-txt-top{
+        font-size: 21px;
+        height: 66px;
+    }
+    .dash-gal-img-txt-top-det{
+        font-size: 15px !important;
+    }
+    .dash-img-txt{
+        font-size: 14px !important;
+    }
+    .green_sale,.blue_lease,.rose_sublease,.noRecord{
+        font-size:14px!important;
+    }
+}
+
+@media (min-width:1700px){
+    .dash-gal-img-txt-top{
+        font-size: 23px;
+        height: 75px;
+    }
+    .dash-gal-img-txt-top-det{
+        font-size: 18px !important;
+    }
+    .dash-img-txt{
+        font-size: 16px !important;
+    }
+    .green_sale,.blue_lease,.rose_sublease,.noRecord{
+        font-size:16px!important;
+    }
+}
+
+@media (min-width:1800px){
+    .dash-gal-img-txt-top{
+        font-size: 24px;
+        height: 78px;
+    }
+    .dash-gal-img-txt-top-det{
+        font-size: 18px !important;
+    }
+    .dash-img-txt{
+        font-size: 16px !important;
+    }
+    .green_sale,.blue_lease,.rose_sublease,.noRecord{
+        font-size:16px!important;
+    }
+}
+
+@media (min-width:1900px){
+    .dash-gal-img-txt-top{
+        font-size: 24px;
+        height: 78px;
+    }
+    .dash-gal-img-txt-top-det{
+        font-size: 18px !important;
+    }
+    .dash-img-txt{
+        font-size: 16px !important;
+    }
+    .green_sale,.blue_lease,.rose_sublease,.noRecord{
+        font-size:16px!important;
+    }
+}
+
+@media (min-width:2000px){
+    .dash-gal-img-txt-top{
+        font-size: 30px;
+        height: 89px;
+    }
+    .dash-gal-img-txt-top-det{
+        font-size: 21px !important;
+    }
+    .dash-img-txt{
+        font-size: 19px !important;
+    }
+    .green_sale,.blue_lease,.rose_sublease,.noRecord{
+        font-size:19px!important;
+    }
+}

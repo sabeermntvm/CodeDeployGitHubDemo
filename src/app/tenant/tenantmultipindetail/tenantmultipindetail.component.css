@@ -1,0 +1,133 @@
+.table{
+    background: #fff;
+}
+th{
+    position: relative;
+}
+
+@media (max-width:1200px) {
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.table-vertical thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	.table-vertical>thead>tr,  .table-vertical>tbody>tr{ border: 1px solid #ccc; }
+	
+	 
+	.table-vertical>thead>tr>td,  .table-vertical>tbody>tr>td{ 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+    position: relative;
+    padding: 6px;
+    padding-left: 50%;
+     
+	}
+	
+	.table-vertical>tbody>tr>td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	.table-vertical>tbody>tr>td:last-child, .table-vertical>tbody>tr>td:nth-last-child(2){
+    text-align: left;
+
+    }
+    .table-vertical>tbody>tr:nth-child(even)>td, .table-vertical>tbody>tr:nth-child(odd)>td{
+        background: #fff;
+        min-height: 34px;
+    }
+
+	/*
+	Label the data
+	*/
+  .table-vertical>tbody>tr:nth-child(even)>td:before { 
+      content: attr(data-th);
+      font-weight: bold; color: #000;
+      background: #8f849c57;
+      padding: 2px;
+      min-height: 34px;
+    }
+    .table-vertical>tbody>tr:nth-child(odd)>td:before { 
+        content: attr(data-th);
+        font-weight: bold; color: #000;
+        background: #fbd983;
+        padding: 2px;
+        min-height: 34px;
+      }
+
+      .table-vertical>tbody>tr.loaderSpin:nth-child(odd)>td:before { 
+        content: attr(data-th);
+        font-weight: bold; color: #000;
+        background: none;
+        padding: 2px;
+        min-height: auto;
+      }
+      
+}
+.prop-name{
+    color: #20a8d8!important;
+    text-decoration: none!important;
+    background-color: transparent!important;
+    cursor: pointer;
+    font-size: 12px;
+}
+.row span{
+    color: #fff;
+}
+
+.hyphen{margin-top: -5px;}
+
+h5{border:1px solid #fff; color: #fff;padding: 7px;}
+hr{
+    margin-top:0;
+}
+.btn{
+    padding: 2px 18px;
+}
+.headCol{
+    color: #fff;
+    width: 85%;
+    display: inline-block;
+}
+@media (max-width:1200px) {
+    .tranallign{
+    max-width: 100%;
+    min-width: 100%;
+    }
+}
+
+@media (max-width: 745px){
+    .headCol{
+        color: #fff;
+        width: 65%;
+        display: inline-block;
+    }
+}
+.btn-default:not(:disabled):not(.disabled).active{
+    background: #1976ad;
+    color: #fff;
+}
+
+[data-toggle=buttons]>.btn-group>.btn input[type=checkbox], [data-toggle=buttons]>.btn-group>.btn input[type=radio], [data-toggle=buttons]>.btn input[type=checkbox], [data-toggle=buttons]>.btn input[type=radio] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+.table th {
+    position: relative;
+    white-space: nowrap;
+    border-right: 1px dotted #dcdcdc;
+}

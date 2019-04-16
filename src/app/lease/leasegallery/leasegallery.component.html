@@ -1,0 +1,148 @@
+<div class="row m-0">
+    <div class="col-md-12">
+      <div class="row m-0">
+        <div class="col-md-12 p-0">
+          <div class="map-nav">
+            <ul>
+              <li class="active" ><span class="map-result">{{TotalResultCount}}</span></li>
+              <li [routerLink]="['/lease/mapsearch']"><span class="map-result"><i class="fas fa-map"></i> Map View</span></li>
+              <li [routerLink]="['/lease/resultsGrid']"><span class="map-result"><i class="fas fa-list-ul"></i> Grid
+                    View</span></li>
+              <li class="active" *ngIf="leaseSelectedCount"><span class="map-result" >{{leaseSelectedCount}} Selected</span></li>
+            </ul>
+          </div>
+          <div class="action-btn-row" role="group">
+            <button id="btnGroupVerticalDrop6" type="button" (click)="showUserPreferencesModal('Download')" title="Export To Excel" class="btn btn-primary-ash" aria-haspopup="true" aria-expanded="false" >
+                <i class="fas fa-cog"></i>
+              </button>
+          </div>
+  
+          <div class="sideBarPanelWrap" id="MapSidenavSetting">
+            <a href="javascript:void(0)" *ngIf="CloseActionBtnSet" class="closebtn" (click)="closeNav()"><i class="fa fa-angle-double-right"></i></a>
+            <div id="MapSidenav" class="sideMapSearch">
+                <app-lease-setting-search [sheets]="sheets" [userId]="userId" screen="Lease Transaction" type="download"
+                [(userPreferencesId)]="userPreferencesId" [Type]="Task"></app-lease-setting-search>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-5 p-0 mt-2">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">««</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">«</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">»</a>
+                </li>
+                <li *ngIf="pager.currentPage < pager.totalPages">
+                  <a (click)="setPage(pager.totalPages)">»»</a>
+                </li>
+                <span class="spinui" *ngIf="Isloader">
+                        <i class="fas fa-spinner fa-spin showspin"></i>
+                      </span>
+              </ul>
+            </div>
+            <div class="col-md-2 float-right offset-md-5 mt-2 pr-0 pl-0" >
+              <div class="drop_Box_select">
+                <div class="checkbox checkbox-css chkBoxStyle" style="right: auto !important;
+                      top: 1px !important;">
+                  <input type="checkbox" id="cssCheckbox_0" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked)"
+                  />
+                  <label for="cssCheckbox_0" style="white-space: nowrap !important; color: #fff">Select All</label>
+                </div>
+
+                <i class="fas fa-chevron-down fa-label" data-toggle="collapse" data-target="#selectOptionDrop"></i>
+              </div>
+              <div id="selectOptionDrop" class="collapse col-md-12 pr-0 pl-0 showDrop">
+                <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(1)">Remove Selected</a>
+                <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(0)">Remove Unselected</a>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 pl-0" *ngFor="let lease of LeaseList; let i = index;">
+              <div class="checkbox checkbox-css chkBoxStyle">
+                <input type="checkbox" id="propCheckbox_{{i}}" [(ngModel)]='lease.isSelected' (change)="Selection($event.target.checked);"
+                  value="" />
+                <label for="propCheckbox_{{i}}"></label>
+              </div>              
+              <div class="gal-img" [ngStyle]='{"background-image":"url(" + mediaUrl + lease.MainPhotoUrl + ")"}' (click)="showTransactionDetails(lease.PropertyID,lease.LeaseID)">
+                  <!-- <div class="gal-img" style="background-image : url('../../../assets/img/gallery/gallery-15.jpg')"> -->
+                <div class="dash-gal-img-txt-top">
+                    {{lease.PropertyName}}
+                  <br>
+                  <span class="dash-gal-img-txt-top-det">
+                        <!-- <span *ngIf="lease.LeasedSM">{{lease.LeasedSM}} SqM </span> -->
+                        <span *ngIf="!lease.BuildingSizeMin && lease.BuildingSizeMax" >{{lease.BuildingSizeMax}} SF </span>
+                        <span *ngIf="lease.BuildingSizeMin && !lease.BuildingSizeMax" >{{lease.BuildingSizeMin}} SF </span>
+                        
+                        <span *ngIf="lease.BuildingSizeMin && lease.BuildingSizeMax" >{{lease.BuildingSizeMin}}-{{lease.BuildingSizeMax}} SF </span>
+                  <span *ngIf="lease.PropertyUse">{{lease.PropertyUse}} Bldg</span>| 
+                  <span>{{lease.CityName}} {{lease.ZipCode}}</span>
+                  
+                  </span>
+                  <!-- <span class="dash-gal-img-txt-top-det">
+                      <span *ngIf="lease.ExecutionDate && lease.SignDate">{{lease.SignDate}}/{{lease.ExecutionDate}}</span>
+                      <span>{{lease.TenantName}}xx </span>
+                      <span >{{lease.SuiteNumber}} xx </span>
+                      <span>{{lease.LandLordRep}} xx</span>
+                
+                </span> -->
+                </div>
+
+                <div class="addedon" style="margin-top: 155px;"*ngIf="lease.ExecutionDate && !lease.SignDate">Leased On:{{lease.ExecutionDate}}</div>
+                <div class="addedon" style="margin-top: 155px;"*ngIf="lease.SignDate&& !lease.ExecutionDate">Leased On:{{lease.SignDate}}</div>
+                <div class="dash-img-txt">
+                
+                  <span class="dash-gal-img-txt-top-det">
+                      <span *ngIf="lease.TenantName" title="{{lease.TenantName}}" class="truncate">Tenant:{{lease.TenantName}}</span><br>
+                      <span *ngIf="lease.SuiteNumber && lease.FloorNumber">Level {{lease.FloorNumber}}/Suite{{lease.SuiteNumber}} -{{lease.LeasedSM}}</span><br>
+                      <span  *ngIf="lease.LandLordRep">{{lease.LandLordRep}}</span>
+                </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-12 mt-2">
+          <div class="row">
+            <div class="col-md-5 p-0 mt-2">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">««</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">«</a>
+                </li>
+                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">»</a>
+                </li>
+                <li *ngIf="pager.currentPage < pager.totalPages">
+                  <a (click)="setPage(pager.totalPages)">»»</a>
+                </li>
+                <span class="spinui" *ngIf="Isloader">
+                          <i class="fas fa-spinner fa-spin showspin"></i>
+                        </span>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>

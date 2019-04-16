@@ -1,0 +1,314 @@
+.search_results{
+    height: 60vh;
+    overflow: scroll;
+}
+
+.contactRow{
+    white-space: nowrap;
+}
+
+.pBtn{
+    min-width:110px;
+}
+
+.contact-wrap {
+    width: 100%;
+    margin: 0 auto;
+}
+.truncate {
+    width: 100%;
+    white-space: nowrap !important;
+    text-overflow: ellipsis;
+    position: relative;
+    float: left;
+    /* border: 1px solid; */
+    overflow: hidden;
+    height: auto;
+  }
+  .hyperlink{
+    color:#fff;
+}
+      /* The heart of the matter */
+.contactRow{
+float: left;
+        }
+        .btnActive{
+            background: #1976ad;
+            color: #fff;
+        }
+.viewCol .col-4,.viewCol .col-6 {
+    padding-left: 0;
+    float: left;
+    min-height: 22px;
+    font-size: 13px;
+    font-weight: 500;
+}
+.contactRow > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+.contactRow > .row > .crd-width {
+    display: inline-block;
+    float: none;
+}
+.table th {
+    position: relative;
+    white-space: nowrap;
+    border-right: 1px dotted #c7c7c7;
+}
+table.dataTableGrid {
+    border: 1px solid #d9e0e7;
+}
+table.dataTableGrid tr td:last-child, table.dataTableGrid tr th:last-child{
+    border-right: 1px solid #d9e0e7;
+}
+.testimonial-group{
+    float: left;
+    display: inline-grid;
+            }
+.testimonial-group > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+.testimonial-group > .row > .crd-width {
+    display: inline-block;
+    float: none;
+}
+.testimonial-group > .row > .crd-width-gallery {
+    display: inline-block;
+    float: none;
+    margin: 5px;
+}
+.icon-side label{
+    white-space: initial;
+}
+.contactName,.contactType {
+    float:left;
+}
+.profile-detail-mid{
+    float:left;
+}
+.dash-img-txt{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    min-height: 61px;    
+    padding: 2px 0 0 5px;
+    color: #fff;
+    position: absolute;
+    bottom: 0%;
+    font-size:1em;
+    height: auto !important;
+  }
+  .gal-img {
+    height: 170px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 0;
+    cursor: pointer;
+    position: relative;
+    background-position: center center;
+}
+
+.spanText{
+    float: left;
+    white-space: initial;
+    width: 100%;
+}
+.crd-width-gallery{
+    width:200px;
+    margin: 5px auto;
+}
+.table tbody+tbody {
+    border-top: 0px solid #dee2e6;
+}
+
+.dashLine{
+    height: 1px;
+    background-color: #cdcdce;
+    margin-top: 8px;}
+
+    .table-col-4 {
+        -ms-flex: 0 0 40%;
+        flex: 0 0 40%;
+        max-width: 40%;
+        padding-left: 0;
+        float: left;
+        font-size: 13px;
+        font-weight: 500;
+        margin: 1px 0;
+    }
+    .table-col-8 {
+        -ms-flex: 0 0 60%;
+        flex: 0 0 60%;
+        max-width: 60%;
+        padding-left: 0;
+        float: left;
+        font-size: 13px;
+        font-weight: bold;
+        margin: 1px 0;
+    }
+    .arrow-group {
+        display: inline-grid !important;
+        margin-right: 6px
+    }
+    .arrow-group i.fa.fa-sort-up {
+        position: relative;
+        float: left;
+        left: auto;
+        height: 6px;
+    }
+    
+    .arrow-group i.fa.fa-sort-down {
+        position: relative;
+        float: left;
+        right: auto;
+        /* left: 0; */
+        /* right: 8px; */
+        height: 5px;
+        top: 1px;
+        }
+
+        .highLightRow{
+            background: #f5f5f5;
+            margin:15px;
+        }
+        .nameVal{
+            max-width:13%
+        }
+        .resultVal{
+            max-width:87%
+        }
+    @media (max-width: 767px){
+        
+        .testimonial-group{
+            float: left;
+            display: inline-grid;
+                    }
+        .testimonial-group > .row {
+            overflow-x: auto;
+            white-space: initial;
+            overflow-y: -webkit-paged-y;
+        }
+        .testimonial-group > .row > .crd-width, .testimonial-group > .row > .crd-width-gallery {
+            display: block;
+            float: none;
+        }
+        .contact_card {
+            width: 100%;
+            display: block;
+            border: 1px solid #ccc;
+            float: left;
+            margin-bottom: 15px;
+        }
+        .nameVal{
+            max-width:10%
+        }
+        
+    }
+
+    @media (max-width: 575px){
+        .table-col-6 {
+            -ms-flex: 0 0 20%;
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+        .table-col-4 {
+            -ms-flex: 0 0 10%;
+            flex: 0 0 10%;
+            max-width: 10%;
+            white-space: initial;
+        }
+        .table-col-8 {
+            -ms-flex: 0 0 20%;
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+        .table-col-half{
+            -ms-flex: 0 0 15%;
+            flex: 0 0 15%;
+            max-width: 15%;
+        }
+        .nameVal{
+            max-width:10%
+        }
+    }
+    .modal-body {
+        padding: 4px;
+        min-height: 200px;
+    }
+    @media (min-width: 576px){
+    .modal-dialog {
+    max-width: 500px!important;
+    margin: 4.75rem auto;
+    top:0px;
+}
+.fullscreen {
+    max-width: 100%!important;
+    max-height: 100%!important;
+    height: 100%!important;
+    margin: 4.75rem auto;
+    top:0px;
+}
+}
+@media (max-width: 576px){
+    .modal-dialog {
+    top:65px;
+}
+}
+.modalClose{
+    position: absolute;
+    z-index: 1;
+    top: -34px;
+    right: -15px;
+    background: none;
+    border: 0;
+    color: #fff;
+    font-size: 25px;
+}
+
+.item img{
+    cursor: pointer;
+}
+
+.ngx-gallery-preview-icons .ngx-gallery-icon{
+    font-size: 20px;
+}
+
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+  th, td {
+    /* padding: 8px 16px;
+    width: 30%; */
+  }
+  
+
+  .pane-hScroll {
+    overflow: auto;
+    width: 100%;
+  }
+  .pane-hScrollSale {
+    overflow: auto;
+    width: 100%;
+  }
+  .pane-vScroll,.pane-vScrollSale {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(65.5vh - 55px);
+  }
+.btn-default:not(:disabled):not(.disabled).active{
+    background: #1976ad;
+    color: #fff;
+}
+
+[data-toggle=buttons]>.btn-group>.btn input[type=checkbox], [data-toggle=buttons]>.btn-group>.btn input[type=radio], [data-toggle=buttons]>.btn input[type=checkbox], [data-toggle=buttons]>.btn input[type=radio] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}

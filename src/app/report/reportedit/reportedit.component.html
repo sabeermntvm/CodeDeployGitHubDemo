@@ -1,0 +1,138 @@
+<!-- <div class="col-lg-10"> -->
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="blue prev-rit-head center">Want to change the data in your report? Feel free to edit the report
+                fields directly by clicking into the outlined boxes below</h5>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2">
+                  <!--   <span>{{zoomMin}}</span>
+                    <mat-slider (change)="onZoomChange()" [(ngModel)]="zoomValue" [max]="zoomMax" [min]="zoomMin"
+                        [thumbLabel]="true" step="1" title="change zoom level of report layouts if using a high resolution">
+                    </mat-slider>
+                    <span>{{zoomMax}}</span> -->
+                </div>
+                <!-- <div class="col-md-10">
+                    <button class="btn btn-primary-radius margin-top-10 mr-1 float-left report-edt-btn-new" (click)="saveEditedReport()" 
+                        title="Actions" type="button">
+                        Apply Edits to All Versions
+                    </button>
+                    <button class="btn btn-primary-grey margin-top-10 mr-1 float-left report-edt-btn-new" (click)="saveEditedReport()"
+                        title="Actions" type="button">
+                        Apply Only to This Version
+                    </button>
+                    <button class="btn btn-default margin-top-10 mr-1 float-left report-edt-btn-new" title="Actions" type="button">
+                        Save Draft
+                    </button>
+                     <div class="dropdown margin-top-10 ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Report Options
+                        </button>
+                        <div class="dropdown-menu" style="padding:10px;">
+                            <div class="checkbox magin-top-5">
+                                <label><input type="checkbox" value="" class="ckkboxDrop"> <span style="margin-top:0px">Hide Listing Agents</span></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckkboxDrop"> <span style="margin-top:0px">Include Page Numbers</span></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" disabled  class="ckkboxDrop"> <span style="margin-top:0px">Include  Header/Footer</span></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" disabled  class="ckkboxDrop"> <span style="margin-top:0px">Include Company Logo</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+          <!-- <span>{{zoomMin}}</span>
+          <mat-slider
+            (change)="onZoomChange()"
+            [(ngModel)]="zoomValue"
+            [max]="zoomMax"
+            [min]="zoomMin"
+            [thumbLabel]="true"
+            step="1">
+          </mat-slider>
+          <span>{{zoomMax}}</span> -->
+            <div class="row">
+                <div class="rep-prev-left" style="font-size: 10px;margin-bottom: 10px;" *ngFor="let report of reportFromPrevPage | orderBy: 'ReportOrder'">
+                    <div *ngIf="report.isEditable && report.reportLayout !== 'landscape'" class="rep-portrait zoom-out"
+                         style="margin-bottom:10px;">
+                      <div [innerHTML]="report.HTML | safeHtml" class="prev-edit rep-content"></div>
+                    </div>
+                    <div *ngIf="report.isEditable && report.reportLayout == 'landscape'" class="rep-landscape zoom-out"
+                         style="margin-bottom:10px;">
+                      <div [innerHTML]="report.HTML | safeHtml" class="prev-edit rep-content"></div>
+                    </div>
+                    <br>
+                </div>
+                <div *ngIf="reportFromPrevPage.length <= 0" class="select_box">
+                    Select Report..
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-lg-3 no-padding">
+            <div class="prv-button left-align" style="padding: 10px;">
+                <button class="btn btn-primary-radius" (click)="saveEditedReport()" style="border-radius:5px !important;width: 100%;"
+                    title="Actions" type="button">
+                    Apply Edits to All Versions
+                </button>
+                <button class="btn btn-primary-grey margin-top-10" (click)="saveEditedReport()" style="border-radius:5px !important;width: 100%;"
+                    title="Actions" type="button">
+                    Apply Only to This Version
+                </button>
+                <button class="btn btn-default margin-top-10" style="border-radius:5px !important;width: 100%;" title="Actions"
+                    type="button">
+                    Save Draft
+                </button>
+            </div>
+            <div class="prv-button left-align" style="padding: 10px;">
+                <div class="check-group margin0">
+                    <div class="check-group-heading"> Report Options </div>
+                    <div class="checkbox magin-top-5">
+                        <label><input type="checkbox" value=""> Hide Listing Agents</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value=""> Include Page Numbers</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="" disabled> Include Header/Footer</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="" disabled> Include Company Logo</label>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+<!-- </div> -->
+<div id="testmodal" class="modal fade" style="z-index: 10000">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div><b>Select the Image You Wish to Use</b></div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12" style="margin-bottom: 10px">
+                    <div class="col-lg-3 no-padding"><b>Image Library</b></div>
+                    <div class="col-lg-9 no-padding">
+                        <div class="detl-dashed-lin"></div>
+                    </div>
+                </div>
+                <div class="col-lg-3" *ngFor="let media of mediaList">
+                    <div class="media-img1">
+                        <img class="img-responsive img" data-dismiss="modal" [src]="media.url" (click)="selectImage(media.PropertyID, media.url)"
+                            width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

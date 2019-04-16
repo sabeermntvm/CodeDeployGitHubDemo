@@ -1,0 +1,12 @@
+.truncate250 {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .prop-name {
+    color: blue !important;
+  }
+.margin-5{
+  margin: 5px!important;
+}

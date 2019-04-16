@@ -1,0 +1,317 @@
+<div class="row m-0">
+  <div class="col-md-12">
+    <div class="row m-0">
+      <div class="col-md-12 p-0">
+        <div class="map-nav">
+          <ul>
+            <!--<li class="active"><span class="map-result">{{TotalResultCount > 500 ? '500+ Results' : TotalResultCount}}</span></li>-->
+            <li class="active"><span class="map-result">{{TotalResultCount}}</span></li>
+            <li [routerLink]="['/property/mapsearch']"><span class="map-result"><i class="fas fa-map"></i> Map View</span></li>
+            <li [routerLink]="['/property/propertyGallery']"><span class="map-result"><i class="fas fa-th"></i> Gallery
+                View</span></li>
+            <li [routerLink]="['/property/analytics']"><span class="map-result"><i class="fas fa-th"></i> Analytics
+                  View</span></li>
+            <li *ngIf="Count" class="active" ><span class="map-result"> {{Count}} Selected  </span></li>
+          </ul>
+        </div>
+
+        <div class="action-btn-row" role="group">
+          <button id="btnGroupVerticalDrop1" type="button" (click)="sendReport()" class="btn btn-primary-ash dropdown-toggle" title="Listing Report" *ngIf="IsEmpiricalUser"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="far fa-envelope"></i>
+          </button>
+          <button id="btnGroupVerticalDrop1" type="button" (click)="showReport()" class="btn btn-primary-ash dropdown-toggle" title="Print Report"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-print font20"></i>
+          </button>
+          <!--<button id="btnGroupVerticalDrop5" type="button" (click)="showUserPreferencesModal('Download')" title="Export to Excel"
+            class="btn btn-primary-ash" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-file-excel"></i>
+          </button>-->
+          <button id="btnGroupVerticalDrop6" type="button" (click)="showUserPreferencesModal('Download')" title="Export Settings" class="btn btn-primary-ash"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div class="sideBarPanelWrap" id="MapSidenavSetting">
+          <a href="javascript:void(0)" *ngIf="CloseActionBtnSet" class="closebtn" (click)="closeSettingsNav($event)"><i class="fa fa-angle-double-right"></i></a>
+          <div id="MapSidenav" class="sideMapSearch">
+            <app-settingsearch [sheets]="sheets" [userId]="userId" screen="Property" Type="Download" [(userPreferencesId)]="userPreferencesId"
+              [type]="Task"></app-settingsearch>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li *ngIf="pager.currentPage < pager.totalPages">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+              <span class="spinui" *ngIf="Isloader">
+                <i class="fas fa-spinner fa-spin showspin"></i>
+              </span>
+            </ul>
+
+
+          </div>
+          <div class="col-md-2 float-right offset-md-5 mt-2 pr-0 pl-0">
+            <div class="drop_Box_select">
+              <div class="checkbox checkbox-css chkBoxStyle" style="right: auto !important;
+                top: 1px !important;">
+                <input type="checkbox" id="cssCheckbox_0" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked)"
+                />
+                <label for="cssCheckbox_0" style="white-space: nowrap !important; color: #fff">Select All</label>
+              </div>
+              <i class="fas fa-chevron-down fa-label" data-toggle="collapse" data-target="#selectOptionDrop"></i>
+            </div>
+            <div id="selectOptionDrop" class="collapse col-md-12 pr-0 pl-0 showDrop">
+              <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(1)">Remove Selected</a>
+              <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(0)">Remove
+                Unselected</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="row m-0">
+        <div class="mt-2 col-md-12 p-0">
+          <a hrefd="#/property/details">
+            <div class="table-scroll">
+              <div class="pane pane--table1">
+                <div class="pane-hScroll">
+                  <table class="table table-bordered table-sm table-head" style="margin-bottom: 0">
+                    <thead>
+                      <tr>
+                        <th style="width:30px; text-align: center;">
+                          <!-- <input type="checkbox" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked);"> -->
+                          <div class="checkbox checkbox-css tableChechbox">
+                            <input type="checkbox" id="propheadCheckbox" value="" [(ngModel)]="isSelectAll" (change)="onClickSelectAll($event.target.checked);"
+                            />
+                            <label for="propheadCheckbox"></label>
+                          </div>
+                        </th>
+                        <th scope="col" style="width:180px;" (click)="sortProperty('PropertyName',NameSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('PropertyName','Ascending') ; $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('PropertyName','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          Name
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'PropertyName' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'PropertyName' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+                        <th scope="col" style="width:175px;" (click)="sortProperty('Address',AddressSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('Address','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('Address','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          Address
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'Address' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'Address' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+
+                        <th scope="col" style="width:120px;" (click)="sortProperty('City',CitySortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('City','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('City','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          City
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'City' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'City' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+
+                        <th scope="col" style="width:145px;" (click)="sortProperty('PropertyType',GeneralUseSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('PropertyType','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('PropertyType','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          General Use
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'PropertyType' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'PropertyType' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+
+                        <th scope="col" style="width:145px;" (click)="sortProperty('SpecificUses',SpecificUseSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('SpecificUses','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('SpecificUses','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          Specific Use
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'SpecificUses' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'SpecificUses' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                        </th>
+
+                        <th scope="col" style="width:175px;" (click)="sortProperty('BuildingSize',BuildingSizeSortOrder)">
+                          <div class="arrow-group">
+                            <i class="fa fa-sort-up" (click)="sortProperty('BuildingSize','Ascending'); $event.stopPropagation();"></i>
+                            <i class="fa fa-sort-down" (click)="sortProperty('BuildingSize','Descending'); $event.stopPropagation();"></i>
+                          </div>
+                          <span [innerHTML]="BuildingSizeHeader"></span>
+                          <div class="sort_Group_white">
+                            <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'BuildingSize' && searchCriteria.SortDirection == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'BuildingSize' && searchCriteria.SortDirection == 'Descending'"></i>
+                          </div>
+                          <!--Building Size (M<sup>2</sup>)
+                        </th>-->
+                          <th scope="col" style="width:150px;" (click)="sortProperty('TotalAvailable',AvailableSpaceSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortProperty('TotalAvailable','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortProperty('TotalAvailable','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            <span [innerHTML]="AvailableSpaceHeader"></span>
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'TotalAvailable' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'TotalAvailable' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                            <!--(M<sup>2</sup>) Available-->
+                          </th>
+                          <th scope="col" style="width:120px;" (click)="sortProperty('Price',PriceSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortProperty('Price','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortProperty('Price','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Price
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'Price' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'Price' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:145px;" (click)="sortProperty('RecordTypeName',ListingTypeSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortProperty('RecordTypeName','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortProperty('RecordTypeName','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Listing Type
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'RecordTypeName' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'RecordTypeName' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:180px;" (click)="sortProperty('ListingCompanyName',CompanyNameSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortProperty('ListingCompanyName','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortProperty('ListingCompanyName','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Company-Branch
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'ListingCompanyName' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'ListingCompanyName' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                          <th scope="col" style="width:130px;" (click)="sortProperty('AgentName',AgentNameSortOrder)">
+                            <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortProperty('AgentName','Ascending'); $event.stopPropagation();"></i>
+                              <i class="fa fa-sort-down" (click)="sortProperty('AgentName','Descending'); $event.stopPropagation();"></i>
+                            </div>
+                            Agent1
+                            <div class="sort_Group_white">
+                              <i class="fas fa-arrow-circle-up" *ngIf="searchCriteria.SortParam == 'AgentName' && searchCriteria.SortDirection == 'Ascending'"></i>
+                              <i class="fas fa-arrow-circle-down" *ngIf="searchCriteria.SortParam  == 'AgentName' && searchCriteria.SortDirection == 'Descending'"></i>
+                            </div>
+                          </th>
+                      </tr>
+                    </thead>
+
+                  </table>
+                  <div class="pane-vScroll">
+                    <table class="table table-striped table-bordered table-sm table-head">
+                      <tbody>
+                        <tr *ngFor="let property of propertyList; let i = index;">
+                          <td style="width:30px;">
+                            <div class="checkbox checkbox-css tableChechbox">
+                              <input type="checkbox" id="propCheckbox_{{i}}" [(ngModel)]='property.isSelected' (change)="Selection($event.target.checked);"
+                                value="" />
+                              <label for="propCheckbox_{{i}}"></label>
+                            </div>
+                          </td>
+                          <td style="width:180px;"><a class="prop-name" (click)="showListingDetails(property.PropertyId, property.ListingID)">
+                              {{ property.PropertyName }}</a></td>
+
+
+
+
+                          <td style="width:175px;"><a [attr.href]="'#/property/propertySummary/' + property.PropertyId">{{property.Address }} </a></td>
+                          <td style="width:120px;">{{ property.City }}</td>
+                          <td style="width:145px;">{{ property.PropertyType }}</td>
+                          <td style="width:145px;">{{ property.SpecificUses }}</td>
+                          <!-- <td style="width:140px;" *ngIf="CountryId == USCountryCode">{{ property.BuildingSize }}</td>
+                                              <td style="width:140px;" *ngIf="CountryId != USCountryCode">{{ property.BuildingSizeSM }}</td>
+                                              <td style="width:130px;" *ngIf="CountryId == USCountryCode">{{ property.TotalAvailable }}</td> 
+                                              <td  style="width:130px;" *ngIf="CountryId != USCountryCode">{{ property.TotalAvailableSM }}</td>-->
+                          <td style="width:175px;" *ngIf="UnitId == metricUnit">{{ property.BuildingSizeSM | number:'.0-0' }}</td>
+                          <td style="width:1750px;" *ngIf="UnitId != metricUnit">{{ property.BuildingSize | number:'.0-0' }}</td>
+                          <td style="width:150px;" *ngIf="UnitId == metricUnit">{{ property.TotalAvailableSM | number:'.0-0' }}</td>
+                          <td style="width:150px;" *ngIf="UnitId != metricUnit">{{ property.TotalAvailable | number:'.0-0' }}</td>
+
+                          <td style="width:120px;">{{ property.Price }} {{property.LeaseTypeName}}</td>
+                          <td style="width:145px;">{{ property.RecordTypeName == 'Lease'? (property.ListingTypeName == 'Direct' ? 'Lease': property.ListingTypeName
+                            ) : property.RecordTypeName }}</td>
+                          <td style="width:180px;">{{ property.ListingCompanyName }}</td>
+                          <td style="width:130px;">{{ property.AgentName }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+              <li *ngIf="pager.currentPage < pager.totalPages">
+                <a (click)="setPage(pager.totalPages)">»»</a>
+              </li>
+              <span class="spinui" *ngIf="Isloader">
+                <i class="fas fa-spinner fa-spin showspin"></i>
+              </span>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

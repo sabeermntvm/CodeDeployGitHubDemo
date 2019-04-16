@@ -1,0 +1,247 @@
+<div class="col-lg-12 no-padding report ulm-border">
+  <div class="col-lg-12 tab-content">
+    <div class="prv-button" style="padding-top: 30px;">
+      <div class="margin-top-10 col-md-12">
+        <h4 class="grid-heading">
+          Listing Update Link Tracking
+        </h4>
+        <div class="row">
+        <div class="col-md-6">
+          <h5 class="grid-heading">
+            Outbound Status
+          </h5>
+          <div class="table-scroll">
+            <table class="table dataTableGrid">
+              <thead>
+              <tr>
+                <th>
+                  Links Sent
+                </th>
+                <th>
+                  Pending
+                </th>
+                <th>
+                  In Progress
+                </th>
+                <th>
+                  Updated
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  {{trackData.TotalCount}}
+                </td>
+                <td>
+                  {{trackData.PendingOutboundCount}}
+                </td>
+                <td>
+                  {{trackData.InProgressOutboundCount}}
+                </td>
+                <td>
+                  {{trackData.UpdatedOutboundCount}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h5 class="grid-heading">
+            Inbound Status
+          </h5>
+          <div class="table-scroll">
+            <table class="table dataTableGrid">
+              <thead>
+              <tr>
+                <th>
+                  Waiting
+                </th>
+                <th>
+                  Ready For Review
+                </th>
+                <th>
+                  In Progress
+                </th>
+                <th>
+                  Complete
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  {{trackData.WaitingInboundCount}}
+                </td>
+                <td>
+                  {{trackData.ReviewInboundCount}}
+                </td>
+                <td>
+                  {{trackData.InProgressInboundCount}}
+                </td>
+                <td>
+                  {{trackData.CompleteInboundCount}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="prv-button" style="padding-top: 20px;">
+      <div class="row margin-5">
+          <div class="col-lg-10">
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                  <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(1)">««</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a (click)="setPage(pager.currentPage - 1)">«</a>
+                  </li>
+                  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a (click)="setPage(page)">{{page}}</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a (click)="setPage(pager.currentPage + 1)">»</a>
+                  </li>
+                  <li *ngIf="pager.currentPage < pager.totalPages">
+                    <a (click)="setPage(pager.totalPages)">»»</a>
+                  </li>
+                  <span class="spinui" *ngIf="Isloader">
+                    <i class="fas fa-spinner fa-spin showspin"></i>
+                  </span>
+                </ul>
+            </div>
+        <div class="col-lg-2 left-align">
+      <div _ngcontent-c2="" class="checkbox checkbox-css tableChechbox text-left">
+        <input _ngcontent-c2="" id="ulmCheckbox" type="checkbox" value="" [(ngModel)]="showByUserSelected" (change)="showMyLinks()" ng-reflect-model="true" class="ng-untouched ng-valid ng-dirty">
+        <label _ngcontent-c2="" for="ulmCheckbox">
+            Show only my links
+        </label>
+        <br>
+      </div>
+      </div>
+      
+      </div>
+      <div class="margin-top-10 col-md-12">
+          <div class="table-scroll">
+            <table class="table dataTableGrid">
+              <thead>
+              <tr>
+                <th>
+                  Link
+                </th>
+                <th>
+                  Name
+                </th>
+                <th style="width:100px;">
+                  Date Sent
+                </th>
+                <th>
+                  Listings Sent
+                </th>
+                <th style="width:100px;">
+                  Updated Time
+                </th>
+                <th style="width:150px;">
+                  Update Status
+                </th>
+                <th>
+                  Listings Updated
+                </th>
+                <th>
+                  PropertyList
+                </th>
+                <th>
+                  Internal Review Status
+                </th>
+                <th>
+                  View
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+                  <span class="spinui" *ngIf="Isloader&&!userListingManagementList">
+                      <i class="fas fa-spinner fa-spin showspin"></i>
+                    </span>
+              <tr *ngFor="let ulm of userListingManagementList">
+                <td>
+                  <a class="prop-name" (click)="editReport(ulm.Key)">{{ulm.UserListingManagementID}}</a>
+                </td>
+                <td>
+                  {{ulm.URLName}}
+                </td>
+                <td>
+                  {{setDate(ulm.CreateTime)| date}}
+                </td>
+                <td>
+                  {{ulm.ListingsSent}}
+                </td>
+                <td>
+                  {{setDate(ulm.UpdateTime) | date}}
+                </td>
+                <td>
+                  <select class="form-control" [style.opacity]="1" name="status" [(ngModel)]="ulm.Status"
+                          id="status" (change)="statusChange(ulm)" *ngIf="!(ulm.Status === 'Cancelled' || ulm.Status === 'Expired')">
+                    <option *ngIf="ulm.Status === 'Sent'" value="Sent">Sent</option>
+                    <option *ngIf="ulm.Status === 'In Progress'" value="In Progress">In Progress</option>
+                    <option *ngIf="ulm.Status === 'Complete'" value="Complete">Complete</option>
+                    <option *ngIf="ulm.Status != 'Complete'" value="Cancelled">Cancelled</option>
+                    <option value="Expired">Expired</option>
+                  </select>
+                  <label *ngIf="ulm.Status === 'Cancelled' || ulm.Status === 'Expired'">{{ulm.Status}}</label>
+                </td>
+                <td>
+                  {{ulm.ListingsUpdated}}
+                </td>
+                <td class='truncate250' title={{getProperties(ulm.PropertyList)}}>
+                  {{getProperties(ulm.PropertyList)}}
+                </td>
+                <td *ngIf="ulm.ReviewStatus!=='Waiting'">
+                  <select class="form-control" [style.opacity]="1" name="reviewStatus" [(ngModel)]="ulm.ReviewStatus"
+                          id="reviewStatus" (change)="reviewStatusChange(ulm)">
+                    <option value="Ready For Review">Ready For Review</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Complete">Complete</option>
+                  </select>
+                </td>
+                <td *ngIf="ulm.ReviewStatus==='Waiting'">
+                  {{ulm.ReviewStatus}}
+                </td>
+                <td>
+                  <a class="prop-name" *ngIf="ulm.ListingsUpdated && !(ulm.Status === 'Cancelled' || ulm.Status === 'Expired')" (click)="showReport(ulm.UserListingManagementID)">Show</a>
+                  <label style="text-align: center!important;" *ngIf="!ulm.ListingsUpdated && ulm.HasUserUpdated && !(ulm.Status === 'Cancelled' || ulm.Status === 'Expired')">No Changes</label>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <div class="col-md-12">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li *ngIf="pager.currentPage > 1" [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(1)">««</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(pager.currentPage - 1)">«</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+              <a (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.currentPage + 1)">»</a>
+            </li>
+            <li *ngIf="pager.currentPage < pager.totalPages">
+              <a (click)="setPage(pager.totalPages)">»»</a>
+            </li>
+            <span class="spinui" *ngIf="Isloader">
+              <i class="fas fa-spinner fa-spin showspin"></i>
+            </span>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>

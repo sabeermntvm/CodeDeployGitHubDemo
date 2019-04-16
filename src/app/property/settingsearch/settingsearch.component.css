@@ -1,0 +1,23 @@
+.page_sub_head1 {
+    font-size: 17px;
+    color: #fff;
+    padding-top: 0;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    float: left;
+  }
+  .headText{
+    font-size: 12px;
+    float: left;
+    color: #fff;
+    margin-top: 5px;
+}
+.checkbox.checkbox-css label {
+    padding-left: 24px;
+    margin: 0;
+    color:#fff;
+}
+
+.searchBtn{
+    padding: 3px 6px;position: relative; width: 100px;
+}

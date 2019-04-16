@@ -1,0 +1,55 @@
+export class Listing {
+    ListingID: any;
+    PropertyId: any;
+    TotalAvailable: any;
+    Vacant: any;
+    AskingRate: any;
+    ListingTypeID: any;
+    ListingStatusID: any;
+    MarketingURL: any;
+    TotalExpenses: any;
+    OperatingExpensesPerSF: any;
+    TaxesPerSF: any;
+    TaxYear: any;
+    SubleaseExpirationDate: any;
+    ListingNotes: any;
+    Sublessor: any;
+    ListingDate: any;
+    ExpirationDate: any;
+    ShareLevelID: any;
+    ShareToPublic: any;
+    MinDiv: any;
+    MaxContig: any;
+    TotalVacant: any;
+    NoOfSpaces: any;
+    AskingLeaseRatePerMonth: any;
+    AskingLeaseRatePerYear: any;
+    TotalMonthlyAsking: any;
+    YearCalculated: any;
+    LeaseTerms: any;
+    FeeCodeID: any;
+    SpecialConditionID: any;
+    AgreementTypeID: any;
+    OptionToExtend: any;
+    SpecialBrokerNotes: any;
+    InternalComments: any;
+    ResearchLastModifiedDate: any;
+    LeaseRatePerMonth: any;
+    LeaseRatePerYear: any;
+    YearBuilt: any;
+    PercentageOccupied: any;
+    NoOfFloors: any;
+    ParkingRatio: any;
+    ConstructionStatusID: any;
+    RecordTypeID: any;
+    UseTypeID: any;
+    SizeValue: any;
+    TotalVacSF: any;
+    MaxContigSF: any;
+    ModifiedBy: any;
+    LeaseTypeID: any;
+
+    UseType:any;
+
+    AskingSalePrice: any;
+}

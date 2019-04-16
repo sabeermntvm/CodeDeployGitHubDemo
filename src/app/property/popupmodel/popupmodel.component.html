@@ -1,0 +1,15 @@
+<label class="mat-headerLabel">{{data.labelvalue}}</label>
+<div mat-dialog-content>
+  <br>
+  <mat-form-field *ngIf="data.showSuggestedValue">
+    <input matInput [(ngModel)]="data.value" placeholder="Suggested Value">
+  </mat-form-field>
+  <mat-form-field>
+    <!-- <input matInput [(ngModel)]="data.comment" placeholder="comment"> -->
+    <textarea matInput [(ngModel)]="data.comment" rows="5" placeholder="Comment"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="cancel-Mat" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="submit-Mat" [mat-dialog-close]="{labelvalue:data.labelvalue,value:data.value,comment:data.comment}">Submit</button>
+</div>

@@ -1,0 +1,14 @@
+.card1:hover {
+  -webkit-transform: translateY(-4px) scale(1.02);
+  -moz-transform: translateY(-4px) scale(1.02);
+  -ms-transform: translateY(-4px) scale(1.02);
+  -o-transform: translateY(-4px) scale(1.02);
+  transform: translateY(-4px) scale(1.02);
+  -webkit-box-shadow: 0 14px 24px rgba(62, 57, 107, .2);
+  box-shadow: 0 14px 24px rgba(62, 57, 107, .2);
+  z-index: 999;
+}
+.card1{
+    cursor:pointer;
+    transition: all 0.3s ease;
+}

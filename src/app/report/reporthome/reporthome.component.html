@@ -1,0 +1,189 @@
+<div class="mapSearchIcon" *ngIf="isReportSelection || isReportSort">
+    <button type="type" class="btn btn-search" (click)="openReportSelectedView()">
+        <i class="fas fa-sticky-note"></i>
+    </button>
+</div>
+<div class="sideBarPanelWrap" id="SidenavWrap">
+    <a href="javascript:void(0)" *ngIf="CloseActionBtn" class="closebtn" (click)="closeNav()"><i class="fa fa-angle-double-right"></i></a>
+    <div id="SidenavReport" class="sideMapSearch">
+        <div class="col-md-12">
+            <div class="reportViewNav">
+                <div class="sub_innerpages" *ngIf="isReportSelection">
+                    <h4 class="report-heading">Report Layouts</h4>
+                    <!-- <a id="coverpage" (click)="showSelectedTab('coverpage')" class="nav-link active" [ngClass]="{'activeTabReport' : selectedReportType == 'coverpage'}"
+                        (click)="getRecentMarketActivityCounts('Today')">
+                        <div class="icon-cover"></div><span class="nav-txt">Cover Page</span>
+                    </a> -->
+                    <a id="coverpage" (click)="showSelectedTab('coverpage')" class="nav-link active" [ngClass]="{'activeTabReport' : selectedReportType == 'coverpage'}">
+                        <div class="icon-cover"></div><span class="nav-txt">Cover Page</span>
+                    </a>
+
+                    <a id="brochure" (click)="showSelectedTab('brochure')" class="nav-link" [ngClass]="{'activeTabReport' : selectedReportType == 'brochure'}">
+                        <div class="icon-brochure"></div><span class="nav-txt">Brochure</span>
+                    </a>
+                    <a id="multiproperty" (click)="showSelectedTab('multiproperty')" class="nav-link" [ngClass]="{'activeTabReport' : selectedReportType == 'multiproperty'}">
+                        <div class="icon-multi"></div><span class="nav-txt"> Multi-Property</span>
+                    </a>
+
+                    <a id="map" (click)="showSelectedTab('map')" class="nav-link" [ngClass]="{'activeTabReport' : selectedReportType == 'map'}">
+                        <div class="icon-mapp"></div><span class="nav-txt"> Map</span>
+                    </a>
+                </div>
+                <div id="innerpages-sub-nxt">
+                    <div class="postalcode">
+                        <h4 class="report-heading">Report Builder</h4>
+                        <div class="postalcode">
+                            <div class="report-prev">
+                                <div *ngFor="let report of _sharedDataService.selectedReportSortList" style="margin:10px;">
+                                    <div *ngIf="report.reportLayout == 'landscape'" style="position: relative">
+                                        <img [src]="report.PreviewImage" class="land-img" />
+                                        <button class="pull-right new-but btn-primary-red" (click)="deleteSelectedReport(report)"
+                                            style="position: absolute; top:0; right:0"><i class="fa fa-times"></i></button>
+                                    </div>
+                                    <div *ngIf="report.reportLayout == 'portrait'" style="position: relative;">
+                                        <img [src]="report.PreviewImage" class="portrait-img" />
+                                        <button class="pull-right new-but btn-primary-red portrait" (click)="deleteSelectedReport(report)"><i
+                                                class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 topBigmarginSmall">
+    <div class="row">
+        <div class="col-md-12 widgetHeadReport">
+            <div class="row m-0 pt-2 pb-2" style="background: #6a829a54;">
+                <div class="p-0 mt-2" [ngClass]="{'col-md-1' :  webView == true,'col-1 ' :  mobileView == true}">
+                    <div (click)="onClickBackToResults()" class="backBtn float-left mr-2 border-nav-right">
+                        <a ><i class="fas fa-long-arrow-alt-left"></i></a>
+                    </div>
+                </div>
+                <div [ngClass]="{'col-md-5' :  webView == true,'col-10' :  mobileView == true}">
+                    <div class="wizard">
+                        <div class="wizard-inner">
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" [ngClass]="{'active' :  activeTab == 'select'}" id="select"
+                                    (click)="changeReportFunction('select')">
+                                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                        <span class="round-tab">
+                                            <i class="fas fa-check-square"></i>
+                                        </span>
+                                        <label class="widgetLabel">Select</label>
+                                    </a>
+                                </li>
+
+                                <li role="presentation" [ngClass]="{'active' :  activeTab == 'sort'}" id="sort" (click)="changeReportFunction('sort')">
+                                    <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                        <span class="round-tab">
+                                            <i class="fas fa-sort-amount-down"></i>
+                                        </span>
+                                        <label class="widgetLabel">Sort</label>
+                                    </a>
+                                </li>
+                                <li role="presentation" [ngClass]="{'active' :  activeTab == 'edit'}" id="edit" (click)="changeReportFunction('edit')">
+                                    <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                                        <span class="round-tab">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                        <label class="widgetLabel">Edit</label>
+                                    </a>
+                                </li>
+
+                                <li role="presentation" [ngClass]="{'active' :  activeTab == 'media'}" id="media"
+                                    (click)="changeReportFunction('media')">
+                                    <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                        <span class="round-tab">
+                                            <i class="fas fa-images"></i>
+                                        </span>
+                                        <label class="widgetLabel">Media</label>
+                                    </a>
+                                </li>
+
+                                <li role="presentation" [ngClass]="{'active' :  activeTab == 'review'}" id="review"
+                                    (click)="changeReportFunction('review')">
+                                    <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                        <span class="round-tab">
+                                            <i class="fas fa-clipboard-check"></i>
+                                        </span>
+                                        <label class="widgetLabel">Review</label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-0 mt-2" [ngClass]="{'col-1' :  mobileView == true}" *ngIf="lastBtnAction && mobileView == true">
+                    <button class="btn btn-Next rounded-0" (click)="changeReportFunction(selectOption)" title="Actions"
+                        type="button"><i class="fa fa-angle-double-right"></i>
+                    </button>
+                </div>
+                <div [ngClass]="{'col-md-6' :  webView == true,'col-12' :  mobileView == true}">
+                    <div class="row">
+                        <div *ngIf="lastBtnAction && webView == true" class="col-lg-10 no-padding mt-2 ">
+                            <button class="btn btn-Next rounded-0" (click)="changeReportFunction(selectOption)" title="Actions"
+                                type="button">
+                                Next {{selectOption}} <i class="fa fa-angle-double-right"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="this.isReportReview" class="col-lg-12 no-padding mt-2 ">
+                            <button class="btn btn-outline-danger preview-btn rounded-0 mr-2" (click)="showSelectedTab('coverpage'); changeReportFunction('select')"
+                                title="Actions" type="button">
+                                New Package Using These Properties
+                            </button>
+                            <button class="btn btn-outline-primary preview-btn rounded-0 mr-2" (click)="reportCompleted()"
+                                title="Actions" type="button">
+                                Finished. Return to Results
+                            </button>
+                            <button class="btn btn-primary-blue  preview-btn rounded-0" (click)="printPDF()">
+                                <i class="fa fa-print font30"></i> Run Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-12 mt-2">
+                    <p class="textData">Choose one or more reports from the categories to build your custom report
+                        package.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 reportWrapper" [class.reportViewPage]="isReportReview == true">
+            <div class="row m-0 pt-2 pb-2" id="reportViewWrap" style="background: #fff;">
+                <div *ngIf="isReportSelection" class="col-lg-12">
+                    <div class="transition-width">
+                        <app-reportselection [selectedReportType]="selectedReportType"></app-reportselection>
+                    </div>
+                </div>
+                <div *ngIf="isReportSort" class="col-lg-12">
+                    <div class="transition-width">
+                        <app-reportsort></app-reportsort>
+                    </div>
+                </div>
+                <div *ngIf="isReportEdit" class="col-lg-12">
+                    <div class="transition-width">
+                        <app-reportedit></app-reportedit>
+                    </div>
+                </div>
+                <div *ngIf="isReportMedia" class="col-lg-12">
+                    <div class="transition-width">
+                        <app-reportmedia></app-reportmedia>
+                    </div>
+                </div>
+                <div *ngIf="isReportReview" class="col-lg-12">
+                    <div class="transition-width">
+                        <app-reportreview></app-reportreview>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

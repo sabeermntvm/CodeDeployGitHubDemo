@@ -1,0 +1,68 @@
+<div class="col-md-12">
+        <button class="btn btn-success mb-2 float-left" style="width:49%;">SEARCH</button>
+        <button class="btn btn-primary mb-2  float-right" style="width:49%;">RESET</button>
+  <button type="button" class="searchBtnActions"><i class="fas fa-draw-polygon"></i> Draw Polygon 
+    <span class="pull-right innerpages-circle"><i class="fa fa-check"></i></span></button>
+  <button type="button" class="searchBtnActions mb-0"><i class="fas fa-circle"></i> Draw Radius</button>
+  <hr>
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#location"  aria-expanded='true'><i class="fas fa-location"></i>Location </button>
+  <div id="location" class="collapse show mb-3">
+    <ng-select  [items]="items"  placeholder="Select Location"></ng-select>
+  </div>
+
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#propertyType" aria-expanded='true' >Property Type</button>
+  <div id="propertyType" class="collapse show mb-3">
+      <ng-select  [items]="items"  [virtualScroll]="true" placeholder="Select Property"></ng-select>
+  </div>
+  
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#listingType" aria-expanded='true'>Listing Type</button>
+  <div id="listingType" class="collapse mb-3 show">
+      <ng-select  [items]="items"  [virtualScroll]="true" placeholder="Select Listing"></ng-select>
+  </div>
+ 
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Company" aria-expanded='true'>Company</button>
+  <div id="Company" class="collapse mb-3 show">
+      <ng-select  [items]="items" [virtualScroll]="true" placeholder="Select Company"></ng-select>
+  </div>
+  
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Agent" aria-expanded='true'>Agent</button>
+  <div id="Agent" class="collapse mb-3 show">
+      <ng-select  [items]="items" [virtualScroll]="true" placeholder="Select Agent"></ng-select>
+  </div>
+
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#SpecificUse" aria-expanded='true'>Specific Use</button>
+  <div id="SpecificUse" class="collapse mb-3 show">
+      <ng-select  [items]="items" [virtualScroll]="true" placeholder="Select Specific Use"></ng-select>
+  </div>
+
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#PropertySize" aria-expanded='true'>Property Size</button>
+  <div id="PropertySize" class="collapse mb-3 show">
+    <div class="row">
+     <span class="col-5"> <input type="text" class="form-control"></span> <span class="col-2 hyphen">-</span> <span class="col-5"> <input type="text" class="form-control"></span>
+    </div>
+  </div>
+
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#PropertyGrade" aria-expanded='true'>Property Grade</button>
+  <div id="PropertyGrade" class="collapse mb-3 show">
+      <ng-select  [items]="items" [virtualScroll]="true" placeholder="Select Property Grade"></ng-select>
+  </div>
+
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Tenancy" aria-expanded='true'>Tenancy</button>
+  <div id="Tenancy" class="collapse mb-3 show">
+      <ng-select  [items]="items" [virtualScroll]="true" placeholder="Select Tenancy"></ng-select>
+  </div>
+
+  <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#LotSize" aria-expanded='true'>Lot Size</button>
+  <div id="LotSize" class="collapse mb-3 show">
+      <div class="row">
+          <span class="col-5"> <input type="text" class="form-control"></span> <span class="col-2 hyphen">-</span> <span class="col-5"> <input type="text" class="form-control"></span>
+         </div>
+  </div>
+
+  <hr>
+  <p style="color: #fff;">Select filters before clicking apply</p>
+  
+  <button class="btn btn-success mb-2 float-left" style="width:49%;">SEARCH</button>
+  <button class="btn btn-primary mb-2  float-right" style="width:49%;">RESET</button>
+
+</div>

@@ -1,0 +1,321 @@
+.search-results {
+    max-height: calc(67.5vh - 55px);
+    overflow: scroll;
+}
+.highLightRow{
+    background: #f5f5f5;
+    margin:15px;
+}
+.netMedia{
+    max-height: 290px;
+    overflow: auto;
+}
+.showspin{
+    position: relative !important;
+}
+.netMedia_head{
+    max-height: 230px;
+    overflow: auto;
+}
+.text-inverse:hover{
+    text-decoration:  none !important;
+}
+table thead {
+    background: #d9e0e7;
+}
+.table{
+    border-top:1px solid #c2cfd6;
+    border-bottom:1px solid #c2cfd6;
+}
+.table-col-4 {
+    -ms-flex: 0 0 35%;
+    flex: 0 0 35%;
+    max-width: 35%;
+    padding-left: 0;
+    float: left;
+    font-size: 13px;
+    font-weight: 500;
+}
+.table-col-8 {
+    -ms-flex: 0 0 65%;
+    flex: 0 0 65%;
+    max-width: 65%;
+    padding-left: 0;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.borderCol{
+    font-size: 13px;
+    font-weight: 500;
+}
+.table-col-half{
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-left: 0;
+    float: left;
+    font-size: 13px;
+    font-weight: 500;
+}
+.table tbody+tbody {
+    border-top: 0px solid #dee2e6;
+}
+
+
+.green{color: green}
+.align-center{
+    text-align: center;
+}
+
+.table-borderd td,.table-borderd th{
+    border:1px solid #c2cfd6;
+  }
+  .table-borderd tbody tr td{height: 46px !important;}
+  .testimonial-group > .row {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .testimonial-group > .row > .tableDataBox {
+      display: inline-block;
+      float: none;
+    }
+  
+    .tableDataBox{margin: 0; width: auto; border-right: 1px solid #ccc;}
+    .dataValueTable tbody tr:nth-of-type(odd) {
+      background-color:#fff ;   
+  }
+  .dataValueTable tbody tr td{height: 46px !important; border-bottom:1px solid #ccc;}
+  .tableDataBox table{
+    margin-bottom: 0 !important;
+  }
+
+  a.table-drop-toggle:before {
+    font-family: "Font Awesome 5 Free";
+     content: "\f107";
+     display: inline-block;
+     padding-right: 3px;
+     vertical-align: middle;
+     font-weight: 900;
+     font-size: 18px;
+     color: #828486;
+  }
+  
+  a.table-drop-toggle[aria-expanded=true]:before {   
+    font-family: "Font Awesome 5 Free";
+    content: "\f106";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    font-size: 18px;
+    color: #828486;
+  }
+  .spanFull{
+    width:100%; float: left;
+  }
+  .table th {
+    /* min-width: 150px; */
+    position: relative;
+    white-space: nowrap;
+    border-right: 1px dotted #c7c7c7;
+}
+.cursor{
+    cursor: pointer;
+}
+
+.hoverBg:hover{
+    background: #d9e0e7;
+    color: #000;
+    cursor: pointer;
+}
+.arrow-group {
+    display: inline-grid !important;
+    margin-right: 6px
+}
+.arrow-group i.fa.fa-sort-up {
+    position: relative;
+    float: left;
+    left: auto;
+    height: 6px;
+}
+
+.arrow-group i.fa.fa-sort-down {
+    position: relative;
+    float: left;
+    right: auto;
+    /* left: 0; */
+    /* right: 8px; */
+    height: 5px;
+    top: 1px;
+    }
+    
+/* .arrow-group {
+    display: inline-grid !important;
+    margin-right: 5px;
+  }
+  .arrow-group i{
+  cursor: pointer;
+  }
+  .arrow-group i.fa.fa-sort-up {
+    position: relative !important;
+      display: block !important;
+      line-height: 0 !important;
+      padding-bottom: 5px !important;
+  }
+  .arrow-group i.fa.fa-sort-down {
+    position: relative !important;
+      display: block !important;
+      line-height: 0 !important;
+      right: auto !important;
+  } */
+@media (max-width: 767px){
+    td .row{
+        display:block;
+    }
+    .listHeadLabel{
+        float: left;
+    }
+    /* .table-col-6 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+    .table-col-4 {
+        -ms-flex: 0 0 8%;
+        flex: 0 0 8%;
+        max-width: 8%;
+    }
+    .table-col-8 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+    .table-col-half{
+        -ms-flex: 0 0 15%;
+        flex: 0 0 15%;
+        max-width: 15%;
+    } */
+    
+}
+
+
+@media (max-width: 575px){
+
+    .table-col-6 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+    .table-col-4 {
+        -ms-flex: 0 0 8%;
+        flex: 0 0 8%;
+        max-width: 8%;
+    }
+    .table-col-8 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+    .table-col-half{
+        -ms-flex: 0 0 15%;
+        flex: 0 0 15%;
+        max-width: 15%;
+    }
+}
+
+.btn-default:not(:disabled):not(.disabled).active{
+    background: #1976ad;
+    color: #fff;
+}
+
+[data-toggle=buttons]>.btn-group>.btn input[type=checkbox], [data-toggle=buttons]>.btn-group>.btn input[type=radio], [data-toggle=buttons]>.btn input[type=checkbox], [data-toggle=buttons]>.btn input[type=radio] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+
+.viewCol .fa-check-double{
+    visibility: hidden;
+  }
+  .viewCol:hover .fa-check-double{
+    visibility: visible;
+  }
+  .labelText{
+    margin-left: 10px;
+  }
+
+  .viewCol .col-6{
+    word-break: break-word;
+  }
+
+  @media (min-width:1400px){
+    .pane-vScroll {
+    height: calc(67.5vh - 55px);
+    }
+}
+
+@media (min-width:1500px){
+    .pane-vScroll {
+        height: calc(69vh - 55px);
+        }
+}
+
+@media (min-width:1700px){
+    .pane-vScroll {
+        height: calc(72vh - 55px);
+        }
+}
+
+@media (min-width:1800px){
+    .pane-vScroll {
+        height: calc(74vh - 55px);
+        }
+    }
+
+@media (min-width:1900px){
+  .pane-vScroll {
+      height: calc(74vh - 55px);
+      }
+  }
+
+@media (min-width:2000px){
+  .pane-vScroll {
+      height: calc(79vh - 55px);
+      }
+  }
+
+@media (min-width:2700px){
+  .pane-vScroll {
+      height: calc(84vh - 55px);
+      }
+  }
+
+  @media (min-width:2800px){
+    .pane-vScroll {
+        height: calc(86vh - 55px);
+        }
+    }
+
+
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+      }
+      th, td {
+        padding: 8px 16px;
+        width: 30%;
+      }
+      
+    
+      .pane-hScroll {
+        overflow: auto;
+        width: 100%;
+      }
+      .pane-vScroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(65.5vh - 55px);
+      }

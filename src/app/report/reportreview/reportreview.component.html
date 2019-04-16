@@ -1,0 +1,25 @@
+<div class="col-lg-12">
+        <div>
+                <h5 class="blue prev-rit-head center mt-2">Review Your Report Package. 'Generate Report' button will open
+                        PDF viewer for saving and printing options</h5>
+                <div class="row">
+                        <div class="col-lg-3">
+                        </div>
+                </div>
+                <div id="DivContentToprint">
+                        <div class="rep-prev-left" style="font-size: 10px;margin-bottom: 10px;" *ngFor="let report of reviewReport  | orderBy: 'ReportOrder'">
+                                <div *ngIf="report.reportLayout != 'landscape'" class="rep-portrait zoom-out">
+                                        <div [innerHTML]="report.HTML | safeHtml" class="prev-edit rep-content"></div>
+                                </div>
+                                <div *ngIf="report.reportLayout == 'landscape'" class="rep-landscape zoom-out">
+                                        <div [innerHTML]="report.HTML | safeHtml" class="prev-edit rep-content"></div>
+                                </div>
+                                <br>
+                        </div>
+                </div>
+                <div *ngIf="reviewReport.length <= 0" class="select_box">
+                        Select Report..
+                </div>
+
+        </div>
+</div>

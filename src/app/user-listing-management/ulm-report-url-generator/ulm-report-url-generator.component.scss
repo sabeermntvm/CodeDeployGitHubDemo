@@ -1,0 +1,19 @@
+.lblName{
+    font-weight: bold;
+    color: #191970;
+    font-size: 18px;
+}
+.btn-default-red{
+    background-color: #fff;
+    border: 1px solid #f18a00!important;
+    color: #de4726!important;
+}
+.control-label{
+    font-size: 13px;
+}
+
+@media (max-width: 575px){
+    .btn-success, .btn-default-red{
+        width:100%
+    }
+}

@@ -1,0 +1,321 @@
+
+<!-- <div class="row m-0">
+  <div class="col-md-12">
+    <div *ngIf="!evCompanyList.length">
+      <div>No Tenants Found!</div>
+    </div>
+    <div class="row">
+      <div class="col-md-5 p-0 mt-2" *ngIf="pagedTenants.length >0">
+        <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(1)">««</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a (click)="setPage(pager.currentPage - 1)">«</a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+            <a (click)="setPage(page)">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.currentPage + 1)">»</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a (click)="setPage(pager.totalPages)">»»</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- <div class="col-md-12"  *ngIf="tenantView == 1">
+  <div class="row m-0">
+    <div class="col-md-12">
+      <div *ngIf="!tenantList.length">
+        <div>No Tenants Found!</div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 p-0 mt-2" *ngIf="pagedTenants.length >0">
+          <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(1)">««</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(pager.currentPage - 1)">«</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+              <a (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.currentPage + 1)">»</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.totalPages)">»»</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3" style="display:block;" *ngIf="tenantList.length">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <div class="float-left no-padding">
+          <table class="table table-borderd">
+            <thead>
+              <tr>
+                <th>Companay Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let company of CompanyList; let i = index;">
+                <tr (click)="branchView(company.BranchID, company.CompanyName)">
+                  <td style="cursor:pointer;">{{company.CompanyName}}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <div class="float-left p-0" style="display:contents">
+          <div class="testimonial-group" style="width:auto;min-height:400px;">
+            <div class="row flex-nowrap m-0">
+              <div class="tableDataBox" *ngFor="let provider of ProviderList; let i = index">
+                <table class="table dataValueTable">
+                  <thead>
+                    <tr>
+                      <th class="text-center">{{provider.ProviderName}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let company of CompanyList; let i = index;">
+                      <ng-container *ngFor="let listing of ProviderDetailDataList; let i = index;">
+                        <tr *ngIf="(company.BranchID == listing.BranchID) && (provider.ProviderID == listing.ProviderID)">
+                          <td class="align-center">
+                            <span *ngIf="listing.HasVerified == 1"><i class="fa fa-check green" aria-hidden="true"></i></span>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row m-0">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-5 p-0 mt-2" *ngIf="pagedTenants.length >0">
+          <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(1)">««</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(pager.currentPage - 1)">«</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+              <a (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.currentPage + 1)">»</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.totalPages)">»»</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-12" *ngIf="tenantView == 2">
+    <app-propertytenantdetail (onClose)="close($event)" [BranchID]="branchID" [BranchName]="branchName"></app-propertytenantdetail>
+  </div> -->
+  <div class="col-md-12 clearfix" >
+    *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+    <button  class="btn btn-primary btn-sm float-right"  [appFeedback]="'Tenant'">Feedback</button>
+</div>
+  <div class="col-md-12" *ngIf="tenantView == 1">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="row m-0">
+          <label class="listHeadLabel mt-2">Tier 1 | Empirical Verified | <span *ngIf="evCompanyList">{{evCompanyList.length}} Tenants found</span></label>
+      </div>
+      </div>
+      <div *ngIf="evCompanyList && evCompanyList.length > 0"  class="col-md-12">
+          <div>
+            <ul *ngIf="evpager.pages && evpager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:evpager.currentPage === 1}">
+                    <a (click)="setevPage(1)">««</a>
+                </li>
+                <li [ngClass]="{disabled:evpager.currentPage === 1}">
+                    <a (click)="setevPage(evpager.currentPage - 1)">«</a>
+                </li>
+                <li *ngFor="let page of evpager.pages" [ngClass]="{active:evpager.currentPage === page}">
+                    <a (click)="setevPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:evpager.currentPage === evpager.totalPages}">
+                    <a (click)="setevPage(evpager.currentPage + 1)">»</a>
+                </li>
+                <li [ngClass]="{disabled:evpager.currentPage === evpager.totalPages}">
+                    <a (click)="setevPage(evpager.totalPages)">»»</a>
+                </li>
+            </ul>
+        </div>
+          <div class="float-left p-0" style="display:contents">
+            <div class="testimonial-group" style="width:auto;">
+              <div class="row flex-nowrap m-0">
+                <div class="tableDataBox">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let provider of evproviderTenants; let i = index" class="text-center">{{provider.Title}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container>
+                        <tr *ngFor="let num of evCount;let i = index">
+                          <td *ngFor="let provider of evproviderTenants;" [class.hoverBg]="provider.VerifiedList[i] != 1 && provider.VerifiedList[i] != 0">
+                             <span class="align-center spanFull" *ngIf="provider.VerifiedList[i] == 1"><i class="fa fa-check green" aria-hidden="true"></i></span>
+                           <span class="align-left spanFull" *ngIf="provider.VerifiedList[i] != 1 && provider.VerifiedList[i] != 0" (click)="branchView(provider.VerifiedList[i].BranchID, provider.VerifiedList[i].CompanyName, 1)">{{provider.VerifiedList[i].CompanyName}}</span>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="tenantLoaderdata1"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>
+        <div *ngIf="!tenantLoaderdata1 && !(evCompanyList && evCompanyList.length > 0)"  class="col-md-12">No Tenants Found</div>
+    </div>
+  
+    <div class="row mt-5">
+        <div class="col-md-12 ">
+          <div class="row m-0">
+            <label class="listHeadLabel mt-2">Tier 2 | Non-Empirical Verified - Multi Provider Sources | <span *ngIf="nevmCompanyList">{{nevmCompanyList.length}} Tenants found</span></label>
+        </div>
+        </div>
+        <div *ngIf="nevmCompanyList && nevmCompanyList.length > 0" class="col-md-12">
+            <div>
+              <ul *ngIf="nevmpager.pages && nevmpager.pages.length" class="pagination">
+                  <li [ngClass]="{disabled:nevmpager.currentPage === 1}">
+                      <a (click)="setnevmPage(1)">««</a>
+                  </li>
+                  <li [ngClass]="{disabled:nevmpager.currentPage === 1}">
+                      <a (click)="setnevmPage(nevmpager.currentPage - 1)">«</a>
+                  </li>
+                  <li *ngFor="let page of nevmpager.pages" [ngClass]="{active:nevmpager.currentPage === page}">
+                      <a (click)="setnevmPage(page)">{{page}}</a>
+                  </li>
+                  <li [ngClass]="{disabled:nevmpager.currentPage === nevmpager.totalPages}">
+                      <a (click)="setnevmPage(nevmpager.currentPage + 1)">»</a>
+                  </li>
+                  <li [ngClass]="{disabled:nevmpager.currentPage === nevmpager.totalPages}">
+                      <a (click)="setnevmPage(nevmpager.totalPages)">»»</a>
+                  </li>
+              </ul>
+          </div>
+            <div class="float-left p-0" style="display:contents">
+              <div class="testimonial-group" style="width:auto;">
+                <div class="row flex-nowrap m-0">
+                  <div class="tableDataBox">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th *ngFor="let provider of nevmproviderTenants; let i = index" class="text-center">{{provider.Title}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container>
+                          <tr *ngFor="let num of nevmCount; let i = index">
+                            <td *ngFor="let provider of nevmproviderTenants;" [class.hoverBg]="provider.VerifiedList[i] != 1 && provider.VerifiedList[i] != 0">
+                               <span  class="align-center spanFull" *ngIf="provider.VerifiedList[i] == 1"><i class="fa fa-check green" aria-hidden="true"></i></span>
+                             <span  class="align-left spanFull" *ngIf="provider.VerifiedList[i] != 1 && provider.VerifiedList[i] != 0" (click)="branchView(provider.VerifiedList[i].TenantID, provider.VerifiedList[i].CompanyName, 2)">{{provider.VerifiedList[i].CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="tenantLoaderdata2"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>
+          <div *ngIf="!tenantLoaderdata2 && !(nevmCompanyList && nevmCompanyList.length > 0)" class="col-md-12">
+            No Tenant Found
+          </div>
+      </div>
+     
+  
+      <div class="row  mt-5">
+        <div class="col-md-12 ">
+          <div class="row m-0">
+            <label class="listHeadLabel mt-2">Tier 3| Non-Empirical Verified - Single Provider Sources | <span *ngIf="nevsCompanyList">{{nevsCompanyList.length}} Tenants found</span></label>
+        </div>
+        </div>
+        <div *ngIf="nevsCompanyList && nevsCompanyList.length > 0" class="col-md-12">
+          <div>
+            <ul *ngIf="nevspager.pages && nevspager.pages.length" class="pagination">
+                <li [ngClass]="{disabled:nevspager.currentPage === 1}">
+                    <a (click)="setnevsPage(1)">««</a>
+                </li>
+                <li [ngClass]="{disabled:nevspager.currentPage === 1}">
+                    <a (click)="setnevsPage(nevspager.currentPage - 1)">«</a>
+                </li>
+                <li *ngFor="let page of nevspager.pages" [ngClass]="{active:nevspager.currentPage === page}">
+                    <a (click)="setnevsPage(page)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:nevspager.currentPage === nevspager.totalPages}">
+                    <a (click)="setnevsPage(nevspager.currentPage + 1)">»</a>
+                </li>
+                <li [ngClass]="{disabled:nevspager.currentPage === nevspager.totalPages}">
+                    <a (click)="setnevsPage(nevspager.totalPages)">»»</a>
+                </li>
+            </ul>
+        </div>
+          <div class="float-left p-0" style="display:contents">
+            <div class="testimonial-group" style="width:auto;">
+              <div class="row flex-nowrap m-0">
+                <div class="tableDataBox">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let provider of nevsproviderTenants; let i = index" class="text-center">{{provider.Title}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container>
+                        <tr *ngFor="let num of nevsCount; let i = index">
+                          <td *ngFor="let provider of nevsproviderTenants;" [class.hoverBg]="provider.VerifiedList[i] != 1 && provider.VerifiedList[i] != 0">
+                             <span  class="align-center spanFull"  *ngIf="provider.VerifiedList[i] == 1"><i class="fa fa-check green" aria-hidden="true"></i></span>
+                           <span  class="align-left spanFull" *ngIf="provider.VerifiedList[i] != 1 && provider.VerifiedList[i] != 0" (click)="branchView(provider.VerifiedList[i].TenantID, provider.VerifiedList[i].CompanyName, 3)">{{provider.VerifiedList[i].CompanyName}}</span>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="tenantLoaderdata3"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>
+        <div *ngIf="!tenantLoaderdata3 && !(nevsCompanyList && nevsCompanyList.length > 0)" class="col-md-12">
+            No Tenant Found
+          </div>
+      </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="tenantView == 2">
+      <app-propertytenantdetail (onClose)="close($event)" [BranchID]="branchID" [BranchName]="branchName" [Tier]="tier"></app-propertytenantdetail>
+    </div>

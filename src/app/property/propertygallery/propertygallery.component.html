@@ -1,0 +1,150 @@
+<div class="row m-0">
+  <div class="col-md-12">
+    <div class="row m-0">
+      <div class="col-md-12 p-0">
+        <div class="map-nav">
+          <ul>
+            <li class="active"><span class="map-result">{{TotalResultCount > 500 ? '500+ Results' : TotalResultCount}}</span></li>
+            <li [routerLink]="['/property/mapsearch']"><span class="map-result"><i class="fas fa-map"></i> Map View</span></li>
+            <li [routerLink]="['/property/resultsGrid']"><span class="map-result"><i class="fas fa-list-ul"></i> Grid
+                View</span></li>
+            <li class="active" *ngIf="Count"><span class="map-result">{{Count}} Selected</span></li>
+          </ul>
+        </div>
+        <div class="action-btn-row" role="group">
+          <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary-ash dropdown-toggle" (click)="sendReport()"
+            title="Listing Report" *ngIf="IsEmpiricalUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="far fa-envelope"></i>
+          </button>
+          <button id="btnGroupVerticalDrop1" type="button" class="btn btn-primary-ash dropdown-toggle" (click)="showReport()"
+            title="Print Report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-print font20"></i>
+          </button>
+          <!-- <button id="btnGroupVerticalDrop5" type="button" title="Export to Excel" class="btn btn-primary-ash" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="fas fa-file-excel"></i>
+          </button> -->
+          <button id="btnGroupVerticalDrop6" type="button" (click)="showUserPreferencesModal('Download')" title="Export To Excel"
+            class="btn btn-primary-ash" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div class="sideBarPanelWrap" id="MapSidenavSetting">
+          <a href="javascript:void(0)" *ngIf="CloseActionBtnSet" class="closebtn" (click)="closeSettingsNav($event)"><i
+              class="fa fa-angle-double-right"></i></a>
+          <div id="MapSidenav" class="sideMapSearch">
+            <app-settingsearch [sheets]="sheets" [userId]="userId" screen="Property" Type="Download"
+              [(userPreferencesId)]="userPreferencesId" [type]="Task"></app-settingsearch>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-2 float-right offset-md-5 mt-2 pr-0 pl-0">
+            <div class="drop_Box_select">
+              <div class="checkbox checkbox-css chkBoxStyle" style="right: auto !important;
+                  top: 1px !important;">
+                <input type="checkbox" id="cssCheckbox_0" value="" (click)="onSelectClick($event.target.checked)"
+                  [(ngModel)]="isSelectAll" />
+                <label for="cssCheckbox_0" style="white-space: nowrap !important; color: #fff">Select All</label>
+              </div>
+              <i class="fas fa-chevron-down fa-label" data-toggle="collapse" data-target="#selectOptionDrop"></i>
+            </div>
+            <div id="selectOptionDrop" class="collapse col-md-12 pr-0 pl-0 showDrop">
+              <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(1)">Remove Selected</a>
+              <a class="dropdown-item dropLabel-right" style="width:140px;" (click)="onRemoveClick(0)">Remove
+                Unselected</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 pl-0" *ngFor="let property of propertyList; let i = index;">
+            <div class="checkbox checkbox-css chkBoxStyle">
+              <input type="checkbox" id="cssCheckbox_{{i+1}}" value="" [(ngModel)]='property.isSelected' (change)="Selection($event.target.checked)" />
+              <label for="cssCheckbox_{{i+1}}"></label>
+            </div>
+            <div class="gal-img" [ngStyle]='{"background-image":"url(" + mediaUrl + property.MainPhotoUrl + ")"}'
+              (click)="showListingDetails(property.PropertyId, property.ListingID)">
+              <div class="dash-gal-img-txt-top">
+                {{property.PropertyName}} <br>
+                <span class="dash-gal-img-txt-top-det">
+                  <span *ngIf="UnitId == metricUnit">{{property.BuildingSizeSM | number:'.0-0' }} SqM </span>
+                  <span *ngIf="UnitId != metricUnit">{{property.BuildingSize | number:'.0-0' }} SF </span>
+                  <span>{{property.PropertyType}} Bldg</span><span> | {{property.City}} {{property.ZipCode}} </span>
+                </span>
+              </div>
+              <div class="dash-img-txt">
+                <div class="green_sale" *ngIf="property.RecordTypeName == 'Sale'">For {{property.RecordTypeName}}</div>
+                <div class="blue_lease" *ngIf="property.RecordTypeName == 'Lease'">For {{property.RecordTypeName}}</div>
+                <div class="rose_sublease" *ngIf="property.RecordTypeName == 'Sublease'">For
+                  {{property.RecordTypeName}}</div>
+                <div class="noRecord" *ngIf="!property.ListingID && !property.ListingCompanyName">Not Listed</div>
+
+                <span *ngIf="property.RecordTypeName == 'Lease' || property.RecordTypeName == 'Sublease'">
+                  <span *ngIf="property.TotalAvailableSM && UnitId == metricUnit">{{property.TotalAvailableSM |
+                    number:'.0-0' }} SqM Available</span>
+                  <br *ngIf="property.TotalAvailable">
+                  <span *ngIf="property.TotalAvailable && UnitId != metricUnit">{{property.TotalAvailable |
+                    number:'.0-0' }} SF Available</span>
+                  <br *ngIf="property.AskingLeaseRatePerYrText">
+                  <span *ngIf="property.AskingLeaseRatePerYrText">
+                    {{property.AskingLeaseRatePerYrText}}/Yr {{property.LeaseTypeName}} </span>
+                </span>
+                <span *ngIf="property.RecordTypeName == 'Sale'"> {{property.AskingSalePrice |
+                  currency:'USD':'symbol':'1.2-2'}}
+                  <br *ngIf="property.SalePricePerSM && UnitId == metricUnit || property.SalePricePerSF && UnitId != metricUnit">
+                  <span *ngIf="property.SalePricePerSM && UnitId == metricUnit">{{property.SalePricePerSM |
+                    currency:'USD':'symbol':'1.2-2' }} </span>
+                  <span *ngIf="property.SalePricePerSF && UnitId != metricUnit">{{property.SalePricePerSF |
+                    currency:'USD':'symbol':'1.2-2' }} </span>
+                </span>
+
+                <!-- <br *ngIf="property.ListingCompanyName"> -->
+                <span *ngIf="property.ListingCompanyName">{{property.ListingCompanyName}}</span><br>
+                <span *ngIf="!property.ListingID && !property.ListingCompanyName"><br>
+                  No Active Listings</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-12 mt-2">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">»</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

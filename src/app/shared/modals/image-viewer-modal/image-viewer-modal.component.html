@@ -1,0 +1,11 @@
+    <div [class.modal-dialog]="!fullscreen" [class.fullscreen]="fullscreen">
+      <div class="modal-content">
+          <button type="button" class="btn btn-info btn-lg modalClose" data-dismiss="modal">
+              <i class="fas fa-times"></i>
+            </button>
+        <div class="modal-body">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages" (previewOpen)="previewOpen($event)" (previewClose)="previewClose($event)">
+              </ngx-gallery>
+           </div>
+      </div>
+    </div>

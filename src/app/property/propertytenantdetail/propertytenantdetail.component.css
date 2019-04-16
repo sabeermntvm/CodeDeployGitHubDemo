@@ -1,0 +1,58 @@
+.green{color: green}
+.align-center{
+    text-align: center;
+}
+.fieldBgr{
+  background-color: #d9e0e7;
+  color: #000;
+  font-size: 13px;
+}
+
+.truncate {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.truncate > .check-icon{
+  position: absolute;
+  top:12px;
+  right:0;
+}
+table thead {
+  background: #d9e0e7;
+}
+th{font-size: 14px}
+.table{
+  border-top:1px solid #c2cfd6;
+  border-bottom:1px solid #c2cfd6;
+}
+.table-borderd td,.table-borderd th{
+    border:1px solid #c2cfd6;
+  }
+  .table-borderd tbody tr td{height: 46px !important;}
+  .testimonial-group > .row {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .testimonial-group > .row > .tableDataBox {
+      display: inline-block;
+      float: none;
+    }
+  
+    .tableDataBox{margin: 0; width: auto; border-right: 1px solid #ccc;}
+    .dataValueTable tbody tr:nth-of-type(odd) {
+      background-color:#fff ;   
+  }
+  .dataValueTable tbody tr td{height: 46px !important; border-bottom:1px solid #ccc;}
+  .tableDataBox table{
+    margin-bottom: 0 !important;
+  }
+  .table .fa-check-double{
+    visibility: hidden;
+  }
+  table td:hover .fa-check-double{
+    visibility: visible;
+  }

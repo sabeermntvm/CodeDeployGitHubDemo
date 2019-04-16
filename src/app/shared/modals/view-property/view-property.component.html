@@ -1,0 +1,102 @@
+<div class="col-lg-12 no-padding margin-top-5">
+    <div class="col-lg-6">
+        <img class="img-fluid" src="{{photoUrl}}" style="height: 230px;">
+
+    </div>
+    <div class="col-lg-6">
+        <div class="col-lg-4 no-padding">
+            <b>Overview</b>
+        </div>
+        <div class="col-lg-8 no-padding">
+            <div class="detl-dashed-lin"></div>
+        </div>
+        <div class="col-lg-12 detl no-padding margin-top-5">
+            <ul>
+                <li>Property ID <span><b>{{PropertyDetail.PropertyId}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>Type <span><b>{{PropertyDetail.PropertyType}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>Size 
+                    <span *ngIf="CountryId != USCountryCode"><b>{{PropertyDetail.BuildingSizeSM | number: '.0-0'}} 
+                        <span *ngIf="PropertyDetail.BuildingSizeSM"> SqM </span></b>
+                    </span>
+
+                      <span *ngIf="CountryId == USCountryCode"><b>{{PropertyDetail.BuildingSize | number: '.0-0'}} 
+                        <span *ngIf="PropertyDetail.BuildingSize"> SF</span></b>
+                    </span>
+                </li>
+                <li class="li-dashed"></li>
+                <li>Year Built
+                    <span><b>{{PropertyDetail.YearBuilt}}</b></span>
+                  <!--<span *ngIf="property.ConstructionStatusName == 'Existing'"><b>{{property.YearBuilt}}</b></span>
+                  <span *ngIf="property.ConstructionStatusName != 'Existing'"><b>{{property.ConstructionStatusName}}</b></span>-->
+                </li>
+                <li class="li-dashed"></li>
+                <li>Floors <span><b>{{PropertyDetail.Floors}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>Market <b>{{PropertyDetail.MarketName}}</b></li>
+                <li class="li-dashed"></li>
+                <li>Total Available 
+                    <span *ngIf="CountryId != USCountryCode"><b>{{PropertyDetail.TotalAvailableSM | number: '.0-0'}}
+                         <span *ngIf="PropertyDetail.TotalAvailableSM"> SqM </span></b>
+                    </span>
+                     <span *ngIf="CountryId == USCountryCode"><b>{{PropertyDetail.TotalAvailable | number: '.0-0'}}
+                         <span *ngIf="PropertyDetail.TotalAvailable"> SF </span></b>
+                    </span>
+                </li>
+                <li class="li-dashed"></li>
+                <li>Rate
+                  <span *ngIf="listing.AskingLeaseRatePerYrText"><b>{{listing.AskingLeaseRatePerYrText}}</b></span>
+                  <span *ngIf="listing.AskingSalePrice"><b>{{listing.AskingSalePrice}}</b></span>
+                </li>
+                <li class="li-dashed"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-6 margin-top-20">
+        <div class="col-lg-5 no-padding">
+            <b>Property Location</b>
+        </div>
+        <div class="col-lg-7 no-padding">
+            <div class="detl-dashed-lin"></div>
+        </div>
+        <div class="col-lg-12 detl no-padding margin-top-5">
+            <ul>
+                <li>Address <span><b>{{PropertyDetail.Address}} </b></span></li>
+                <li class="li-dashed"></li>
+                <li>City <span><b>{{PropertyDetail.City}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>State <span><b>{{PropertyDetail.State}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>LGA <span><b>{{PropertyDetail.County}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>Country <span><b>{{PropertyDetail.Country}}</b></span></li>
+                <li class="li-dashed"></li>
+                <li>Postal Code <span><b>{{PropertyDetail.ZipCode}}</b></span></li>
+                <li class="li-dashed"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-6 margin-top-20" style="margin-bottom: 20px;">
+        <div class="col-lg-3 no-padding">
+            <b>Notes</b>
+        </div>
+        <div class="col-lg-9 no-padding">
+            <div class="detl-dashed-lin"></div>
+        </div>
+        <div class="col-lg-12 detl no-padding margin-top-5 notes-pane3" style="text-align: justify;">
+
+            {{PropertyDetail.BuildingComments}}
+            <!--The prime Grade-A premium office tower offers an expansive floor plate of approximately 11,000 square feet. Its column-free
+            feature and built-in raised floors facilitate easy configuration and in-floor cabling for tenants. The full-height
+            glass curtain wall with its crystalline features complemented the existing Tower 1 and maximise the outlooks
+            across the city. The 38-storey Tower 2 was officially opened on 18 September 2012 and has added a new dimension
+            to the majestic Singapore City skyline.-->
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <a class="view-property" (click)="showListingDetails(PropertyDetail.PropertyId, PropertyDetail.ListingID)">View Property</a>
+    </div>
+</div>

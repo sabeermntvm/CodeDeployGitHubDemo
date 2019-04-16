@@ -1,0 +1,81 @@
+<div *ngIf="dataLoaded" class="chartFilter">
+  <button type="type" class="btn btn-search mr-2" (click)="openChartNav()"><i class="fas fa-signal"></i></button>
+</div>
+<div *ngIf="dataLoaded" class="chartFilterCog">
+  <button type="type" class="btn btn-search" (click)="openNav4()"><i class="fa fa-cog"></i></button>
+</div>
+<div class="sideChartSearchWrap" id="chartNavWrap4">
+  <a href="javascript:void(0)" *ngIf="CloseActionBtn" class="closebtn" (click)="closeNav()" style="background: #455463c2">
+      <i class="fa fa-angle-double-right"></i></a>
+  <div id="chartNav4" class="sideChartSearch">
+      <div class="col-md-12">
+          <button class="btn btn-success mb-2 mr-2" style="width:100px; position: relative;" (click)="onSearchClick()"><i
+                  class="fas fa-spinner fa-spin showspin" *ngIf="Isloader"></i>Apply</button>
+          <button class="btn btn-primary mb-2" style="width:100px;" (click)="onSearchResetClick()">Reset</button>
+      </div>
+      <div class="col-md-12">
+          <div class="checkbox checkbox-css">
+              <input type="checkbox" id="chartCheck4" [(ngModel)]="displaySubLease4" (click)="displaySubLeaseBars4($event)" />
+              <label for="chartCheck4">Display SubLease</label>
+          </div>
+      </div>
+
+      <!-- <div class="row"> -->
+      <div class="col-md-12 mt-2">
+          <div class="row">
+              <label class="col-md-12 labelName">Location
+                  <hr>
+              </label>
+
+              <div class="col-md-12">
+                  <ng-select class="mb-2" placeholder="Select City" [items]="CityList" [virtualScroll]="true"
+                      [typeahead]="cityInput" [loading]="cityLoading" bindLabel="City" bindValue="CityID" [multiple]="true"
+                      [(ngModel)]="cityArray" ></ng-select>
+              </div>
+              <div class="col-md-12">
+                  <ng-select class="mb-2" placeholder="Select Postal Code" [items]="ZipCodes" [virtualScroll]="true"
+                      [typeahead]="zipcodeInput" [loading]="zipcodeLoading" bindLabel="ZipCode" bindValue="ZipCode"
+                      [multiple]="true" [(ngModel)]="zipCodeArray"></ng-select>
+              </div>
+          </div>
+          <div class="row">
+              <label class="col-md-12 labelName">Property Grade
+                  <hr>
+              </label>
+              <div class="col-md-12">
+                      <ng-select [items]="buildingClass" [virtualScroll]="true" placeholder="Select Property Grade"
+                      bindLabel="ClassTypeName" bindValue="ClassTypeID" [(ngModel)]="classArray" [multiple]="true"></ng-select>
+              </div>
+    <!--           <div class="col-md-12">
+                  <ng-select class="mb-2" [items]="propertyTypes" [virtualScroll]="true" placeholder="Select Property Type"
+                      bindLabel="UseTypeName" bindValue="UseTypeID" placeholder="Select Property Type" [multiple]="true"
+                      [(ngModel)]="propertyTypeArray" (change)="onPropertyTypeSelected($event)">
+                  </ng-select>
+              </div>
+              <div class="col-md-12">
+                  <ng-select class="mb-2" [items]="SpecificUseList" *ngIf="SpecificUseList.length>0" [virtualScroll]="true"
+                      placeholder="Select Specific Use" bindLabel="SpecificUsesName" bindValue="SpecificUsesID"
+                      [multiple]="true" [(ngModel)]="specificUseArray" (change)="changeSpecificUse($event)"></ng-select>
+              </div> -->
+          </div>
+      </div>
+      <!-- </div> -->
+  </div>
+</div>
+
+<div class="sideChartSearchWrap" id="chartNavWrapChkBox4">
+  <a href="javascript:void(0)" *ngIf="CloseActionBtnChkBox" class="closebtn" (click)="closeChartNav4()" style="background: #455463c2">
+      <i class="fa fa-angle-double-right"></i></a>
+  <div id="chartNavChkBox4" class="sideChartSearch">
+      <div class="col-md-12">
+          <div *ngFor="let data of masterChartdata4; let i = index;">
+              <div *ngIf = "!data.IsProperty" class="checkbox checkbox-css">
+                      <input type="checkbox" id="stackRateChartCheck_{{i}}" [(ngModel)]="data.IsSelected" (click)="filterColumns4($event, data.name)"/>
+                      <label for="stackRateChartCheck_{{i}}">{{data.name}}</label>
+                  </div>
+          </div>
+      </div>
+  </div>
+</div>
+<app-stackedbarchart *ngIf="dataLoaded" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [BarChartDataInput]="chartdata4"
+  [customColors]="customColors" [chartHeader]="chartHeader"></app-stackedbarchart>

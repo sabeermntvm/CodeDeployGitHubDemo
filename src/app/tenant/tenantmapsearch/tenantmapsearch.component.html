@@ -1,0 +1,240 @@
+<div class="mapSearchIcon">
+    <button type="type" class="btn btn-search" (click)="openNav()"><i class="fa fa-filter"></i></button>
+</div>
+<div class="sideBarPanelWrap" id="MapSidenavWrap">
+    <a href="javascript:void(0)" style="background: #455463c2" *ngIf="CloseActionBtn" class="closebtn" (click)="closeNav()"><i
+            class="fa fa-angle-double-right"></i></a>
+    <div id="MapSidenav" class="sideMapSearch" style="background: #455463">
+        <div *ngIf="SideNav">
+                <form [formGroup]="tenantSearchForm">
+                        
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success mb-2 float-left"  type="button" style="width:49%; position: relative;" (click)="onSearchClick()"><i
+                                class="fas fa-spinner fa-spin showspin" *ngIf="Isloader"></i>SEARCH</button>
+                        <button class="btn btn-primary mb-2  float-right"  type="button" style="width:49%;" (click)="onSearchResetClick()">RESET</button>
+                    </div>
+                </div>
+
+                <button type="button" class="searchBtnActions whiteBorder mb-2" (click)="DrawShape('polygon')"><i class="fas fa-draw-polygon"></i>
+                    Draw
+                    Polygon
+                    <span class="innerpages-circle" *ngIf="isSelectDrawPolyGon"><i class="fa fa-check"></i></span></button>
+                <button type="button" class="searchBtnActions whiteBorder mb-0" (click)="DrawShape('circle')"><i class="fas fa-circle"></i>
+                    Draw
+                    Radius
+                    <span class="innerpages-circle" *ngIf="isSelectDrawCircle"><i class="fa fa-check"></i></span></button>
+                <hr>
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#location"
+                        aria-expanded='true'><i class="fas fa-location"></i>Location
+                        <span class="innerpages-circle" *ngIf="isMarketSelected || isCitySelected || isPostalCodeSelected"><i
+                                class="fa fa-check"></i></span>
+                    </button>
+                    <div id="location" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <!--Hide Market and SubMarket temporarily-->
+                        <!--<div id="location" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                <ng-select class="mb-2" placeholder="Select Market" [(ngModel)]="marketArray"></ng-select>
+            </div>
+            <div id="location" class="collapse show mb-2 mt-2 pl-2 pr-2" *ngIf="marketArray.length>0">
+                <ng-select class="mb-2" placeholder="Select Sub Market" [(ngModel)]="subMarketArray"></ng-select>
+            </div>-->
+
+                        <ng-select class="mb-2" formControlName="cityArray" placeholder="Select City" [items]="CityList" [virtualScroll]="true"
+                            [typeahead]="cityInput" [loading]="cityLoading" bindLabel="City" bindValue="CityID"
+                            [multiple]="true" [(ngModel)]="cityArray" (change)="onSelectCity($event)"></ng-select>
+
+                        <ng-select class="mb-2" formControlName="zipCodeArray" placeholder="Select Postal Code" [items]="ZipCodes" [virtualScroll]="true"
+                            [typeahead]="zipcodeInput" [loading]="zipcodeLoading" bindLabel="ZipCode" bindValue="ZipCode"
+                            [multiple]="true" [(ngModel)]="zipCodeArray" (change)="onSelectZipCode($event)"></ng-select>
+
+                    </div>
+                </div>
+
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#propertyType"
+                        aria-expanded='true'>Property Type
+                        <span class="innerpages-circle" *ngIf="isPropertyTypeSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="propertyType" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <ng-select formControlName="propertyTypeArray" [items]="propertyTypes" [virtualScroll]="true" placeholder="Select Property Type"
+                            bindLabel="UseTypeName" bindValue="UseTypeID" placeholder="--Select--" [multiple]="true"
+                            [(ngModel)]="propertyTypeArray" (change)="onPropertyTypeSelected($event)">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#SpecificUse"
+                        aria-expanded='true'>Specific Use
+                        <span class="innerpages-circle" *ngIf="isSpecificUseSelected"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="SpecificUse" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="col-md-12" *ngIf="SpecificUseList.length<=0">
+                            <p style="color:#fff;">Please first select a property type.</p>
+                        </div>
+                        <ng-select formControlName="specificUseArray" [items]="SpecificUseList" *ngIf="SpecificUseList.length>0" [virtualScroll]="true"
+                            placeholder="Select Specific Use" groupBy="PropertyTypeName" bindLabel="SpecificUsesName" bindValue="SpecificUsesID"
+                            [multiple]="true" [(ngModel)]="specificUseArray" (change)="changeSpecificUse($event)">
+
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Contacts"
+                        aria-expanded='true'>Company
+
+                        <span class="innerpages-circle" *ngIf="searchCriteria.CompanyName"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="Contacts" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-12"> <input formControlName="CompanyName" type="text" class="form-control" [(ngModel)]="searchCriteria.CompanyName"
+                                    placeholder="Company Name"></span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Industry"
+                        aria-expanded='true'>SIC/Industry
+                        <span class="innerpages-circle" *ngIf="searchCriteria.ISIC"><i class="fa fa-check"></i></span>
+                    </button>
+                    <div id="Industry" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <tree-root (select)="onSelectSIC($event)" [focused]="false" (deselect)="onDeselectSIC($event)" 
+                                #tree [nodes]="nodes" [options]="options"></tree-root>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Operating"
+                        aria-expanded='true'>Annual Revenue
+                        <span class="innerpages-circle" *ngIf="searchCriteria.MinAnnualRevenue || searchCriteria.MaxAnnualRevenue"><i
+                                class="fa fa-check"></i></span>
+                    </button>
+                    <div id="Operating" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5"> <input formControlName="MinAnnualRevenue" type="text" class="form-control" [(ngModel)]="searchCriteria.MinAnnualRevenue"
+                                    placeholder="Min Revenue" currencyMask [options]="formatOptions" (blur)="checkValidations()" [ngClass]="{'error-field':(MinAnnualRevenueError)}">
+                                    <div class="validation-error" *ngIf="(MinAnnualRevenueError)">Min value cannot be greater than max value</div></span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5"> <input formControlName="MaxAnnualRevenue" type="text" class="form-control" [(ngModel)]="searchCriteria.MaxAnnualRevenue"
+                                    placeholder="Max Revenue" currencyMask [options]="formatOptions" (blur)="checkValidations()" [ngClass]="{'error-field':(MinAnnualRevenueError)}">
+                                    <div class="validation-error" *ngIf="(MinAnnualRevenueError)">Min value cannot be greater than max value</div></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expandBox">
+                    <button type="button" class="searchBtnActions selectMoreToggle" data-toggle="collapse" data-target="#Occupied"
+                        aria-expanded='true'>Company Size
+                        <span class="innerpages-circle" *ngIf="searchCriteria.MinCompanySize || searchCriteria.MaxCompanySize"><i
+                                class="fa fa-check"></i></span>
+                    </button>
+                    <div id="Occupied" class="collapse show mb-2 mt-2 pl-2 pr-2">
+                        <div class="row">
+                            <span class="col-5"> <input formControlName="MinCompanySize" type="text" class="form-control" [(ngModel)]="searchCriteria.MinCompanySize"
+                                    placeholder="Min Size" (blur)="checkValidations()" [ngClass]="{'error-field':(MinCompanySizeError)||(!tenantSearchForm.controls['MinCompanySize'].valid)}">
+                                    <div class="validation-error" *ngIf="(MinCompanySizeError)">Min value cannot be greater than max value</div></span>
+                            <span class="col-2 hyphen">-</span>
+                            <span class="col-5"> <input formControlName="MaxCompanySize" type="text" class="form-control" [(ngModel)]="searchCriteria.MaxCompanySize"
+                                    placeholder="Max Size" (blur)="checkValidations()" [ngClass]="{'error-field':(MinCompanySizeError)||(!tenantSearchForm.controls['MaxCompanySize'].valid)}">
+                                    <div class="validation-error" *ngIf="(MinCompanySizeError)">Min value cannot be greater than max value</div></span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <p style="color: #fff;">Select filters before clicking apply</p>
+
+                <button class="btn btn-success mb-2 float-left"  type="button" style="width:49%; position: relative;" (click)="onSearchClick()"><i
+                        class="fas fa-spinner fa-spin showspin" *ngIf="Isloader"></i>SEARCH</button>
+                <button class="btn btn-primary mb-2  float-right"  type="button" style="width:49%;" (click)="onSearchResetClick()">RESET</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<div class="map-nav" *ngIf="hasSearchResult">
+    <ul>
+        <li class="active"><span *ngIf="tenantResultCount && tenantResultCount>5000" class="map-result">5000 +</span><span *ngIf="!(tenantResultCount && tenantResultCount>5000)" class="map-result">{{tenantResultCount}}</span></li>
+        <li><span class="map-result" [routerLink]="['/tenant/resultsGrid']"><i class="fas fa-list-ul"></i> Grid
+                View</span></li>
+    </ul>
+</div>
+<div class="refresh-nav" *ngIf="isViewportChange">
+    <button class="refreshButton" (click)="refreshResults()"><i class="fas fa-spinner fa-spin showspin" *ngIf="IsRefreshloader"></i>Refresh
+        Results</button>
+</div>
+<div class="wrapB LegentMedia">
+    <div class="pinColorWrap">
+        <div class="pinBox"><span><img src="assets/img/blue.png" class="float-left"></span><span class="label">Office</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/red.png" class="float-left"></span><span class="label">Industrial</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/orange.png" class="float-left"></span><span class="label">Retail</span>
+        </div>        
+        <div class="pinBox"><span><img src="assets/img/brown.png" class="float-left"></span><span class="label">Multi-Family</span>
+        </div>
+        <div class="pinBox"><span><img src="assets/img/Magentha.png" class="float-left"></span><span class="label">Special
+                Use</span> </div>
+        <div class="pinBox"><span><img src="assets/img/green.png" class="float-left"></span><span class="label">Land</span>
+        </div>        
+    </div>
+</div>
+<div class="Legenticon">
+    <button type="type" class="btn btn-search" style="padding: 5px 8px 8px 9px;" (click)="openLegent()">
+        <img src="assets/img/legent.png">
+    </button>
+</div>
+
+<div class="LegentWrap" id="LegentDetailSideBar">
+    <a href="javascript:void(0)" *ngIf="legentCloseActionBtn" class="closebtn" (click)="closeLegent()"><i class="fa fa-angle-double-right"></i></a>
+    <div id="LegentSideBar" class="LegentBox">
+        <div class="wrapB">
+            <div class="pinColorWrap">
+                <div class="pinBox"><span><img src="assets/img/blue.png" class="float-left"></span><span class="label">Office</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/red.png" class="float-left"></span><span class="label">Industrial</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/orange.png" class="float-left"></span><span class="label">Retail</span>
+                </div>                
+                <div class="pinBox"><span><img src="assets/img/brown.png" class="float-left"></span><span class="label">Multi-Family</span>
+                </div>
+                <div class="pinBox"><span><img src="assets/img/Magentha.png" class="float-left"></span><span class="label">Special
+                        Use</span> </div>
+                <div class="pinBox"><span><img src="assets/img/green.png" class="float-left"></span><span class="label">Land</span>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapB" [ngClass]="{'wrapB-smallposition': SideNav && !pageSettings.pageSidebarMinified && hasSearchResult}" *ngIf="showClearBtn">
+    <button class="clearButton btn-align" (click)="clearPolygon()">
+        Clear Shape</button>
+</div>
+<div class="map"  id="mainmap" [ngClass]="{'shortest-map': SideNav && !pageSettings.pageSidebarMinified,'short-map-leftpanel': !SideNav && !pageSettings.pageSidebarMinified ,'shorten-map': SideNav && pageSettings.pageSidebarMinified}"></div>
+<!-- <div class="map" id="mainmap"></div> -->
+
+<div class="sideBarPanelWrap" id="MapSidenavWrapDetail">
+    <a href="javascript:void(0)" *ngIf="CloseActionBtnDetail" class="closebtn" (click)="closeDetailNav()"><i class="fa fa-angle-double-right"></i></a>
+    <div id="MapDetailSideBar" class="sideMapSearch">
+        <div *ngIf="SideDetailNav">
+            <app-tenantpindetail [tenant]="selectedTenantInfo"></app-tenantpindetail>
+        </div>
+    </div>
+</div>
+
+<div class="sideBarPanelWrap" id="MapSidenavWrapMultiDetail">
+    <a href="javascript:void(0)" *ngIf="CloseActionBtnMultiDetail" class="closebtn" (click)="closeMultiDetailNav()"><i
+            class="fa fa-angle-double-right"></i></a>
+    <div id="MapMultiDetailSideBar" class="sideMapSearch">
+        <div *ngIf="SideMultiDetailNav">
+            <app-tenantmultipindetail [PropertyId]="selectedPropertyId" [PropertyName]="propertyTitle" [tenant]="selectedTenantInfo"></app-tenantmultipindetail>
+        </div>
+    </div>
+</div>

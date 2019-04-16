@@ -1,0 +1,19 @@
+<div class="col-lg-12 no-padding tab-content">
+    <div class="row">
+  <div class="col-lg-12 no-padding"  style="margin-top: 10px">
+    <div class="col-lg-1">
+      <button class="btn btn-primary-blue" style="border-radius:5px !important;"
+              (click)="backToResults()"> Done
+      </button>
+    </div>
+    <div class="col-lg-12 ulm">
+      <div class="rep-prev-left" style="font-size: 10px;margin-bottom: 10px;" *ngFor="let report of userListingManagementList">
+        <div class="col-lg-12 no-padding prev-edit " *ngIf="report.isEditable" style="margin-bottom:10px;"
+             [innerHTML]="report.HTML | safeHtml">
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

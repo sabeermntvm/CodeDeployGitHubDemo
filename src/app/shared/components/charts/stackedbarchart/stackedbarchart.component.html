@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-inverse">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{chartHeader}}</h4>
+        </div>
+        <div class="panel-body border">
+          <div class="height-sm">
+            <ngx-charts-bar-vertical-stacked [scheme]="chartColor" [customColors]="customColors" [showDataLabel]="true" [results]="BarChartDataInput"
+              [xAxis]="true" [yAxis]="true" [legend]="true" [showXAxisLabel]="false" [xAxisLabel]="xAxisLabel"
+              [showYAxisLabel]="true" [yAxisLabel]="yAxisLabel">
+            </ngx-charts-bar-vertical-stacked>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

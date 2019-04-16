@@ -1,0 +1,189 @@
+
+<div  class="row">
+  <h4 class="col-md-12 no-padding">
+    <label class="listHeadLabel mt-2 float-left">{{BranchName}}
+      <button type="button" class="btn w-xs btn-primary float-right" (click)="close()">
+        <i class="fa fa-remove"></i>Cancel
+      </button>
+    </label>
+  </h4>
+</div>
+<div *ngIf="(mergedTenantID)" class="row">
+  <div class="col-md-12">
+    <div class="float-left no-padding">
+      <table class="table table-borderd">
+        <thead>
+          <tr>
+            <th>Fields</th>
+            <th>Merged View</th>
+            <th>Source</th>
+            <th>Updated Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let row of tenantFields; let i = index">
+            <tr *ngIf="row.IsVisible">
+              <td class="fieldBgr" title="{{row.DisplayText}}">{{row.DisplayText}}</td>
+              <td class="truncate" title="{{mergedTenant[i].Value}}">{{mergedTenant[i].Value}}<i class="fas fa-check-double check-icon text-primary ml-1" (click)="onTenantSuggestion(row.DisplayText)"></i></td>
+              <td class="truncate" title="{{mergedTenant[i].Source}}">{{mergedTenant[i].Source}}</td>
+              <td>{{mergedTenant[i].UpdatedDate}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="float-left p-0" style="display:contents">
+      <div class="testimonial-group" style="width:auto;min-height:400px;">
+        <div class="row flex-nowrap m-0">
+          <div class="tableDataBox" *ngFor="let pt of providerTenants; let i = index">
+            <table class="table dataValueTable">
+              <thead>
+                <tr>
+                  <th class="text-center">{{pt.Title}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of pt.List; let i = index">
+                  <tr *ngIf="item.IsVisible">
+                    <td class="truncate">
+                      <span *ngIf="item.Value" title="{{item.Value}}">{{item.Value}}</span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="!(mergedTenantID)" class="row">
+  <div class="col-md-12">
+    <div class="float-left no-padding">
+      <table class="table table-borderd">
+        <thead>
+          <tr>
+            <th>Fields</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let row of tenantFields; let i = index">
+            <tr *ngIf="row.IsVisible">
+              <td class="fieldBgr" title="{{row.DisplayText}}">{{row.DisplayText}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="float-left p-0" style="display:contents">
+      <div class="testimonial-group" style="width:auto;min-height:400px;">
+        <div class="row flex-nowrap m-0">
+          <div class="tableDataBox" *ngFor="let pt of providerTenants; let i = index">
+            <table class="table dataValueTable">
+              <thead>
+                <tr>
+                  <th class="text-center">{{pt.Title}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of pt.List; let i = index">
+                  <tr *ngIf="item.IsVisible">
+                    <td class="truncate">
+                      <span *ngIf="item.Value" title="{{item.Value}}">{{item.Value}}</span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 
+<div class="row">
+  <h4 class="col-md-12 no-padding">
+    <label class="listHeadLabel mt-2 float-left">{{BranchName}}
+      <button type="button" class="btn w-xs btn-primary float-right" (click)="close()">
+        <i class="fa fa-remove"></i>Cancel
+      </button>
+    </label>
+  </h4>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="float-left no-padding">
+      <table *ngIf="mergedTenantID" class="table table-borderd">
+        <thead>
+          <tr>
+            <th rowspan="2">Fields</th>
+            <th colspan="3" style="text-align: center">Merged View</th>
+          </tr>
+          <tr>
+            <th style="text-align: center">Value</th>
+            <th style="text-align: center">Source</th>
+            <th style="text-align: center">Updated Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let row of tenantFields; let i = index">
+          <tr *ngIf="row.IsVisible">
+            <td class="fieldBgr">{{row.DisplayText}}</td>
+            <td [ngClass]="{greenBgr:mergedTenant[i].ProviderID}">{{mergedTenant[i].Value}}</td>
+            <td>{{mergedTenant[i].Source}}</td>
+            <td>{{mergedTenant[i].UpdatedDate}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <table *ngIf="!(mergedTenantID)" class="table table-borderd">
+        <thead>
+          <tr>
+            <th rowspan="2">Fields</th>
+          </tr>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let row of tenantFields; let i = index">
+          <tr *ngIf="row.IsVisible">
+            <td class="fieldBgr">{{row.DisplayText}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="float-left p-0" style="display:contents">
+      <div class="testimonial-group" style="width:auto;min-height:400px;">
+        <div class="row flex-nowrap m-0">
+          <div class="tableDataBox" *ngFor="let pt of providerTenants; let i = index">
+            <table class="table dataValueTable">
+              <thead>
+                <tr>
+                  <th class="text-center">{{pt.Title}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of pt.List; let i = index">
+                  <tr *ngIf="item.IsVisible">
+                    <td class="truncate">
+                      <span *ngIf="item.Value" title="{{item.Value}}">{{item.Value}}</span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+ -->

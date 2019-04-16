@@ -1,0 +1,218 @@
+ <!--<div class="col-lg-12 no-padding prev-edit">-->
+     <!--<div class="rep-prev-left">-->
+        <!--<div class="page" id="margin-bottom-200">-->
+         <div id="##PropertyId##" reportid="103" style="text-align:left;">
+                <div class="col-lg-7 no-padding">
+                    <div class="prev-edit-bg">
+                         <div class="prev-edit-no" style="width: 80px;"># ##Index## ##PropertyId##</div>
+                    </div>
+                    <div class="prev-edit-blue edittext">
+                          ##Property_Name##
+                    </div>
+                    <div class="col-lg-7 no-padding prev-edit-sub margin-top-10">
+                   <p class="edittext">##Address## <br>##City##, ##State## ##Zip##</p>
+                    <p class="blue edittext"> ##General_Use## for ##RecordTypeName##</p>
+                      <p><span class="edittext">##BuildingSize## SqM</span><br><span class="edittext"> Class ##Class## ##General_Use## Property </span><br><span class="edittext">Located in ##MarketName##</span><br> <span  class="edittext">##AvailableSpace## SqM  Available</span><br> <span class="edittext">$30,00 FSG</span></p>
+                 </div>
+                 <div class="col-lg-5 no-padding">
+                     <!--<div class="logo2"><img src="assets/images/combined-logo.jpg"/></div>-->
+                      </div>
+                </div>
+                <div class="col-lg-5 no-padding-right">
+                    <div class="prev-edit-right">
+                         <div class="prev-edit-right-img" prop-id="##PropertyId##">
+                             <img class="img-responsive" src="##PropertyImage##" class="img" width="100%">
+                         </div>
+                    </div>
+                 </div>
+                 <div class="col-lg-12 no-padding margin-top-10" >
+                         <p (click)="editFields()"  class="edittext">
+                         ##BuildingComments##</p>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 no-padding">
+                <div class="margin-top-10"><b>Property Detail</b></div>
+                <div class="dashed-lin"></div>
+
+                 <div class="col-lg-4 no-padding-left margin-top-10">
+                     <div class="col-lg-7 no-padding txt-rit">Property Type :</div>
+                     <div class="col-lg-4 no-padding black edittext report-dropdown" data-dropdown-type="propertyType">##General_Use##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Building Size :</div>
+                     <div class="col-lg-4 no-padding black edittext">##BuildingSize##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Building Class :</div>
+                     <div class="col-lg-4 no-padding black edittext report-dropdown" data-dropdown-type="buildingClass">##Class##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Typical Floor :</div>
+                     <div class="col-lg-4 no-padding black edittext">##TypicalFloorArea##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Year Built :</div>
+                     <div class="col-lg-4 no-padding black edittext">##YearBuilt##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Renovated :</div>
+                     <div class="col-lg-4 no-padding black edittext">##YearRenovated##</div>
+                 </div>
+                 <div class="col-lg-4 margin-top-10">
+                         <div class="col-lg-7 no-padding txt-rit">Status :</div>
+                         <div class="col-lg-4 no-padding black edittext report-dropdown" data-dropdown-type="constructionStatus">##ConstructionStatus##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Stories :</div>
+                         <div class="col-lg-4 no-padding black edittext">##Floors##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Parking :</div>
+                         <div class="col-lg-4 no-padding black edittext">##ParkingSpaces##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Parking Ratio :</div>
+                         <div class="col-lg-4 no-padding black edittext">##ParkingRatio##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Tenancy :</div>
+                         <div class="col-lg-4 no-padding black edittext report-dropdown" data-dropdown-type="tenancy">##Tenancy##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Parcel # :</div>
+                         <div class="col-lg-4 no-padding black edittext">##ParcelNumber##</div>
+                     </div>
+                     <div class="col-lg-4 no-padding-right margin-top-10">
+                             <div class="col-lg-7 no-padding txt-rit">%Occupied :</div>
+                             <div class="col-lg-4 no-padding black edittext">##OccupancyPercent##</div>
+                             <div class="col-lg-7 no-padding txt-rit">Land Area :</div>
+                             <div class="col-lg-4 no-padding black edittext">##LotSizeAC##</div>
+                             <div class="col-lg-7 no-padding txt-rit">Zoning :</div>
+                             <div class="col-lg-4 no-padding black edittext">##Zoning##</div>
+                             <div class="col-lg-7 no-padding txt-rit">Elevators :</div>
+                             <div class="col-lg-4 no-padding black edittext">##NumberOfElevators##</div>
+                             <div class="col-lg-7 no-padding txt-rit">Load Factor :</div>
+                             <div class="col-lg-4 no-padding black edittext">##FloorLoading##</div>
+                         </div>
+                         <div class="clearfix"></div>
+                         <div class="margin-top-10"><b>Listing Detail</b></div>
+                   <div class="dashed-lin"></div>
+
+                 <div class="col-lg-4 no-padding-left margin-top-10">
+                     <div class="col-lg-7 no-padding txt-rit">Available SqM :</div>
+                     <div class="col-lg-4 no-padding black edittext">##AvailableSpace##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Vacant :</div>
+                     <div class="col-lg-4 no-padding black edittext report-dropdown" data-dropdown-type="vacant">##Vacant##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Max Contig :</div>
+                     <div class="col-lg-4 no-padding black edittext">##MaxContig##</div>
+                     <div class="col-lg-7 no-padding txt-rit">Min Divisible :</div>
+                     <div class="col-lg-4 no-padding black edittext">##MinDiv##</div>
+                     <div class="col-lg-7 no-padding txt-rit"># Spaces :</div>
+                     <div class="col-lg-4 no-padding black edittext">##NoOfSpaces##</div>
+                 </div>
+                 <div class="col-lg-4 margin-top-10">
+                         <div class="col-lg-7 no-padding txt-rit">Asking Rate :</div>
+                         <div class="col-lg-4 no-padding black edittext">##AskingRate##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Type :</div>
+                         <div class="col-lg-4 no-padding black edittext">##ListingTypeName## ##RecordTypeName##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Operating Exp/SqM :</div>
+                         <div class="col-lg-4 no-padding black edittext">##OperatingExpensesPerSF##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Taxes/SqM :</div>
+                         <div class="col-lg-4 no-padding black edittext">##TaxesPerSF##</div>
+                         <div class="col-lg-7 no-padding txt-rit">Tax Year :</div>
+                         <div class="col-lg-4 no-padding black edittext">##TaxYear##</div>
+                     </div>
+                     <div class="col-lg-4 no-padding-right margin-top-10">
+                             <div class="col-lg-7 no-padding txt-rit">Sale Price :</div>
+                             <div class="col-lg-4 no-padding black edittext">##AskingSalePrice##</div>
+                             <div class="col-lg-7 no-padding txt-rit">Price/SqM :</div>
+                             <div class="col-lg-4 no-padding black edittext">##SalePricePerSF##</div>
+                             <div class="col-lg-7 no-padding txt-rit">Listing Use :</div>
+                             <div class="col-lg-4 no-padding black edittext report-dropdown" data-dropdown-type="propertyType">##General_Use##</div>
+                         </div>
+                        <div class="col-lg-12">
+                            <button class="btn-add-listing"><i class="fa fa-plus"></i>Add Space</button>
+                        </div>
+                         <div class="col-lg-12 no-padding margin-top-20">
+                                <table class="suite-table table table-condensed">
+                                        <thead>
+                                          <tr>
+                                            <th>Floor</th>
+                                            <th>Unit</th>
+                                            <th>SqM Available</th>
+                                            <th>Max Contig</th>
+                                            <th>Min Div</th>
+                                            <th>Lease Rate</th>
+                                            <th>Space Type</th>
+                                            <th>Vacant</th>
+                                            <th>Occupancy</th>
+                                            <th>Term</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                         <!-- <tr>
+                                            <td>1</td>
+                                            <td>100</td>
+                                            <td><span class="edittext">28,965</span></td>
+                                            <td><span class="edittext">28,965</span></td>
+                                            <td><span class="edittext">5,000</span></td>
+                                            <td><span class="edittext">$30.00 FSG</span></td>
+                                            <td>Office</td>
+                                            <td><span class="edittext">Yes</span></td>
+                                            <td><span class="edittext">Now</span></td>
+                                            <td><span class="edittext">3-5 Yr</span></td>
+                                          </tr>
+                                          <tr>
+                                                <td style="border: none;"></td>
+                                                <td colspan="9" style="border: none;"><span class="edittext">Full floor available. Great corner views. Ready for build out.</span></td>
+                                            </tr>
+                                          <tr>
+                                                <td>1</td>
+                                                <td>100</td>
+                                                <td><span class="edittext">28,965</span></td>
+                                                <td><span class="edittext">28,965</span></td>
+                                                <td><span class="edittext">5,000</span></td>
+                                                <td><span class="edittext">$30.00 FSG</span></td>
+                                                <td>Office</td>
+                                                <td><span class="edittext">Yes</span></td>
+                                                <td><span class="edittext">Now</span></td>
+                                                <td><span class="edittext">3-5 Yr</span></td>
+                                        </tr>
+                                        <tr>
+                                                <td style="border: none;"></td>
+                                                <td colspan="9" style="border: none;"><span class="edittext">Full floor available. Great corner views. Ready for build out.</span></td>
+                                            </tr>
+                                        <tr>
+                                                <td>1</td>
+                                                <td>100</td>
+                                                <td><span class="edittext">28,965</span></td>
+                                                <td><span class="edittext">28,965</span></td>
+                                                <td><span class="edittext">5,000</span></td>
+                                                <td><span class="edittext">$30.00 FSG</span></td>
+                                                <td>Office</td>
+                                                <td><span class="edittext">Yes</span></td>
+                                                <td><span class="edittext">Now</span></td>
+                                                <td><span class="edittext">3-5 Yr</span></td>
+                                        </tr>
+                                        <tr>
+                                                <td style="border: none;"></td>
+                                                <td colspan="9" style="border: none;"><span class="edittext">Full floor available. Great corner views. Ready for build out.</span></td>
+                                            </tr>
+                                        <tr>
+                                                <td>1</td>
+                                                <td>100</td>
+                                                <td><span class="edittext">28,965</span></td>
+                                                <td><span class="edittext">28,965</span></td>
+                                                <td><span class="edittext">5,000</span></td>
+                                                <td><span class="edittext">$30.00 FSG</span></td>
+                                                <td>Office</td>
+                                                <td><span class="edittext">Yes</span></td>
+                                                <td><span class="edittext">Now</span></td>
+                                                <td><span class="edittext">3-5 Yr</span></td>
+                                              </tr>
+                                              <tr>
+                                                    <td style="border: none;"></td>
+                                                    <td colspan="9" style="border: none;"><span class="edittext">Full floor available. Great corner views. Ready for build out.</span></td>
+                                                </tr>-->
+                                        </tbody>
+                                      </table>
+                         </div>
+                         <div class="clearfix"></div>
+                         <div class="col-lg-12 no-padding">
+                         <div class="margin-top-10"><b>Listing Contacts</b></div>
+                   <div class="dashed-lin"></div>
+                           <div class="contacts"></div>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        </div>
+                    <!--</div>-->
+<!--##footer_template##-->
+
+ <!--<div style="page-break-after: always;"></div>-->
+
+
+
+     <!--</div>-->
+             <!--</div>-->

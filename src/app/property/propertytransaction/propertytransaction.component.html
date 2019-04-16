@@ -1,0 +1,1717 @@
+<div class="col-md-12 clearfix">
+  *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+  <button class="btn btn-primary btn-sm float-right" [appFeedback]="'Transaction'">Feedback</button>
+</div>
+
+<div class="row ml-0 mr-0">
+  <div class="col-md-3 p-0">
+      <div class="dropdown  float-left">
+        <button type="button" class="btn rounded-0 pBtn" [ngClass]="{'btnActive' : viewTransData == 1}"
+        (click)="viewTransactions(1)">
+        Lease
+      </button>
+    </div>
+        <button type="button" class="btn float-left rounded-0 pBtn" [ngClass]="{'btnActive' : viewTransData == 2}"
+        (click)="viewTransactions(2)">Sale</button>
+  </div>
+  <div class="col-md-3 p-0 mt-2" *ngIf="viewTransData == 1">
+      <div><b><span *ngIf="!leaseCompTransactionList.length && !leaseLoader">No</span><span
+            *ngIf="leaseCompTransactionList.length && !leaseLoader">{{leaseCompTransactionList.length}}</span><span
+            style="margin-right:30px;" *ngIf="leaseLoader"><i class="fas fa-spinner fa-spin showspin"></i></span> Lease
+          Transaction(s) Found!</b></div>
+    </div>
+  <div class="col-md-3 p-0 mt-2" *ngIf="viewTransData == 2">
+    <div><b><span *ngIf="!saleCompTransactionList.length && !saleLoader">No</span><span
+          *ngIf="saleCompTransactionList.length && !saleLoader">{{saleCompTransactionList.length}}</span><span
+          style="margin-right:30px;" *ngIf="saleLoader"><i class="fas fa-spinner fa-spin showspin"></i></span>
+        Transaction(s) Found!</b></div>
+  </div>
+  <div class="col-lg-3 p-0">
+      <div class="btn-group" id="status" data-toggle="buttons">
+          <label class="btn btn-default btn-on  active" style="border-radius: 5px 0 0 5px !important;padding-right: 10px !important;" (click)="applySearchFilter(1)">
+              <input name="selectAll" type="radio" value="1">Matching Transactions</label>
+          <label class="btn btn-default btn-off" style="border-radius: 0 5px 5px 0  !important;padding-right: 10px !important;" (click)="applySearchFilter(0)">
+              <input name="selectAll" type="radio" value="0">All Transactions</label>
+      </div>
+  </div>
+</div>
+
+
+<!-- lease transaction data goes here -->
+<div class="row m-0" *ngIf="viewTransData == 1">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-11 p-0 mt-2">
+        <h5 class="mt-3">Lease Transactions</h5>
+        <!-- <ul class="pagination mb-0" *ngIf="leasepager.pages && leasepager.pages.length">
+            <li [ngClass]="{disabled:leasepager.currentPage === 1}">
+              <a (click)="setLeasePage(1)">««</a>
+            </li>
+            <li [ngClass]="{disabled:leasepager.currentPage === 1}">
+              <a (click)="setLeasePage(leasepager.currentPage - 1)">«</a>
+            </li>
+            <li *ngFor="let page of leasepager.pages" [ngClass]="{active:leasepager.currentPage === page}">
+              <a (click)="setLeasePage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:leasepager.currentPage === leasepager.totalPages}">
+              <a (click)="setLeasePage(leasepager.currentPage + 1)">»</a>
+            </li>
+            <li [ngClass]="{disabled:leasepager.currentPage === leasepager.totalPages}">
+              <a (click)="setLeasePage(leasepager.totalPages)">»»</a>
+            </li>
+          </ul> -->
+      </div>
+      <div class="col-md-1 mt-2 pr-0">
+        <select class="form-control" [(ngModel)]="pageSize" (change)="filterLease(leasepager.currentPage)">
+          <option value="100">100</option>
+          <option value="50">50</option>
+          <option value="20">20</option>
+          <!-- <option value="10">10</option> -->
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-3" style="display:block;">
+  <div class="col-sm-12">
+    <!-- <div class="table-responsive"> -->
+    <div class="table-scroll mt-3">
+      <div class="pane pane--table1">
+        <div class="pane-hScroll">
+          <table class="table dataTableGrid" style="margin-bottom: 0;"
+            *ngIf="viewTransData == 1">
+            <thead>
+              <tr>
+                <th style="width:42px;"></th>
+                <th style="width:115px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('LeaseID','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('LeaseID','Descending')"></i>
+                  </div>
+                  Lease ID
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'LeaseID' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'LeaseID' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:200px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('TransactionOrgination','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('TransactionOrgination','Descending')"></i>
+                  </div>
+                  Orgination
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up"
+                      *ngIf="sortValue == 'TransactionOrgination' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'TransactionOrgination' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <!-- <th style="width:185px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('ExecutionDate','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('ExecutionDate','Descending')"></i>
+                  </div>
+                  Execution Date
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up"
+                      *ngIf="sortValue == 'ExecutionDate' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'ExecutionDate' && sortFun == 'Descending'"></i>
+                  </div>
+                </th> -->
+                <th style="width:240px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('DateOccupied','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('DateOccupied','Descending')"></i>
+                  </div>
+                  Commencement Date
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up"
+                      *ngIf="sortValue == 'ExecutionDate' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'ExecutionDate' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:185px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('TenantName','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('TenantName','Descending')"></i>
+                  </div>
+                  Tenant Name
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'TenantName' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'TenantName' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:155px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('ExpirationDate','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('ExpirationDate','Descending')"></i>
+                  </div>
+                  Expiry Date
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up"
+                      *ngIf="sortValue == 'ExpirationDate' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'ExpirationDate' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:145px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('FloorNumber','Ascending', 1)"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('FloorNumber','Descending', 1)"></i>
+                  </div>
+                  Floor/Level
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'FloorNumber' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'FloorNumber' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:120px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('SuiteNumber','Ascending', 1)"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('SuiteNumber','Descending', 1)"></i>
+                  </div>
+                  Suite
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'SuiteNumber' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'SuiteNumber' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:155px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('AvailableSpaceSM','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('AvailableSpaceSM','Descending')"></i>
+                  </div>
+                  Leased SqM
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up"
+                      *ngIf="sortValue == 'AvailableSpaceSM' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'AvailableSpaceSM' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:235px;">
+               <!--    <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('AskingRateHigh','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('AskingRateHigh','Descending')"></i>
+                  </div> -->
+                  Start Rent/SqM/Yr
+                  <!-- <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up"
+                      *ngIf="sortValue == 'AskingRateHigh' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'AskingRateHigh' && sortFun == 'Descending'"></i>
+                  </div> -->
+                </th>
+                <th style="width:130px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('LeaseTerms','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('LeaseTerms','Descending')"></i>
+                  </div>
+                  Term
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'LeaseTerms' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'LeaseTerms' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+<!--                 <th style="width:160px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('TenantRep','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('TenantRep','Descending')"></i>
+                  </div>
+                  Tenant Rep
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'TenantRep' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down" *ngIf="sortValue == 'TenantRep' && sortFun == 'Descending'"></i>
+                  </div>
+                </th>
+                <th style="width:185px;">
+                  <div class="arrow-group">
+                    <i class="fa fa-sort-up" (click)="sortLease('LandLordRep','Ascending')"></i>
+                    <i class="fa fa-sort-down" (click)="sortLease('LandLordRep','Descending')"></i>
+                  </div>
+                  Landlord Rep
+                  <div class="sort_Group">
+                    <i class="fas fa-arrow-circle-up" *ngIf="sortValue == 'LandLordRep' && sortFun == 'Ascending'"></i>
+                    <i class="fas fa-arrow-circle-down"
+                      *ngIf="sortValue == 'LandLordRep' && sortFun == 'Descending'"></i>
+                  </div>
+                </th> -->
+              </tr>
+              <tr *ngIf="leaseCompTransactionList.length == 0 && !leaseLoader">
+                  <td colspan="13" style="background :#fff;">
+                    No lease transaction(s) found.
+                  </td>
+                </tr>
+            </thead>
+          </table>
+          <div class="pane-vScroll" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollUpDistance]="1.5"
+            [infiniteScrollThrottle]="2" (scrolled)="onScroll()" [scrollWindow]="false" *ngIf="viewTransData == 1">
+            <table class="table dataTableGrid">
+               
+              <ng-container *ngFor="let transaction of leaseArrayToScroll;let k=index;">
+                <tbody>
+                  <tr class="clickable" id="valueRow{{k}}">
+                    <td (click)="viewSelectedLeaseTransaction(transaction.LeaseID,k)" style="width:42px;">
+                      <a class="table-drop-toggle" data-toggle="collapse" href="#group-of-rows-1{{k}}"></a>
+                    </td>
+                    <td style="width:120px;">{{transaction.LeaseID}}</td>
+                    <td style="width:200px;">{{transaction.TransactionOrgination}}</td>
+                    <!-- <td style="width:185px;">{{transaction.ExecutionDate}}</td> -->
+                    <td style="width:240px;">{{transaction.DateOccupied}}</td>
+                    <td style="width:185px;">{{transaction.TenantName}} </td>
+                    <td style="width:155px;">{{transaction.ExpirationDate}} </td>
+                    <td style="width:145px;">{{transaction.FloorNumber}} </td>
+                    <td style="width:120px;">{{transaction.SuiteNumber}} </td>
+                    <td style="width:155px;">{{transaction.AvailableSpaceSM | number: '.2-2'}} </td>
+                    <td style="width:235px;">{{transaction.StartingRatePerSMPerYr | currency:'USD':symbol:'1.2-2'}}</td>
+                    <td style="width:130px;">{{transaction.LeaseTerms}} </td>
+<!--                     <td style="width:160px;">{{transaction.TenantRep}} </td>
+                    <td style="width:185px;">{{transaction.LandLordRep}} </td> -->
+                  </tr>
+                </tbody>
+                <tbody>
+
+                  <tr class="p-0 m-0 border-0">
+                    <td colspan="11" class="p-0 m-0 border-0">
+                      <div class="collapse highLightRow" id="group-of-rows-1{{k}}" [class.show]="k==expandData">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="listHeadLabel">Lease Details</label>
+                            </div>
+                          </div>
+                          <div class="row viewCol" *ngIf="transaction.TransactionDetails">
+                            <div class="col-sm-12">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4 nameVal">Tenant Name</label>
+                                <label class="col-8 table-col-8 resultVal">{{transaction.TransactionDetails.TenantName}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Lease/Sublease</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.ListingTypeName}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Dealing#</label>
+                                <label
+                                  class="col-8 table-col-8">{{transaction.TransactionDetails.DealingNumber}}</label>
+                              </div>
+                            </div>                            
+
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Transaction Type</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.LeaseTransTypeName}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Floor/Level</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.FloorNumber}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Lease Folio</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.LeaseFolio}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Registered/Generated</label>
+                                <label
+                                  class="col-8 table-col-8">{{transaction.TransactionDetails.TransactionOriginationTypeName}}</label>
+                              </div>
+                            </div>
+                     
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Suite</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.SuiteNumber}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Folio</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.Folio}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">General Use</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.SpaceUseTypeName}}
+                                </label>
+                              </div>
+                            </div> 
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Leased SqM</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.AvailableSpaceSM | number: '.2-2'}}
+                                </label>
+                              </div>
+                            </div> 
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Head Title</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.HeadTitle}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Space Type</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.SpaceTypeName}}</label>
+                              </div>
+                            </div>
+                             <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Execution/Sign Date</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.ExecutionDate }}</label>
+                              </div>
+                            </div> 
+
+
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Effective Rent (annual)</label>
+                                <label class="col-8 table-col-8" *ngIf="transaction.TransactionDetails.StartingRate!=transaction.TransactionDetails.EffectiveRate">{{transaction.TransactionDetails.EffectiveRate | currency:'USD':symbol:'1.0-0'}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID" style="overflow-wrap: break-word;">
+                                <label class="col-4 table-col-4 ">Strata</label>
+                                <label
+                                  class="col-8 table-col-8">{{(transaction.TransactionDetails.IsCondo)?'Yes':'No'}}</label>
+                              </div>
+                            </div>  
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Expiry Date</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.ExpirationDate }}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Effective Rent/SqM/Yr</label>
+                                <label class="col-8 table-col-8" *ngIf="transaction.TransactionDetails.StartingRate!=transaction.TransactionDetails.EffectiveRate">{{transaction.TransactionDetails.EffectiveRatePerSMPerYr | currency:'USD':symbol:'1.2-2'}}
+                                </label>
+                              </div>
+                            </div>
+  
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Bank Guarantee</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.BankGuaranteeAmount | currency:'USD':symbol:'1.2-2'}}
+                                </label>
+                              </div>
+                            </div>
+                          
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Term (months)</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.LeaseTerms}}
+                                </label>
+                              </div>
+                            </div>  
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Lease Rate Type</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.LeaseTypeName}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Asking Lease Rate/SqM/Yr</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.AskingRateLow  | currency:'USD':symbol:'1.2-2'}} <span *ngIf="transaction.TransactionDetails.AskingRateHigh"> -
+                                  {{transaction.TransactionDetails.AskingRateHigh | currency:'USD':symbol:'1.2-2'}}</span></label>
+                              </div>
+                            </div>
+                            <!-- <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Date Occupied</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.DateOccupied }}</label>
+                              </div>
+                            </div> -->
+                            <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Commencement Date</label>
+                                  <label class="col-8 table-col-8">{{transaction.TransactionDetails.DateOccupied }}</label>
+                                </div>
+                              </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Escalation Rate %</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.EscalationRate | number: '.2-2'}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Asking Rent (annual)</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.TotalAnnualRateMin | currency:'USD':symbol:'1.0-0'}} <span *ngIf="transaction.TransactionDetails.TotalAnnualRateMax">-
+                                  {{transaction.TransactionDetails.TotalAnnualRateMax | currency:'USD':symbol:'1.0-0'}}</span>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Recorded Date</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.RecordedDate }}</label>
+                              </div>
+                            </div>    
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Escalation Type</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.EscalationType}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Lease ID</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.LeaseID}}
+                                  <!-- <span *ngIf="transaction.TransactionDetails.PercentageOccuppied">%</span> -->
+                                </label>
+                              </div>
+                            </div>
+
+                        
+                            
+                           <!--  <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Asking lease Rate/SqM/Month</label>
+                                <label
+                                  class="col-8 table-col-8">{{transaction.TransactionDetails.AskingLeaseRatePerMonthMin}} -
+                                  {{transaction.TransactionDetails.AskingLeaseRatePerMonthMax}}
+                                </label>
+                              </div>
+                            </div> -->
+                        
+
+                           
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Starting Rent (annual)</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.StartingRate | currency:'USD':symbol:'1.0-0'}}
+                                </label>
+                              </div>
+                            </div>
+
+
+
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Renewal Option (#months)</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.RenewalOption}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              
+                                <label class="col-4 table-col-4"></label>
+                                <label class="col-8 table-col-8"></label>
+                            </div>
+                          
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Starting Rent/SqM/Yr</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.StartingRatePerSMPerYr | currency:'USD':symbol:'1.2-2'}}
+                                </label>
+                              </div>
+                            </div>
+                            
+                        <!--
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Lease Trans Type</label>
+                                <label
+                                  class="col-8 table-col-8">{{transaction.TransactionDetails.LeaseTransTypeName}}</label>
+                              </div>
+                            </div>                       
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Suite Status</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.SuiteStatusName}}</label>
+                              </div>
+                            </div>  
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Min Divisible Space</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.MinDivSF}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Date On Market</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.DateOnMarket }}</label>
+                              </div>
+                            </div>                           
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Date Vacant</label>
+                                <label class="col-8 table-col-8">
+                                  {{transaction.TransactionDetails.DateVacant }}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Effective Rate</label>
+                                <label class="col-8 table-col-8">
+                                  {{transaction.TransactionDetails.EffectiveRate}} </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Starting Rate</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.StartingRate}}</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Total Monthly Rate</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.TotalMonthlyRateMin}} -
+                                  {{transaction.TransactionDetails.TotalMonthlyRateMax}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Rate Disclosed</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.IsNegotiable}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Lease Rate Type</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.LeaseTypeName}}
+                                </label>
+                              </div>
+                            </div>                        
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">TI Allowance</label>
+                                <label class="col-8 table-col-8"> {{transaction.TransactionDetails.TIAllowance}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Sign Date</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.SignDate }}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">% Rents (Retail only)</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.PercentageRents}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Escalation Rate</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.EscalationRate}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Escalation Type</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.EscalationType}}
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                [transactionId]="transaction.LeaseID">
+                                <label class="col-4 table-col-4">Fitout</label>
+                                <label class="col-8 table-col-8">{{transaction.TransactionDetails.Fitout}}
+                                </label>
+                              </div>
+                            </div>-->
+    
+                            <ng-container *ngIf="transaction.TransactionDetails.SpaceUseTypeName == 'Industrial'">
+                              <div class="col-md-12 ">
+                                <div class="form-group row">
+                                  <div class="col-lg-12 head-bg margin-top-20">
+                                    <b>Space Attributes</b>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Dock High Doors</label>
+                                  <label class="col-8 table-col-8"> {{transaction.TransactionDetails.DockHighDoors}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Notes</label>
+                                  <label class="col-8 table-col-8">{{transaction.TransactionDetails.DockHighDoorsNotes}}
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Grade Level Doors</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.GradeLevelDoorsTypeID}}</label>
+
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Notes</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.GradeLevelDoorsNotes}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Truckwell Doors</label>
+                                  <label
+                                    class="col-8 table-col-8">{{transaction.TransactionDetails.TruckwellDoors}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Notes</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.TruckwellDoorsNotes}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Clear Height Min/Max</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.ClearHeightMin}}</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.ClearHeightMax}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Bay Depth/Width</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.BayDepth}}</label>
+                                  <label class="col-8 table-col-8">{{transaction.TransactionDetails.BayWidth}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Coloum Spacing</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.ColumnSpacing1}}</label>
+                                  <label
+                                    class="col-8 table-col-8">{{transaction.TransactionDetails.ColumnSpacing2}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4"># Restrooms</label>
+                                  <label
+                                    class="col-8 table-col-8">{{transaction.TransactionDetails.NumberOfRestRooms}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Parking Spaces</label>
+                                  <label
+                                    class="col-8 table-col-8">{{transaction.TransactionDetails.ParkingSpaces}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Parking Ratio</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.ParkingRatio}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Office SqM</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.OfficeSpace | number: '.2-2'}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4"># of Office</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.NumberOfOffices}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Office A/C </label>
+                                  <label
+                                    class="col-8 table-col-8">{{(transaction.TransactionDetails.OfficeAC)?'Yes':'No'}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Office Heat</label>
+                                  <label class="col-8 table-col-8">
+                                    {{(transaction.TransactionDetails.OfficeHeat)?'Yes':'No'}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Whsc HVAC </label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.WhseHVAC}}</label>
+                                </div>
+                              </div>
+
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Yard-Paved</label>
+                                  <label class="col-8 table-col-8">
+                                    {{(transaction.TransactionDetails.HasYardPaved) ? 'Yes' : 'No'}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Yard-Unfenced</label>
+                                  <label class="col-8 table-col-8">
+                                    {{(transaction.TransactionDetails.HasYardUnfenced) ? 'Yes' : 'No'}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Yard-Fenced</label>
+                                  <label class="col-8 table-col-8">
+                                    {{(transaction.TransactionDetails.HasYardFenced) ? 'Yes' : 'No'}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Sprinklers</label>
+                                  <label class="col-8 table-col-8">
+                                    {{transaction.TransactionDetails.SprinklerTypeName}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">amps</label>
+                                  <label class="col-8 table-col-8"> {{transaction.TransactionDetails.Amps}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Volt</label>
+                                  <label class="col-8 table-col-8"> {{transaction.TransactionDetails.Volts}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Phase</label>
+                                  <label class="col-8 table-col-8"> {{transaction.TransactionDetails.Phase}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Unfinished Ofc Mezz/Sqm</label>
+                                  <label class="col-8 table-col-8"
+                                    *ngIf="transaction.TransactionDetails.UnFinishedOfcMezzSF">
+                                    {{(transaction.TransactionDetails.UnFinishedOfcMezz)?'Yes':'No'}}/
+                                    {{leaseComp.UnFinishedOfcMezzSF | number: '.2-2'}}
+                                  </label>
+                                  <label
+                                    class="col-8 table-col-8">{{(transaction.TransactionDetails.UnFinishedOfcMezz)?'Yes':'No'}}
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                  [transactionId]="transaction.LeaseID">
+                                  <label class="col-4 table-col-4">Finished Ofc Mezz/Sqm</label>
+                                  <label class="col-8 table-col-8"
+                                    *ngIf="transaction.TransactionDetails.FinishedOfcMezzSF">
+                                    {{(transaction.TransactionDetails.FinishedOfcMezz)?'Yes':'No'}}/
+                                    {{leaseComp.FinishedOfcMezzSF | number: '.2-2'}}
+                                  </label>
+                                  <label class="col-8 table-col-8">
+                                    {{(transaction.TransactionDetails.FinishedOfcMezz)?'Yes':'No'}}
+                                  </label>
+                                </div>
+                              </div>
+                            </ng-container>
+                            <div class="col-md-12" *ngIf="transaction.LeaseReviewsAndRents && transaction.LeaseReviewsAndRents.length >0">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Rent Review/Escalations</label>
+                                </div>
+                              </div>
+                              <table class="table table-hover property-name-table">
+                                <thead>
+                                  <tr style="background-color: #f9f9f9;">
+                                    <th scope="col">Review Date</th>
+                                    <th scope="col">Term</th>
+                                    <th scope="col">Review Type</th>
+                                    <th scope="col">% Adjustment</th>
+                                    <th scope="col">Adjusted Rate</th>
+                                    <th scope="col">Adjusted Rate (Yr)</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let leaseReview of transaction.LeaseReviewsAndRents">
+                                    <td>{{leaseReview.ReviewDate}}</td>
+                                    <td>{{leaseReview.LeaseTermTypeName}}</td>
+                                    <td>{{leaseReview.LeaseReviewTypeName}}</td>
+                                    <td>{{leaseReview.PercentageAdjustment}}</td>
+                                    <td>{{leaseReview.AdjustmentRate}}</td>
+                                    <td>{{leaseReview.AdjustmentRateYr}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="col-md-12" *ngIf="transaction.TransactionDetails.SuiteComments">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Suite Comments</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <p class="commentsParaProp">{{transaction.TransactionDetails.SuiteComments}}</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12" *ngIf="transaction.TransactionDetails.TransactionComments">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Transaction Comments</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <p class="commentsParaProp">{{transaction.TransactionDetails.TransactionComments}}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12"*ngIf="transaction.TransactionDetails.SpecialBrokerNotes">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Special Broker Notes</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <p class="commentsParaProp">{{transaction.TransactionDetails.SpecialBrokerNotes}}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+<!--                             <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Verification Comments</label>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <p class="commentsParaProp">{{transaction.TransactionDetails.ConfirmationNotes}}</p>
+                                </div>
+                              </div>
+                            </div> -->
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Lease Extensions/Options</label>
+                                </div>
+                              </div>
+                              <table class="table table-hover property-name-table">
+                                <thead>
+                                  <tr style="background-color: #f9f9f9;">
+                                    <th scope="col">Folio</th>
+                                    <th scope="col">Dealing #</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Date Registered</th>
+                                    <th scope="col">Lesse</th>
+                                    <th scope="col">Expires</th>
+                                    <th scope="col">Notes</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let extensions of transaction.LeaseExtensions">
+                                    <td>{{extensions.Folio}}</td>
+                                    <td>{{extensions.DealingNumber}}</td>
+                                    <td>{{extensions.LeaseExtensionTypeName}}</td>
+                                    <td>{{extensions.DateRegistered}}</td>
+                                    <td>{{extensions.LesseeName}}</td>
+                                    <td>{{extensions.Expires}}</td>
+                                    <td>{{extensions.Notes}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>                           
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Lease Contacts</label>
+                                </div>
+                              </div>
+                              <table class="table table-hover property-name-table">
+                                <thead>
+                                  <tr style="background-color: #f9f9f9;">
+                                    <th scope="col">Company Name</th>
+                                    <th scope="col">Contact Name</th>
+                                    <th scope="col">Contact Role</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let contact of transaction.LeaseContacts">
+                                    <td>{{contact.CompanyName}}</td>
+                                    <td>{{contact.FirstName}} {{contact.LastName}}</td>
+                                    <td>{{contact.LeaseContactTypeName}}</td>
+                                    <td>{{contact.Email}}</td>
+                                    <td>{{contact.PhoneNumber}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Media</label>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div *ngIf="transaction.MediaList && transaction.MediaList.length>0"
+                                    class="testimonial-group">
+                                    <div class="row m-0" style="display: block;">
+                                      <div class="crd-width-gallery"
+                                        *ngFor="let image of transaction.MediaList; let i = index;">
+                                        <div class="gal-img" data-toggle="modal" data-target="#myModalTransaction"
+                                          (click)="imageclick(transaction.MediaList,i,image.Path)">
+                                          <img *ngIf="image.Height" [src]="preImageUrl + image.Path"
+                                            class="img-pointer img-fluid" (click)="showImage(image.Path)"
+                                            style="position: absolute;" />
+                                          <div class="dash-img-txt">
+                                            <div *ngIf="image.MediaSubTypeName" class="spanText">
+                                              {{image.MediaTypeName}}/{{image.MediaSubTypeName}}</div>
+                                            <div *ngIf="!image.MediaSubTypeName" class="spanText">
+                                              {{image.MediaTypeName}}
+                                            </div>
+                                            <div class="spanText">{{image.CreatedDate | date: 'dd/MM/yyyy'}}</div>
+                                            <div class="spanText">{{image.MediaName}}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div *ngIf="!(transaction.MediaList && transaction.MediaList.length>0)">
+                                    No Media Found
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12 mt-2">
+                                  <div class="testimonial-group">
+                                    <div class="row m-0" style="display: block;">
+                                      <div class="crd-width-gallery"
+                                        *ngFor="let media of transaction.NonMediaList; let i = index;">
+                                        <div class="gal-img" (click)="downloadFile(nonImageUrl + media.Path)">
+                                          <div class="gal-img" style="background-image: url('assets/img/PdfImage.jpg')">
+                                          </div>
+                                          <div class="dash-img-txt">
+                                            <div *ngIf="media.MediaSubTypeName" class="spanText">
+                                              {{media.MediaTypeName}}/{{media.MediaSubTypeName}}</div>
+                                            <div *ngIf="!media.MediaSubTypeName" class="spanText">
+                                              {{media.MediaTypeName}}
+                                            </div>
+                                            <div class="spanText">{{media.CreatedDate | date: 'dd/MM/yyyy'}}</div>
+                                            <div class="spanText">{{media.MediaName}}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sale transaction data goes here -->
+<div>
+    <div class="row m-0" *ngIf="viewTransData == 2">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-11 p-0">
+            <h5 class="mt-3">Sale Transactions</h5>
+            <!-- <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:salepager.currentPage === 1}">
+                <a (click)="setSalePage(salepager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of salepager.pages" [ngClass]="{active:salepager.currentPage === page}">
+                <a (click)="setSalePage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:salepager.currentPage === salepager.totalPages}">
+                <a (click)="setSalePage(salepager.currentPage + 1)">»</a>
+              </li>
+              <li [ngClass]="{disabled:salepager.currentPage === salepager.totalPages}">
+                <a (click)="setSalePage(salepager.totalPages)">»»</a>
+              </li>
+            </ul> -->
+          </div>
+          <div class="col-md-1 pr-0">
+            <select class="form-control" [(ngModel)]="pageSizeSale" (change)="filterSale(pager.currentPage)">
+              <option value="100">100</option>
+              <option value="50">50</option>
+              <option value="20">20</option>
+              <!-- <option value="10">10</option> -->
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3" style="display:block;">
+      <div class="col-sm-12">
+        <!-- <div class="table-responsive"> -->
+        <div class="table-scroll mt-3">
+          <div class="pane pane--table1">
+            <div class="pane-hScrollSale">
+              <table class="table dataTableGrid" style="margin-bottom: 0;" *ngIf="viewTransData == 2">
+                <!-- <thead>
+                  <tr>
+                    <th style="width:30px"></th>
+                    <th style="width:120px">Date</th>
+                    <th style="width:120px">Buyer</th>
+                    <th style="width:120px">Seller</th>
+                    <th style="width:120px">Sale Price</th>
+                    <th style="width:120px">SqM Sold</th>
+                    <th style="width:120px">Price/SqM</th>
+                    <th style="width:120px">Sale Type</th>
+                  </tr>
+                </thead> -->
+                <thead>
+                    <tr>
+                      <th style="width:30px"></th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('DeedOrSaleDate','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('DeedOrSaleDate','Descending')"></i>
+                            </div>
+                        Date
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'DeedOrSaleDate' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'DeedOrSaleDate' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('Buyer','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('Buyer','Descending')"></i>
+                            </div>
+                        Buyer
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'Buyer' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'Buyer' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('Seller','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('Seller','Descending')"></i>
+                            </div>
+                        Seller
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'Seller' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'Seller' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('SoldPrice','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('SoldPrice','Descending')"></i>
+                            </div>
+                        Sale Price
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'SoldPrice' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'SoldPrice' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('SoldSM','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('SoldSM','Descending')"></i>
+                            </div>
+                        SqM Sold
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'SoldSM' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'SoldSM' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('SalePricePerSM','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('SalePricePerSM','Descending')"></i>
+                            </div>
+                        Price/SqM
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'SalePricePerSM' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'SalePricePerSM' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                      <th style="width:120px">
+                          <div class="arrow-group">
+                              <i class="fa fa-sort-up" (click)="sortSale('SaleTypeName','Ascending')"></i>
+                              <i class="fa fa-sort-down" (click)="sortSale('SaleTypeName','Descending')"></i>
+                            </div>
+                        Sale Type
+                        <div class="sort_Group">
+                            <i class="fas fa-arrow-circle-up" *ngIf="sortValueSale == 'SaleTypeName' && sortFunSale == 'Ascending'"></i>
+                            <i class="fas fa-arrow-circle-down" *ngIf="sortValueSale == 'SaleTypeName' && sortFunSale == 'Descending'"></i>
+                          </div>
+                      </th>
+                    </tr>
+                    <tr *ngIf="saleCompTransactionList.length == 0 && !saleLoader">
+                        <td colspan="8"  style="background :#fff;">
+                          No sale transaction(s) found.
+                        </td>
+                      </tr>
+                  </thead>
+              </table>
+              <div class="pane-vScrollSale" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollUpDistance]="1.5"
+                [infiniteScrollThrottle]="2" (scrolled)="onScrollSale()" [scrollWindow]="false">
+                <table class="table dataTableGrid" *ngIf="viewTransData == 2">
+                    <!-- <tr *ngIf="saleCompTransactionList.length == 0 && !saleLoader">
+                        <td colspan="8">
+                          No sale transaction(s) found.
+                        </td>
+                      </tr> -->
+                  <ng-container *ngFor="let transaction of saleArrayToScroll;let k=index;">
+                    <tbody>
+                      <tr class="clickable" id="valueSaleRow{{k}}">
+                        <td (click)="viewSelectedTransaction(transaction.SaleID,k)" style="width:30px">
+                          <a class="table-drop-toggle" data-toggle="collapse" href="#group-of-rows-1{{k}}"></a>
+                        </td>
+                        <td style="width:120px">{{transaction.DeedOrSaleDate}}</td>
+                        <td style="width:120px">{{transaction.Buyer}}</td>
+                        <td style="width:120px">{{transaction.Seller}}</td>
+                        <td style="width:120px">{{transaction.SoldPrice | currency:'USD':symbol:'1.0-0'}}</td>
+                        <td style="width:120px">{{transaction.SoldSM | number}}</td>
+                        <td style="width:120px">{{transaction.SalePricePerSM | currency:'USD':symbol:'1.2-2'}}</td>
+                        <td style="width:120px">{{transaction.SaleTypeName}}</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr class="p-0 m-0 border-0">
+                        <td colspan="8" class="p-0 m-0 border-0">
+                          <div class="collapse highLightRow" id="group-of-rows-1{{k}}" [class.show]="k==expandDataSale">
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Sale Details</label>
+                                </div>
+                              </div>
+                              <div class="row viewCol" *ngIf="transaction.TransactionDetails">
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Sale price</label>
+                                    <label class="col-8 table-col-8">{{transaction.TransactionDetails.SoldPrice |
+                                currency:'USD':symbol:'1.0-0'}} </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 ">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Sold Date</label>
+                                    <label class="col-8 table-col-8">{{transaction.TransactionDetails.DeedOrSaleDate | date:
+                                'dd/MM/yyyy'}} </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">% Occupied</label>
+                                    <label class="col-8 table-col-8">
+                                      {{transaction.TransactionDetails.PercentageOccuppied}}
+                                      <span *ngIf="transaction.TransactionDetails.PercentageOccuppied">%</span></label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Listed price</label>
+                                    <label class="col-8 table-col-8">{{transaction.TransactionDetails.AskingPrice |
+                                currency:'USD':symbol:'1.0-0'}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Recorded Date</label>
+                                    <label class="col-8 table-col-8"
+                                      *ngIf="!!transaction.TransactionDetails.DateRecorded">{{transaction.TransactionDetails.DateRecorded
+                                | date: 'dd/MM/yyyy'}} </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Cap Rate</label>
+                                    <label class="col-8 table-col-8">
+                                      {{transaction.TransactionDetails.CapRatePercentage}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Sold SqM</label>
+                                    <label class="col-8 table-col-8">
+                                      {{transaction.TransactionDetails.SoldSM | number}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Listed Date</label>
+                                    <label class="col-8 table-col-8">{{transaction.TransactionDetails.ListingDate | date:
+                                'dd/MM/yyyy'}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Operating Costs</label>
+                                    <label class="col-8 table-col-8"></label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Lot Size ha</label>
+                                    <label
+                                      class="col-8 table-col-8">{{transaction.TransactionDetails.LotSizeHec | number}}
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Dealing #</label>
+                                    <label class="col-8 table-col-8">
+                                      {{transaction.TransactionDetails.DeedDocNumber}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Loan Amount</label>
+                                    <label *ngIf="transaction.LoanInfo" class="col-8 table-col-8">{{transaction.LoanInfo.LoanAmount
+                                | currency:'USD':symbol:'1.0-0'}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID" style="overflow-wrap: break-word;">
+                                    <label class="col-4 table-col-4 ">Parcel #</label>
+                                    <label
+                                      class="col-8 table-col-8">{{transaction.TransactionDetails.ParcelNumbers}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Unimproved Land Value (UCV)</label>
+                                    <label class="col-8 table-col-8">{{transaction.SaleCompStageDetails.UCV |
+                                currency:'USD':symbol:'1.0-0'}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Loan Type</label>
+                                    <label *ngIf="transaction.LoanInfo" class="col-8 table-col-8">
+                                      {{transaction.LoanInfo.LoanTypeName}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Jurisdiction ID #</label>
+                                    <label
+                                      class="col-8 table-col-8">{{transaction.SaleCompStageDetails.JurisdictionId}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">Unimproved Land Value Date (UCV Date)</label>
+                                    <label class="col-8 table-col-8">
+                                      <font *ngIf="!!transaction.SaleCompStageDetails.UCVDate">
+                                        {{transaction.SaleCompStageDetails.UCVDate}} </font>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">VG Zone</label>
+                                    <label class="col-8 table-col-8">{{transaction.SaleCompStageDetails.VGZone}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">VG Zone Description</label>
+                                    <label class="col-8 table-col-8">
+                                      {{transaction.SaleCompStageDetails.ZoneDesc}}</label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="wrap_divBox" [appEditSuggestion]="'Transaction'"
+                                    [transactionId]="transaction.SaleID">
+                                    <label class="col-4 table-col-4">VG Zone Purpose</label>
+                                    <label class="col-8 table-col-8">{{transaction.SaleCompStageDetails.VGPurpose}}
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <ng-container *ngIf="transaction.TransactionDetails && transaction.TransactionDetails.ListingNotes"> 
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Listing Comments</label>
+                                </div>
+                              </div>
+                              <div class="row" >
+                                <div class="col-md-12">
+                                  <p class="commentsParaProp">
+                                    {{transaction.TransactionDetails.ListingNotes}}
+                                  </p>
+                                </div>
+                              </div>
+                              </ng-container>
+                              <ng-container *ngIf="transaction.TransactionDetails && transaction.TransactionDetails.TransactionNotes"> 
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Transaction Comments</label>
+                                </div>
+                              </div>
+                              <div class="row" >
+                                <div class="col-md-12">
+                                  <p class="commentsParaProp">
+                                    {{transaction.TransactionDetails.TransactionNotes}}
+                                  </p>
+                                </div>
+                              </div>
+                              </ng-container>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <label class="listHeadLabel">Contacts</label>
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col-md-12">
+                                  <div class="testimonial-group">
+                                    <div class="row m-0" style="display: block;">
+                                      <div class="crd-width"
+                                        *ngFor="let contact of transaction.AllContacts; let i = index;">
+                                        <div class="contact-wrap">
+                                          <div class="contact_card">
+                                            <div class="profile-detail-mid">
+                                              <label class="contactName m-2"><b>{{contact.FirstName}}</b>
+                                                {{contact.LastName}}</label>
+                                              <label *ngIf="contact.BuyerEntityID" class="contactType">
+                                                <b>{{contact.BuyerContactTypeName}}</b></label>
+                                              <label *ngIf="contact.SellerEntityID" class="contactType">
+                                                <b>{{contact.SellerContactTypeName}}</b></label>
+                                            </div>
+                                            <div class="profile-detail-bottom">
+                                              <div class="profile-side">
+                                                <div class="icon-side sideHeight">
+                                                  <div class="label-icon"><i class="fas fa-building"></i></div>
+                                                </div>
+                                                <div class="icon-side">
+                                                  <div class="label-icon"><i class="fas fa-phone"></i></div>
+                                                </div>
+                                                <div class="icon-side">
+                                                  <div class="label-icon"><i class="fas fa-fax"></i></div>
+                                                </div>
+                                                <div class="icon-side">
+                                                  <div class="label-icon"><i class="fas fa-envelope-square"></i></div>
+                                                </div>
+                                                <div class="icon-side">
+                                                  <div class="label-icon"><i class="fas fa-at"></i></div>
+                                                </div>
+                                                <div class="icon-side sideBtmHeight">
+                                                  <div class="label-icon"><i class="fas fa-address-card"></i></div>
+                                                </div>
+                                              </div>
+                                              <div class="profile-right-side">
+                                                <div class="icon-side iconHeightSide"><label><span>
+                                                      <b>{{contact.CompanyName}}</b>
+                                                    </span></label></div>
+                                                <div class="icon-side"><label>
+                                                    <font *ngIf="contact.PhoneNumber">
+                                                      O:+{{contact.PhoneNumber | slice:0:2}}
+                                                      ({{contact.PhoneNumber | slice:2:4}})
+                                                      {{contact.PhoneNumber | slice:4:8}}
+                                                      {{contact.PhoneNumber | slice:8:12}}
+                                                    </font>
+                                                  </label></div>
+                                                <div class="icon-side"><label>{{contact.OfficeFax}}</label></div>
+                                                <div class="icon-side"><label>{{contact.AgentWebsite}}</label></div>
+                                                <div class="icon-side"><label>{{contact.Email}}</label></div>
+                                                <div class="icon-side iconHeightSide" style="white-space: initial">
+                                                  <label>{{contact.AddressText}}</label></div>
+                                                <div class="icon-side"
+                                                  style="background: #fff; text-align: right;  height: auto !important;">
+                                                  <img src="assets/img/EmpiricalCRE_Logo_Primary.png"
+                                                    style="height:30px;">
+                                                </div>
+                                              </div>
+                                            </div>
+  
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <label class="listHeadLabel">Media</label>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <!-- <div class="row m-0">
+                              <h5 class="col-md-3">Property Imagery</h5>
+                              <div class="col-md-9 dashLine"></div>
+                            </div> -->
+                                        <div *ngIf="transaction.MediaList && transaction.MediaList.length>0"
+                                          class="testimonial-group">
+                                          <div class="row m-0" style="display: block;">
+                                            <div class="crd-width-gallery"
+                                              *ngFor="let image of transaction.MediaList; let i = index;">
+                                              <div class="gal-img" data-toggle="modal" data-target="#myModalTransaction"
+                                                (click)="imageclick(transaction.MediaList,i,image.Path)">
+                                                <img *ngIf="image.Height" [src]="preImageUrl + image.Path"
+                                                  class="img-pointer img-fluid" (click)="showImage(image.Path)"
+                                                  style="position: absolute;" />
+                                                <div class="dash-img-txt">
+                                                  <div *ngIf="image.MediaSubTypeName" class="spanText">
+                                                    {{image.MediaTypeName}}/{{image.MediaSubTypeName}}</div>
+                                                  <div *ngIf="!image.MediaSubTypeName" class="spanText">
+                                                    {{image.MediaTypeName}}
+                                                  </div>
+                                                  <div class="spanText">{{image.CreatedDate | date: 'dd/MM/yyyy'}}</div>
+                                                  <div class="spanText">{{image.MediaName}}</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div *ngIf="!(transaction.MediaList && transaction.MediaList.length>0)">
+                                          No Media Found
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-12 mt-2">
+                                        <!-- <div class="row m-0">
+                              <h5 class="col-md-3">Property Attachments</h5>
+                              <div class="col-md-9 dashLine"></div>
+                            </div> -->
+                                        <div class="testimonial-group">
+                                          <div class="row m-0" style="display: block;">
+                                            <div class="crd-width-gallery"
+                                              *ngFor="let media of transaction.NonMediaList; let i = index;">
+                                              <div class="gal-img" (click)="downloadFile(nonImageUrl + media.Path)">
+                                                <div class="gal-img"
+                                                  style="background-image: url('assets/img/PdfImage.jpg')">
+                                                </div>
+                                                <div class="dash-img-txt">
+                                                  <div *ngIf="media.MediaSubTypeName" class="spanText">
+                                                    {{media.MediaTypeName}}/{{media.MediaSubTypeName}}</div>
+                                                  <div *ngIf="!media.MediaSubTypeName" class="spanText">
+                                                    {{media.MediaTypeName}}
+                                                  </div>
+                                                  <div class="spanText">{{media.CreatedDate | date: 'dd/MM/yyyy'}}</div>
+                                                  <div class="spanText">{{media.MediaName}}</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ng-container>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row m-0">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-5 p-0 mt-2">
+            <ul class="pagination mb-0" *ngIf="pager.pages && pager.pages.length">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">««</a>
+              </li>
+              <li [ngClass]="{disabled:salepager.currentPage === 1}">
+                <a (click)="setSalePage(salepager.currentPage - 1)">«</a>
+              </li>
+              <li *ngFor="let page of salepager.pages" [ngClass]="{active:salepager.currentPage === page}">
+                <a (click)="setSalePage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:salepager.currentPage === salepager.totalPages}">
+                <a (click)="setSalePage(salepager.currentPage + 1)">»</a>
+              </li>
+              <li [ngClass]="{disabled:salepager.currentPage === salepager.totalPages}">
+                <a (click)="setSalePage(salepager.totalPages)">»»</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-1 mt-2 pr-0">
+            <select class="form-control" [(ngModel)]="pageSizeSale" (change)="filterSale(salepager.currentPage)">
+              <option value="100">100</option>
+              <option value="50">50</option>
+              <option value="20">20</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+<div *ngIf="showModal">
+  <div id="myModalTransaction" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <app-image-viewer-modal [galleryOptions]="galleryOptions" [galleryImages]="galleryImages"></app-image-viewer-modal>
+  </div>
+</div>

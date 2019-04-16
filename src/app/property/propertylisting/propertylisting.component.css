@@ -1,0 +1,309 @@
+
+[data-toggle=buttons]>.btn-group>.btn input[type=checkbox], [data-toggle=buttons]>.btn-group>.btn input[type=radio], [data-toggle=buttons]>.btn input[type=checkbox], [data-toggle=buttons]>.btn input[type=radio] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+.text-inverse{
+    font-size: 17px
+}
+.accordion-row{
+    display:block;
+    width:100%;
+    margin-bottom: 10px;
+}
+
+.btn-default:not(:disabled):not(.disabled).active{
+    background: #1976ad;
+    color: #fff;
+}
+.netMedia{
+    max-height: 290px;
+    overflow: auto;
+}
+.netMedia_head{
+    max-height: 230px;
+    overflow: auto;
+}
+.text-inverse:hover{
+    text-decoration:  none !important;
+}
+
+.table-col-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 10px 0px !important;
+}
+
+/* .crd-width{
+    width: 257px;
+    height: auto;
+    display: inline-block;
+    border: 0px solid #ccc;
+    margin: 5px;
+    margin-left: 0;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+} */
+.contactCard_head{
+    background: #1976ad;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px 5px;
+    border: 1px solid #1976ad;
+    height: 40px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.contactCard_body{
+    width:100%;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    padding:10px;
+}
+.contactCard_body label{width:100%; display: block;}
+.contactCard_footer{
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    width: 100%;
+    padding: 5px;
+}
+.contact_card{
+    border:0
+}
+
+.mediaCard{
+ width: 170px;
+height: 170px;
+display: inline-block;
+border: 1px solid #ccc;
+margin: 5px;
+margin-left: 0;
+margin-right: 10px;
+position: relative;
+overflow: hidden;
+}
+.testimonial-group{
+    float: left;
+            }
+.testimonial-group > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+    display: inline-block;
+}
+.testimonial-group > .row > .contactCard, .testimonial-group > .row > .mediaCard {
+    display: inline-block;
+    float: none;
+}
+.table tbody+tbody {
+    border-top: 0px solid #dee2e6;
+}
+table.dataTableGrid thead tr th{
+    border-right: 1px dotted #c7c7c7;
+}
+.contactRow{
+    float: left;
+            }
+    .contactRow > .row {
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: hidden;
+    }
+    .contactRow > .row > .crd-width {
+        display: inline-block;
+        float: none;
+    }
+    
+    .testimonial-group{
+        float: left;
+        display: inline-grid;
+                }
+    .testimonial-group > .row {
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: hidden;
+    }
+    .testimonial-group > .row > .crd-width {
+        display: inline-block;
+        float: none;
+    }
+    .testimonial-group > .row > .crd-width-gallery {
+        display: inline-block;
+        float: none;
+        margin: 5px;
+    }
+    .icon-side label{
+        white-space: initial;
+    }
+    .contactName,.contactType {
+        float:left;
+    }
+    .profile-detail-mid{
+        float:left;
+    }
+    .dash-img-txt{
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        min-height: 61px;    
+        padding: 2px 0 0 5px;
+        color: #fff;
+        position: absolute;
+        bottom: 0%;
+        font-size:1em;
+        height: auto !important;
+      }
+      .gal-img {
+        height: 170px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 0;
+        cursor: pointer;
+        position: relative;
+        background-position: center center;
+    }
+    
+    .spanText{
+        float: left;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .crd-width-gallery{
+        width:200px;
+        margin: 5px auto;
+    }
+    .contact-wrap {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .truncate {
+        width: 100%;
+        white-space: nowrap !important;
+        text-overflow: ellipsis;
+        position: relative;
+        float: left;
+        /* border: 1px solid; */
+        overflow: hidden;
+        height: auto;
+      }
+      .hyperlink{
+        color:#fff;
+    }
+@media (max-width: 767px){
+    
+    .btn-link {
+        font-size: 15px;
+    }
+    .btn-link[aria-expanded]:after { 
+         font-size: 28px;
+        }
+      
+      .btn-link[aria-expanded=true]:after {
+        font-size: 28px;
+      }
+}
+
+@media (max-width: 567px){
+    .btn-link {
+        font-size: 13px;
+    }
+    
+    .testimonial-group > .row {
+        overflow-x: auto;
+        white-space: initial;
+        overflow-y: hidden;
+        display: block;
+    }
+    .testimonial-group > .row > .contactCard, .testimonial-group > .row > .mediaCard {
+        display: block;
+        float: none;
+    }
+    .contactCard{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .mediaCard{
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .btn-link[aria-expanded]:after { 
+        font-size: 28px;
+       }
+     
+     .btn-link[aria-expanded=true]:after {
+       font-size: 28px;
+     }
+}
+@media (max-width: 575px){
+    .table-col-6 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+.modal-body {
+    padding: 4px;
+    min-height: 200px;
+}
+@media (min-width: 576px){
+.modal-dialog {
+max-width: 500px;
+margin: 4.75rem auto;
+top:0px;
+}
+}
+@media (max-width: 576px){
+.modal-dialog {
+top:65px;
+}
+}
+.modalClose{
+position: absolute;
+z-index: 1;
+top: -34px;
+right: -15px;
+background: none;
+border: 0;
+color: #fff;
+font-size: 25px;
+}
+
+.item img{
+cursor: pointer;
+}
+.modalClose{
+    position: absolute;
+    z-index: 1;
+    top: -34px;
+    right: -15px;
+    background: none;
+    border: 0;
+    color: #fff;
+    font-size: 25px;
+}
+
+.item img{
+    cursor: pointer;
+}
+
+.ngx-gallery-preview-icons .ngx-gallery-icon{
+    font-size: 20px;
+}
+.checkBoxMargin{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

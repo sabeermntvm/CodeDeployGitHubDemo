@@ -1,0 +1,28 @@
+<div class="row mb-3">
+        <div class="col-md-12">
+    <div class="map-nav">
+        <ul>
+          <li [routerLink]="['/property/mapsearch']"><span class="map-result"><i class="fas fa-map"></i> Map View</span></li>
+          <li [routerLink]="['/property/resultsGrid']"><span class="map-result"><i class="fas fa-list-ul"></i> Grid
+            View</span></li>
+          <li [routerLink]="['/property/propertyGallery']"><span class="map-result"><i class="fas fa-th"></i> Gallery
+              View</span></li>
+        </ul>
+    </div>
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-12">
+    <app-askrentcomparison *ngIf="dataLoaded" [propertyId]="propertyId" [zipcode]=""></app-askrentcomparison> 
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-12">
+    <app-vacantsummarycomparison *ngIf="dataLoaded"   [propertyId]="propertyId" [zipcode]=""></app-vacantsummarycomparison>
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-12">
+    <app-vacancyratecomparison *ngIf="dataLoaded"   [propertyId]="propertyId" [zipcode]=""></app-vacancyratecomparison>
+    </div>
+</div>

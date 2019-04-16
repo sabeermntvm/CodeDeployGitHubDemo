@@ -1,0 +1,343 @@
+<div class="col-md-12 clearfix" >
+    *Use <i class="fas fa-check-double text-primary"></i> button to suggest edits to the data.
+    <button  class="btn btn-primary btn-sm float-right"  [appFeedback]="'Contact'">Feedback</button>
+</div>
+<div class="row">
+  <div class="col-md-12">
+      <div *ngIf="!this.contactList || !this.listingAgentsList">
+          <div>No Contacts Found!</div>
+      </div>
+    <div class="row m-0">
+      <div class="crd-width contact-title parent"   *ngFor="let contact of contactList.trueOwnerList; let i = index;">
+        <div class="row m-0 border">
+          <div class="contact-wrap">
+            <div class="contact_card">
+              <div class="profile-top" style="background-image: url('assets/img/thumb.png');" *ngIf="!contact.MainPhotoUrl"></div>
+              <div class="profile-top" [ngStyle]="{'background-image': 'url(' + preImageUrl +contact.MainPhotoUrl+ ')'}"
+                *ngIf="contact.MainPhotoUrl"></div>
+              <div class="profile-detail-mid">
+                <label class="contactName m-2"><b>{{contact.FirstName}} </b>{{contact.LastName}}</label>
+                <label class="contactType"><span><b>{{contact.RoleName}}</b></span></label>
+              </div>
+              <div class="profile-detail-bottom">
+                <div class="profile-side">
+                  <div class="icon-side sideHeight">
+                    <div class="label-icon"><i class="fas fa-building" title="Company Name"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-phone" title="Phone Number"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-fax" title="Office Fax"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-envelope-square" title="Agent Website"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-at" title="Email"></i></div>
+                  </div>
+                  <div class="icon-side sideBtmHeight">
+                    <div class="label-icon"><i class="fas fa-address-card" title="Address"></i></div>
+                  </div>
+                </div>
+                <div class="profile-right-side">
+                  <div class="icon-side iconHeightSide"><label><span><b>{{contact.CompanyName}}</b></span></label></div>
+                  <div class="icon-side"><label><span *ngIf="contact.PhoneNumber">{{contact.PhoneNumber |
+                          slice:0:2}} ({{contact.PhoneNumber | slice:2:4}}) {{contact.PhoneNumber | slice:4:8}}
+                          {{contact.PhoneNumber | slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label> <span *ngIf="contact.OfficeFax">{{contact.OfficeFax | slice:0:2}}
+                          ({{contact.OfficeFax | slice:2:4}}) {{contact.OfficeFax | slice:4:8}} {{contact.OfficeFax |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"> <label class="truncate" title="{{contact.AgentWebsite}}"><a class="hyperlink" (click)="goToLink(contact.AgentWebsite)">{{contact.AgentWebsite}}</a></label></div>
+                  <div class="icon-side"><label class="truncate">{{contact.Email}}</label></div>
+                  <div class="icon-side iconHeightSide"><label>{{contact.AddressText}}</label></div>
+                  <div class="icon-side" style="background: #fff; text-align: right; min-height: 30px!important;">
+                    <img src="{{imagePath+contact.Path}}" style="height:30px;" *ngIf="contact.Path">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-icon-wrap child" >
+          <i class="fas fa-check-double text-primary ml-1  " (click)="onEditContact(contact,$event)"></i>
+        </div>
+      </div>
+       <div class="crd-width contact-title parent"  *ngFor="let contact of contactList.recordedOwnerList; let i = index;">
+        <div class="row m-0 border">
+          <div class="contact-wrap">
+            <div class="contact_card">
+              <div class="profile-top" style="background-image: url('assets/img/thumb.png');" *ngIf="!contact.MainPhotoUrl"></div>
+              <div class="profile-top" [ngStyle]="{'background-image': 'url(' + preImageUrl +contact.MainPhotoUrl+ ')'}"
+                *ngIf="contact.MainPhotoUrl"></div>
+              <div class="profile-detail-mid">
+                <label class="contactName m-2"><b>{{contact.FirstName}} </b>{{contact.LastName}}</label>
+                <label class="contactType"><span><b>{{contact.RoleName}}</b></span></label>
+              </div>
+              <div class="profile-detail-bottom">
+                <div class="profile-side">
+                  <div class="icon-side sideHeight">
+                    <div class="label-icon"><i class="fas fa-building" title="Company Name"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-phone" title="Phone Number"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-fax" title="Office Fax"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-envelope-square" title="Agent Website"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-at" title="Email"></i></div>
+                  </div>
+                  <div class="icon-side sideBtmHeight">
+                    <div class="label-icon"><i class="fas fa-address-card" title="Address"></i></div>
+                  </div>
+                </div>
+                <div class="profile-right-side">
+                  <div class="icon-side iconHeightSide"><label><span><b>{{contact.CompanyName}}</b></span></label></div>
+                  <div class="icon-side"><label><span *ngIf="contact.PhoneNumber">{{contact.PhoneNumber |
+                          slice:0:2}} ({{contact.PhoneNumber | slice:2:4}}) {{contact.PhoneNumber | slice:4:8}}
+                          {{contact.PhoneNumber | slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label> <span *ngIf="contact.OfficeFax">{{contact.OfficeFax | slice:0:2}}
+                          ({{contact.OfficeFax | slice:2:4}}) {{contact.OfficeFax | slice:4:8}} {{contact.OfficeFax |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label class="truncate" title="{{contact.AgentWebsite}}"><a class="hyperlink" (click)="goToLink(contact.AgentWebsite)">{{contact.AgentWebsite}}</a></label></div>
+                  <div class="icon-side"><label class="truncate">{{contact.Email}}</label></div>
+                  <div class="icon-side iconHeightSide"><label>{{contact.AddressText}}</label></div>
+                  <div class="icon-side" style="background: #fff; text-align: right; min-height: 30px!important;">
+                    <img src="{{imagePath+contact.Path}}" style="height:30px;" *ngIf="contact.Path">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-icon-wrap child" >
+          <i class="fas fa-check-double text-primary ml-1" (click)="onEditContact(contact,$event)"></i>
+        </div>
+      </div>
+       <div class="crd-width contact-title parent" *ngFor="let contact of contactList.propertyManagerList; let i = index;">
+        <div class="row m-0 border">
+          <div class="contact-wrap">
+            <div class="contact_card">
+              <div class="profile-top" style="background-image: url('assets/img/thumb.png');" *ngIf="!contact.MainPhotoUrl"></div>
+              <div class="profile-top" [ngStyle]="{'background-image': 'url(' + preImageUrl +contact.MainPhotoUrl+ ')'}"
+                *ngIf="contact.MainPhotoUrl"></div>
+              <div class="profile-detail-mid">
+                <label class="contactName m-2"><b>{{contact.FirstName}} </b>{{contact.LastName}}</label>
+                <label class="contactType"><span><b>{{contact.RoleName}}</b></span></label>
+              </div>
+              <div class="profile-detail-bottom">
+                <div class="profile-side">
+                  <div class="icon-side sideHeight">
+                    <div class="label-icon"><i class="fas fa-building" title="Company Name"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-phone" title="Phone Number"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-fax" title="Office Fax"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-envelope-square" title="Agent Website"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-at" title="Email"></i></div>
+                  </div>
+                  <div class="icon-side sideBtmHeight">
+                    <div class="label-icon"><i class="fas fa-address-card" title="Address"></i></div>
+                  </div>
+                </div>
+                <div class="profile-right-side">
+                  <div class="icon-side iconHeightSide"><label><span><b>{{contact.CompanyName}}</b></span></label></div>
+                  <div class="icon-side"><label><span *ngIf="contact.PhoneNumber">{{contact.PhoneNumber |
+                          slice:0:2}} ({{contact.PhoneNumber | slice:2:4}}) {{contact.PhoneNumber | slice:4:8}}
+                          {{contact.PhoneNumber | slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label> <span *ngIf="contact.OfficeFax">{{contact.OfficeFax | slice:0:2}}
+                          ({{contact.OfficeFax | slice:2:4}}) {{contact.OfficeFax | slice:4:8}} {{contact.OfficeFax |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label class="truncate" title="{{contact.AgentWebsite}}"><a class="hyperlink" (click)="goToLink(contact.AgentWebsite)">{{contact.AgentWebsite}}</a></label></div>
+                  <div class="icon-side"><label class="truncate">{{contact.Email}}</label></div>
+                  <div class="icon-side iconHeightSide"><label>{{contact.AddressText}}</label></div>
+                  <div class="icon-side" style="background: #fff; text-align: right; min-height: 30px!important;">
+                    <img src="{{imagePath+contact.Path}}" style="height:30px;" *ngIf="contact.Path">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-icon-wrap child" >
+          <i class="fas fa-check-double text-primary ml-1 " (click)="onEditContact(contact,$event)"></i>
+        </div>
+      </div>
+      <div class="crd-width contact-title parent"  *ngFor="let agent of listingAgentsList.leaseAgentList; let i = index;">
+        <div class="row m-0 border">
+          <div class="contact-wrap">
+            <div class="contact_card">
+                <div class="profile-top" style="background-image: url('assets/img/thumb.png');" *ngIf="!agent.MainPhotoUrl"></div>
+                <div class="profile-top" [ngStyle]="{'background-image': 'url(' + preImageUrl +agent.MainPhotoUrl+ ')'}"
+                  *ngIf="agent.MainPhotoUrl"></div>
+              <div class="profile-detail-mid">
+                <label class="contactName m-2"><b>{{agent.AgentFirstName}} </b>{{agent.AgentLastName}}</label>
+                <label class="contactType"><span><b>{{agent.ListingTypeDisplayName}} Agent</b></span></label>
+              </div>
+              <div class="profile-detail-bottom">
+                <div class="profile-side">
+                  <div class="icon-side sideHeight">
+                    <div class="label-icon"><i class="fas fa-building" title="Company Name"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-phone" title="Phone Number"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-fax" title="Office Fax"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-envelope-square" title="Agent Website"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-at" title="Email"></i></div>
+                  </div>
+                  <div class="icon-side sideBtmHeight">
+                    <div class="label-icon"><i class="fas fa-address-card" title="Address"></i></div>
+                  </div>
+                </div>
+                <div class="profile-right-side">
+                  <div class="icon-side iconHeightSide"><label><span><b>{{agent.AgentCompanyName}}</b> </span></label></div>
+                  <div class="icon-side"><label><span *ngIf="agent.AgentPhone">{{agent.AgentPhone | slice:0:2}}
+                          ({{agent.AgentPhone | slice:2:4}}) {{agent.AgentPhone | slice:4:8}} {{agent.AgentPhone |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label> <span *ngIf="agent.OfficeFax">{{agent.OfficeFax | slice:0:2}}
+                          ({{agent.OfficeFax | slice:2:4}}) {{agent.OfficeFax | slice:4:8}} {{agent.OfficeFax |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label class="truncate" title="{{agent.AgentWebsite}}"><a class="hyperlink" (click)="goToLink(agent.AgentWebsite)">{{agent.AgentWebsite}}</a></label></div>
+                  <div class="icon-side"><label class="truncate">{{agent.AgentEmail}}</label></div>
+                  <div class="icon-side iconHeightSide"><label>{{agent.AddressText}}</label></div>
+                  <div class="icon-side" style="background: #fff; text-align: right; min-height: 30px!important;">
+                    <img src="{{imagePath+agent.Path}}" style="height:30px;" *ngIf="agent.Path">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-icon-wrap child" >
+          <i class="fas fa-check-double text-primary ml-1 " (click)="onEditContact(agent,$event)"></i>
+        </div>
+      </div>
+       <div class="crd-width contact-title parent"   *ngFor="let agent of listingAgentsList.saleAgentList; let i = index;">
+        <div class="row m-0 border">
+          <div class="contact-wrap">
+            <div class="contact_card">
+                <div class="profile-top" style="background-image: url('assets/img/thumb.png');" *ngIf="!agent.MainPhotoUrl"></div>
+                <div class="profile-top" [ngStyle]="{'background-image': 'url(' + preImageUrl +agent.MainPhotoUrl+ ')'}"
+                  *ngIf="agent.MainPhotoUrl"></div>
+              <div class="profile-detail-mid">
+                <label class="contactName m-2"><b>{{agent.AgentFirstName}} </b>{{agent.AgentLastName}}</label>
+                <label class="contactType"><span><b>{{agent.ListingTypeDisplayName}} Agent</b></span></label>
+              </div>
+              <div class="profile-detail-bottom">
+                <div class="profile-side">
+                  <div class="icon-side sideHeight">
+                    <div class="label-icon"><i class="fas fa-building" title="Company Name"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-phone" title="Phone Number"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-fax" title="Office Fax"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-envelope-square" title="Agent Website"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-at" title="Email"></i></div>
+                  </div>
+                  <div class="icon-side sideBtmHeight">
+                    <div class="label-icon"><i class="fas fa-address-card" title="Address"></i></div>
+                  </div>
+                </div>
+                <div class="profile-right-side">
+                  <div class="icon-side iconHeightSide"><label><span><b>{{agent.AgentCompanyName}}</b> </span></label></div>
+                  <div class="icon-side"><label><span *ngIf="agent.AgentPhone">{{agent.AgentPhone | slice:0:2}}
+                          ({{agent.AgentPhone | slice:2:4}}) {{agent.AgentPhone | slice:4:8}} {{agent.AgentPhone |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label> <span *ngIf="agent.OfficeFax">{{agent.OfficeFax | slice:0:2}}
+                          ({{agent.OfficeFax | slice:2:4}}) {{agent.OfficeFax | slice:4:8}} {{agent.OfficeFax |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label class="truncate" title="{{agent.AgentWebsite}}"><a class="hyperlink" (click)="goToLink(agent.AgentWebsite)">{{agent.AgentWebsite}}</a></label></div>
+                  <div class="icon-side"><label class="truncate">{{agent.AgentEmail}}</label></div>
+                  <div class="icon-side iconHeightSide"><label>{{agent.AddressText}}</label></div>
+                  <div class="icon-side" style="background: #fff; text-align: right; min-height: 30px!important;">
+                    <img src="{{imagePath+agent.Path}}" style="height:30px;" *ngIf="agent.Path">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-icon-wrap child" >
+          <i class="fas fa-check-double text-primary ml-1 " (click)="onEditContact(agent,$event)"></i>
+        </div>
+      </div>
+       <div class="crd-width contact-title parent"  *ngFor="let agent of listingAgentsList.subLeaseAgentList; let i = index;">
+        <div class="row m-0 border">
+          <div class="contact-wrap">
+            <div class="contact_card">
+                <div class="profile-top" style="background-image: url('assets/img/thumb.png');" *ngIf="!agent.MainPhotoUrl"></div>
+                <div class="profile-top" [ngStyle]="{'background-image': 'url(' + preImageUrl +agent.MainPhotoUrl+ ')'}"
+                  *ngIf="agent.MainPhotoUrl"></div>
+              <div class="profile-detail-mid">
+                <label class="contactName m-2"><b>{{agent.AgentFirstName}} </b>{{agent.AgentLastName}}</label>
+                <label class="contactType"><span><b>{{agent.ListingTypeDisplayName}} Agent</b></span></label>
+              </div>
+              <div class="profile-detail-bottom">
+                <div class="profile-side">
+                  <div class="icon-side sideHeight">
+                    <div class="label-icon"><i class="fas fa-building" title="Company Name" ></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-phone" title="Phone Number"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-fax" title="Office Fax"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-envelope-square" title="Agent Website"></i></div>
+                  </div>
+                  <div class="icon-side">
+                    <div class="label-icon"><i class="fas fa-at" title="Email"></i></div>
+                  </div>
+                  <div class="icon-side sideBtmHeight">
+                    <div class="label-icon"><i class="fas fa-address-card" title="Address"></i></div>
+                  </div>
+                </div>
+                <div class="profile-right-side">
+                  <div class="icon-side iconHeightSide"><label><span><b>{{agent.AgentCompanyName}}</b> </span></label></div>
+                  <div class="icon-side"><label><span *ngIf="agent.AgentPhone">{{agent.AgentPhone | slice:0:2}}
+                          ({{agent.AgentPhone | slice:2:4}}) {{agent.AgentPhone | slice:4:8}} {{agent.AgentPhone |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label> <span *ngIf="agent.OfficeFax">{{agent.OfficeFax | slice:0:2}}
+                          ({{agent.OfficeFax | slice:2:4}}) {{agent.OfficeFax | slice:4:8}} {{agent.OfficeFax |
+                          slice:8:12}}</span></label></div>
+                  <div class="icon-side"><label class="truncate" title="{{agent.AgentWebsite}}"><a class="hyperlink" (click)="goToLink(agent.AgentWebsite)">{{agent.AgentWebsite}}</a></label></div>
+                  <div class="icon-side"><label class="truncate">{{agent.AgentEmail}}</label></div>
+                  <div class="icon-side iconHeightSide"><label>{{agent.AddressText}}</label></div>
+                  <div class="icon-side" style="background: #fff; text-align: right; min-height: 30px!important;">
+                    <img src="{{imagePath+agent.Path}}" style="height:30px;" *ngIf="agent.Path">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-icon-wrap child" >
+          <i class="fas fa-check-double text-primary ml-1" (click)="onEditContact(agent,$event)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

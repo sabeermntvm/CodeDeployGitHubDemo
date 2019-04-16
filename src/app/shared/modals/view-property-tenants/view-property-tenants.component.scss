@@ -1,0 +1,28 @@
+.intrepid-modal{
+    left: 300px !important;
+    width: calc(100% - 300px);
+    padding-left: 130px;
+    padding-top: 0px;
+}
+
+.testClass{
+    width:300px!important;
+}
+.tenants-pane{
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.tenants-txt{
+    text-overflow: ellipsis;
+    width: 159px;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+}
+
+a.view-property{
+    color:#00a1ff;
+    text-align: right;
+    margin-top: -32px;
+    float: right;
+}
