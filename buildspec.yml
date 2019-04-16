@@ -1,10 +1,7 @@
-version: 0.2
-env:
-    variables:
-        CACHE_CONTROL: "86400"
-         S3_BUCKET: {codepipeline-us-west-2-964311757435}
-         BUILD_FOLDER: {CodeDeploySample}
-        BUILD_ENV: "prod"
+version: 0.1
+environment_variables:
+    plaintext:
+        S3_BUCKET: "codepipeline-us-west-2-964311757435"
 phases:
     install:
         commands:
@@ -14,10 +11,10 @@ phases:
     build:
         commands:
             - echo Build started on `date`
-            - ng build 
+            - ng build --prod --aot
     post_build:
          commands:
-            # - aws s3 cp ${BUILD_FOLDER} s3://${S3_BUCKET} --recursive --acl public-read --cache-control "max-age=${CACHE_CONTROL}"
+            # - aws s3 cp dist s3://${S3_BUCKET} --recursive
             # - echo Build completed on `date`
 artifacts:
     files:
