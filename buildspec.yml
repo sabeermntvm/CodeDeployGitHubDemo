@@ -2,7 +2,7 @@ version: 0.2
 env:
     variables:
         CACHE_CONTROL: "86400"
-        # S3_BUCKET: {-INSERT BUCKET NAME FOR STATIC WEBSITE HERE-}
+         S3_BUCKET: {codepipeline-us-west-2-964311757435}
          BUILD_FOLDER: {CodeDeploySample}
         BUILD_ENV: "prod"
 phases:
